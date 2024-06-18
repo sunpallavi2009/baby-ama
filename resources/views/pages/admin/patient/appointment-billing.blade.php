@@ -56,7 +56,11 @@
 
                                             <div class="col-md-6 mb-12" id="doctorFields" style="display: none;">
                                                 <label for="doctor_id" class="form-label">Doctor Name</label>
-                                                <select class="form-control" id="doctor_id" name="doctor_id">
+                                                <input type="text" class="form-control" id="doctor_id"
+                                                    name="doctor_id"
+                                                    value=""
+                                                    placeholder="Enter here">
+                                                {{-- <select class="form-control" id="doctor_id" name="doctor_id">
                                                     <option value="">Select a doctor</option>
                                                     @foreach($doctorlist as $id => $name)
                                                     <option value="{{ $id }}" {{ old('doctor_id', $appointment->
@@ -64,7 +68,7 @@
                                                         {{ $name }}
                                                     </option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
 
                                             <div class="col-md-6 mb-12" id="specialistFields" style="display: none;">

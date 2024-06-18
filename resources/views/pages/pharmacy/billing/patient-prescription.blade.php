@@ -81,6 +81,8 @@
                                     <th scope="col" class="bg-color-v1 text-center ">RELATION TO FOOD</th>
                                     <th scope="col" class="bg-color-v1 text-center">FOLLOW UP DAYS</th>
                                     <th scope="col" class="bg-color-v1 text-center">QTY</th>
+                                    <th scope="col" class="bg-color-v1 text-center">Action</th>
+
                                    {{-- 
                                    <th scope="col" class="bg-color-v1 text-center">PRESCRIPTION BY</th>
                                    --}} 
@@ -100,6 +102,13 @@
                                     <td class="text-center">{{$val->timing_how}}</td>
                                     <td class="text-center">{{$val->duration}} </td>
                                     <td class="text-center">{{$val->total_qty}}</td>
+                                    <td class="text-center"><button class="action-btn" data-bs-toggle="modal" data-bs-target="#EditMedPopModal<?php echo $list_med->id; ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 16 16" fill="none">
+                                        <path d="M10.9921 2.49662C11.1496 2.33917 11.3365 2.21428 11.5422 2.12907C11.7479 2.04386 11.9684 2 12.1911 2C12.4138 2 12.6342 2.04386 12.84 2.12907C13.0457 2.21428 13.2326 2.33917 13.39 2.49662C13.5475 2.65407 13.6724 2.84099 13.7576 3.04671C13.8428 3.25242 13.8867 3.47291 13.8867 3.69557C13.8867 3.91824 13.8428 4.13873 13.7576 4.34444C13.6724 4.55016 13.5475 4.73708 13.39 4.89453L5.29712 12.9875L2 13.8867L2.89921 10.5895L10.9921 2.49662Z"  stroke="#667085" stroke-width="1.11111"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </button></td>
                                    {{-- <td class="text-center">{{ ($val->prescription_by == '1') ? "Doctor" : "Pharmacy" }}</td> --}}
                                 </tr>
                             @php $i++; @endphp
@@ -115,6 +124,7 @@
 
                 <div class="col-12 d-flex gap-2 align-items-center">
                     <a href="{{ route('pharmacy.billing.prescription.list') }}" class="baby-btn-v1">Back</a>
+                    <a href="{{ route('pharmacy.billing.complete.medicine', $prescription_id) }}" class="act-btn success">Completed</a>
                 </div>
             </div>
             <!-- Add/Modify Search Medicine -->

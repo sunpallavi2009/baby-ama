@@ -263,7 +263,23 @@ class PharmacyController extends Controller
 }
 
 
-public function DeclinedPrescription(Request $request){
+public function CompletedPrescription($prescription_id){
+
+    $id =  $prescription_id;
+    $status = 'delivered';
+    $query  = PrescriptionMedicine::where('prescription_id', $id)->update(['prescription_status'=>$status]);
+
+    $response = [];
+
+        $response['success'] = true;
+        $response['data']    = $query;
+        //return response($response,200);
+   return redirect()->route('pharmacy.billing.prescription.list')->with('success');
+     
+
+}
+
+    public function DeclinedPrescription(Request $request){
 
         /*$query =  PrescriptionMedicine::where('prescription_id', $request->delid)->first();
         $query->prescription_status = 'ignored';
@@ -293,6 +309,7 @@ public function DeclinedPrescription(Request $request){
         return response($response,200);
 
     }
+
 
     public function GetUserPrescription(Request $request, $prescription_id){
 
@@ -350,8 +367,7 @@ public function DeclinedPrescription(Request $request){
 
     public function prescriptionList(){
 
-        $patients = PrescriptionMedicine::where('prescription_status','pending')
-        ->groupBy('prescription_id')
+        $patients = PrescriptionMedicine::groupBy('prescription_id')
         ->with("user")
         ->orderBy('id','desc')->paginate(25);
 
