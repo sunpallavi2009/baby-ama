@@ -3,7 +3,7 @@
 @php
 $appointment= $appoinment;
 $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
-
+use App\Models\PrescriptionMedicine;
 @endphp
     <style>
         .prescription-table .table tr {
@@ -170,7 +170,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                 </div>
 
                                 <?php
-                                $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'physiotherapy'])->get();
+                                $prescription_medicine = prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'physiotherapy'])->get();
                                ?>
                                 @if (isset($prescription_medicine))
                                     <div class="prescription-table py-3">
@@ -296,7 +296,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             <?php endif;  ?>
             @endforeach
 
-            @if (isset($medicine) && $medicine != '')
+            @if (isset($medicine) && !empty($medicine))
             <div class="prescription-table py-3">
                 <h3 class="">Drug and Prescription</h3>
                 <div class="table-responsive py-3">

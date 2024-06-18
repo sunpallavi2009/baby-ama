@@ -260,7 +260,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             <?php endif;  ?>
             @endforeach
 
-            @if (isset($medicine) && $medicine != '')
+            @if (isset($medicine) && !empty($medicine))
             <div class="prescription-table py-3">
                 <h3 class="">Drug and Prescription</h3>
                 <div class="table-responsive py-3">

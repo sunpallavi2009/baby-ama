@@ -67,7 +67,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                 </div>
             </div> --}}
 
-             @foreach ($getFormAnswers as $list => $ps)
+            @foreach ($getFormAnswers as $list => $ps)
              <?php
              $data = isset($ps['pediatric']) ? json_decode($ps['pediatric']) : [];
 
@@ -297,7 +297,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                 <?php endif;  ?>
             @endforeach
 
-            @if (isset($medicine) && $medicine != '')
+            @if (isset($medicine) && !empty($medicine))
             <div class="prescription-table py-3">
                 <h3 class="">Drug and Prescription</h3>
                 <div class="table-responsive py-3">

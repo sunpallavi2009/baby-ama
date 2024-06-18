@@ -356,7 +356,7 @@ public function GetAppointments()
 }
 
 
-    
+
     // public function GetAppointments(){
 
     //     $doc_id = helperGetAuthUser('id');
@@ -1326,56 +1326,72 @@ public function GetAppointments()
                                         ->get();
 
         // Extract the pediatric id
-        $pediatricData = $clinicalNotes->first()->pediatric ? json_decode($clinicalNotes->first()->pediatric, true) : null;
+        $pediatricData = null;
+        if ($clinicalNotes->isNotEmpty()) {
+            $pediatricData = $clinicalNotes->first()->pediatric ? json_decode($clinicalNotes->first()->pediatric, true) : null;
+        }
         $dataid = $pediatricData['id'] ?? null;
-        // dd($dataid);
+
         $medicine = [];
         if ($dataid) {
             $medicine = PrescriptionMedicine::where(['type' => 'general', 'prescription_id' => $dataid])->get();
         }
-        // dd($medicine);
 
         return view('pages.doctor.patient.paediatrics-case-summery', compact('appoinment', 'user', 'getFormAnswers', 'clinicalNotes', 'medicine', 'patient'));
     }
 
 
     public function GetDentalCaseSummery(Request $request, Appoinment $appoinment, Patient $patient){
-       $user = $appoinment->user;
-       $getFormAnswers = Prescription::where('patient_id',$patient->id)->orderBy('id', 'DESC')->get();
-    //    $apid = $appoinment->id;
-    //     $pid = $patient->id;
-    //     $getFormAnswers = Prescription::where(['appointment_id'=>$apid,'patient_id'=>$pid])->orderBy('id', 'DESC')->get();
+        $user = $appoinment->user;
 
+        // Fetch all prescriptions for the patient
+        $getFormAnswers = Prescription::where('patient_id', $patient->id)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
+        // Fetch clinical notes and order by id in descending order
         $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
-                                        ->orderBy('id', 'DESC')
-                                        ->get();
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
-        // Extract the dental id
-        $dentalData = $clinicalNotes->first()->dental ? json_decode($clinicalNotes->first()->dental, true) : null;
+        // Initialize dental data
+        $dentalData = null;
+        if ($clinicalNotes->isNotEmpty()) {
+            $firstNote = $clinicalNotes->first();
+            $dentalData = $firstNote->dental ? json_decode($firstNote->dental, true) : null;
+        }
+
         $dataid = $dentalData['id'] ?? null;
-        // dd($dataid);
+
+        // Fetch medicine data if dataid is available
         $medicine = [];
         if ($dataid) {
             $medicine = PrescriptionMedicine::where(['type' => 'dental', 'prescription_id' => $dataid])->get();
         }
-        // dd($medicine);
 
-
-
-        return view('pages.doctor.patient.dental-case-summery', compact('clinicalNotes','medicine','appoinment','user','getFormAnswers'));
+        // Pass variables to the view
+        return view('pages.doctor.patient.dental-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
     }
+
 
     public function GetGynaecologyCaseSummery(Request $request, Appoinment $appoinment, Patient $patient) {
         $user = $appoinment->user;
         $getFormAnswers = Prescription::where('patient_id', $patient->id)->orderBy('id', 'DESC')->get();
 
         $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
-                                        ->orderBy('id', 'DESC')
-                                        ->get();
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
-        $gynaecologyData = $clinicalNotes->first()->gynaecology ? json_decode($clinicalNotes->first()->gynaecology, true) : null;
-        $dataid = $gynaecologyData['id'] ?? null;
+        // Initialize gynaecologyData and dataid
+        $gynaecologyData = null;
+        $dataid = null;
+
+        // Check if there are clinical notes
+        if ($clinicalNotes->isNotEmpty()) {
+            $firstClinicalNote = $clinicalNotes->first();
+            $gynaecologyData = $firstClinicalNote->gynaecology ? json_decode($firstClinicalNote->gynaecology, true) : null;
+            $dataid = $gynaecologyData['id'] ?? null;
+        }
 
         $medicine = [];
         if ($dataid) {
@@ -1386,53 +1402,66 @@ public function GetAppointments()
     }
 
 
-    public function GetPhysiotherapyCaseSummery(Request $request, Appoinment $appoinment, Patient $patient){
-        $user = $appoinment->user;
-        $getFormAnswers = Prescription::where('patient_id',$patient->id)->orderBy('id', 'DESC')->get();
-        // $apid = $appoinment->id;
-        // $pid = $patient->id;
-        // $getFormAnswers = Prescription::where(['appointment_id'=>$apid,'patient_id'=>$pid])->orderBy('id', 'DESC')->get();
-        //
 
+    public function GetPhysiotherapyCaseSummery(Request $request, Appoinment $appoinment, Patient $patient) {
+        $user = $appoinment->user;
+        $getFormAnswers = Prescription::where('patient_id', $patient->id)->orderBy('id', 'DESC')->get();
 
         $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
-                                        ->orderBy('id', 'DESC')
-                                        ->get();
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
-        // Extract the pediatric id
-        $physiotherapyData = $clinicalNotes->first()->physiotherapy ? json_decode($clinicalNotes->first()->physiotherapy, true) : null;
-        $dataid = $physiotherapyData['id'] ?? null;
-        // dd($dataid);
-        $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'physiotherapy', 'prescription_id' => $dataid])->get();
+        // Initialize physiotherapyData and dataid
+        $physiotherapyData = null;
+        $dataid = null;
+
+        // Check if there are clinical notes
+        if ($clinicalNotes->isNotEmpty()) {
+            $firstClinicalNote = $clinicalNotes->first();
+            if ($firstClinicalNote && $firstClinicalNote->physiotherapy) {
+                $physiotherapyData = json_decode($firstClinicalNote->physiotherapy, true);
+                $dataid = $physiotherapyData['id'] ?? null;
+            }
         }
-        // dd($medicine);
 
-
-
-        return view('pages.doctor.patient.physiotherapy-case-summery', compact('clinicalNotes','medicine','appoinment','user','getFormAnswers'));
-     }
-
-    public function GetWomenWellnessCaseSummery(Request $request, Appoinment $appoinment, Patient $patient){
-        $user = $appoinment->user;
-        $getFormAnswers = Prescription::where('patient_id',$patient->id)->orderBy('id', 'DESC')->get();
-
-        $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
-                                        ->orderBy('id', 'DESC')
-                                        ->get();
-
-        // Extract the pediatric id
-        $women_wellnessData = $clinicalNotes->first()->physiotherapy ? json_decode($clinicalNotes->first()->physiotherapy, true) : null;
-        $dataid = $women_wellnessData['id'] ?? null;
-        // dd($dataid);
         $medicine = [];
         if ($dataid) {
             $medicine = PrescriptionMedicine::where(['type' => 'physiotherapy', 'prescription_id' => $dataid])->get();
         }
 
-        return view('pages.doctor.patient.women-wellness-case-summery', compact('clinicalNotes','medicine','appoinment','user','getFormAnswers'));
-     }
+        return view('pages.doctor.patient.physiotherapy-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
+    }
+
+
+    public function GetWomenWellnessCaseSummery(Request $request, Appoinment $appoinment, Patient $patient) {
+        $user = $appoinment->user;
+        $getFormAnswers = Prescription::where('patient_id', $patient->id)->orderBy('id', 'DESC')->get();
+
+        $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
+
+        // Initialize women_wellnessData and dataid
+        $women_wellnessData = null;
+        $dataid = null;
+
+        // Check if there are clinical notes
+        if ($clinicalNotes->isNotEmpty()) {
+            $firstClinicalNote = $clinicalNotes->first();
+            if ($firstClinicalNote && $firstClinicalNote->women_wellness) {
+                $women_wellnessData = json_decode($firstClinicalNote->women_wellness, true);
+                $dataid = $women_wellnessData['id'] ?? null;
+            }
+        }
+
+        $medicine = [];
+        if ($dataid) {
+            $medicine = PrescriptionMedicine::where(['type' => 'women_wellness', 'prescription_id' => $dataid])->get();
+        }
+
+        return view('pages.doctor.patient.women-wellness-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
+    }
+
 
     public function AddClinicalNotesDetail(Request $request, Appoinment $appoinment, Patient $patient,$id=null)
     {
