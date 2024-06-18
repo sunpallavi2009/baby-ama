@@ -73,7 +73,6 @@ Route::get('doctor-test',function(){
 Route::get('test', [PagesController::class, 'test']);
 Route::view('/powergrid', 'powergrid-demo');
 
-
 require __DIR__.'/admin.php';
 require __DIR__.'/front-end.php';
 require __DIR__.'/doctor.php';
