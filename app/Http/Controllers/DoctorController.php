@@ -426,7 +426,7 @@ public function GetAppointments()
 
         // Retrieve the latest prescription for the patient and appointment, if exists
         $getdata = Prescription::where('patient_id', $patient->id)
-            ->where('appointment_id', $appoinment->id)
+            // ->where('appointment_id', $appoinment->id)
             ->orderBy('id', 'DESC')
             ->first();
 

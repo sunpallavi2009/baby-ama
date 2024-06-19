@@ -110,7 +110,7 @@
                         @elseif($details->prescription_status == 'delivered')
                             Completed
                         @else
-                            {{ $details->prescription_status }}
+                            {{-- {{ $details->prescription_status }} --}}
                         @endif
                     @else
                         ""
