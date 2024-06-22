@@ -241,6 +241,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             @endif
 
 
+            <hr class="mt-8 mb-16">
 
 
             @if ($clinicalNotes!=null)
@@ -255,8 +256,54 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
 
 
-                        <div class="col-11 text-center">
+                        <div class="col-11 text-center mb-4">
                             <h2 class="mb-0">Clinical Notes Case Summary</h2>
+                        </div>
+
+                        <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                        <div class="head baby-shadow py-3 px-5 mb-4">
+                            <div class="row px-5 py-4 align-items-center">
+                                <div class="col-12 col-md-2">
+                                    <div class="patient-img d-flex justify-content-center align-items-center mx-auto">
+                                        <p class="name mb-0">
+                                            {{ ucfirst(substr($user->first_name, 0, 1)) . ucfirst(substr($user->last_name, 0, 1)) }}
+                                        </p>
+                                        {{-- <img src="{{helperAssetUrl('assets/img/patinet-placeholder.png')}}"> --}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="patient-info">
+                                        <p class="name mb-3">{{ $user->first_name . ' ' . $user->last_name }}</p>
+                                        @if ($user->patient)
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">UMR
+                                                NO</span><span class="val">{{ $user->patient->umr_no }}</span>
+                                        </p>
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Gender</span><span class="val">{{
+                                                $user->patient->gender }}</span></p>
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Age</span><span class="val">{{
+                                                $user->patient->age }}</span></p>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="patient-info">
+                                        @if ($appoinment->doctor)
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Doctor </span>
+                                            <span class="val">{{ $appoinment->doctor->first_name.' '.$appoinment->doctor->last_name }}</span>
+                                        </p>
+                                        @endif
+                                        {{-- @if (isset($appointment->appoinment_date))
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Date</span><span class="val">
+                                                {{ $appointment->appoinment_date }}</span></p>
+                                        @endif --}}
+                                        @if ($appointment->appoinment_session)
+                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Session</span><span class="val">
+                                                {{ $appointment->appoinment_session }}</span></p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 

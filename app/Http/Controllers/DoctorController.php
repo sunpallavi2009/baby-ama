@@ -619,7 +619,7 @@ public function GetAppointments()
 
         // dd($doctor);
 
-        $data = Prescription::where(['appointment_id' => $apid, 'patient_id' => $pid])->first();
+        $data = Prescription::where(['patient_id' => $pid])->first();
         $dataid = $data->id ?? null;
         $pr_id = $dataid;
         $medicine = [];

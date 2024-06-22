@@ -35,7 +35,7 @@ $appointment= $appoinment;
                         </svg>
                     </div>
                     <div class="service-name">Paediatrics Case Record</div>
-        <a target="_self" class="service-link"
+                    <a target="_self" class="service-link"
                         href="{{route('doctor.patient.pediatric',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
 
                 </div>
@@ -82,7 +82,7 @@ $appointment= $appoinment;
                     </div>
                     <div class="service-name">Anthropometry and Growth Chart</div>
                     <a target="_self" class="service-link"
-                    href="{{route('doctor.patient.anthropometry_growth_chart',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
+                        href="{{route('doctor.patient.anthropometry_growth_chart',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
                 </div>
             </div>
             <!-- Dental Case Record -->
@@ -102,8 +102,9 @@ $appointment= $appoinment;
                             </defs>
                         </svg>
                     </div>
-                    <div class="service-name">Paediatric Dental Case Record  </div>
-                    <a target="_self" class="service-link"  href="{{route('doctor.patient.dental',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
+                    <div class="service-name">Paediatric Dental Case Record </div>
+                    <a target="_self" class="service-link"
+                        href="{{route('doctor.patient.dental',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
                 </div>
             </div>
             <!-- DentalGynaecology Case Record -->
@@ -117,7 +118,8 @@ $appointment= $appoinment;
                         </svg>
                     </div>
                     <div class="service-name">Gynaecology Case Record</div>
-                    <a href="{{route('doctor.patient.gynaecology_case_record',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}" class="service-link"></a>
+                    <a href="{{route('doctor.patient.gynaecology_case_record',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"
+                        class="service-link"></a>
                 </div>
             </div>
             <!-- Clinical Notes -->
@@ -191,7 +193,7 @@ $appointment= $appoinment;
                     <div class="service-name">Vaccination</div>
                     <a target="_self" class="service-link"
                         href="{{route('doctor.patient.vaccination',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"></a>
- </div>
+                </div>
             </div>
             <!-- Investigation Reports -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
@@ -222,7 +224,8 @@ $appointment= $appoinment;
                         </svg>
                     </div>
                     <div class="service-name">Physiotherapy</div>
-                    <a href="{{route('doctor.patient.physiotherapy',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}" class="service-link"></a>
+                    <a href="{{route('doctor.patient.physiotherapy',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"
+                        class="service-link"></a>
                 </div>
             </div>
             <!--Women Wellness -->
@@ -236,7 +239,8 @@ $appointment= $appoinment;
                         </svg>
                     </div>
                     <div class="service-name">Women Wellness</div>
-                    <a href="{{route('doctor.patient.women_wellness',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}" class="service-link"></a>
+                    <a href="{{route('doctor.patient.women_wellness',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"
+                        class="service-link"></a>
                 </div>
             </div>
             <!-- Other Services -->
@@ -244,7 +248,8 @@ $appointment= $appoinment;
                 <div class="p-service baby-shadow clinical">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 36 36" fill="none">
-                            <path
+                            <path d="M10 27H26V9H10V27ZM14 23H22V25H14V23ZM14 19H22V21H14V19ZM14 15H22V17H14V15ZM12 7H24V9H12V7Z"
+                                fill="#8A4FBA" />
                                 d="M10.1447 27.3936C6.6017 27.3739 4.68296 27.2167 3.43132 25.965C2 24.5337 2 22.23 2 17.6228V11.107C2 6.49967 2 4.19601 3.43132 2.76469C4.86263 1.33337 7.16629 1.33337 11.7736 1.33337H24.8051C29.4124 1.33337 31.7161 1.33337 33.1474 2.76469C34.5788 4.19601 34.5788 6.49967 34.5788 11.107V17.6228C34.5788 22.23 34.5788 24.5337 33.1474 25.965C31.9586 27.154 30.1678 27.3553 26.9548 27.3894L25.6196 27.3936"
                                 stroke="#8A4FBA" stroke-width="2.5" />
                             <path d="M13.4023 7.84912H23.176" stroke="#8A4FBA" stroke-width="2.5"
@@ -259,7 +264,8 @@ $appointment= $appoinment;
                         </svg>
                     </div>
                     <div class="service-name">Other Services</div>
-                    <a href="{{route('doctor.patient.other_services',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}" class="service-link"></a>
+                    <a href="{{route('doctor.patient.other_services',['appoinment'=>$appoinment->id,'patient'=>$user->patient->id])}}"
+                        class="service-link"></a>
                 </div>
             </div>
         </div>
