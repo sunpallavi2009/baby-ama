@@ -102,7 +102,7 @@
                                     <td class="text-center">{{$val->timing_how}}</td>
                                     <td class="text-center">{{$val->duration}} </td>
                                     <td class="text-center">{{$val->total_qty}}</td>
-                                    <td class="text-center"><button class="action-btn" data-bs-toggle="modal" data-bs-target="#EditMedPopModal<?php echo $list_med->id; ?>">
+                                    <td class="text-center"><button class="action-btn" data-bs-toggle="modal" data-bs-target="#EditMed">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 16 16" fill="none">
                                         <path d="M10.9921 2.49662C11.1496 2.33917 11.3365 2.21428 11.5422 2.12907C11.7479 2.04386 11.9684 2 12.1911 2C12.4138 2 12.6342 2.04386 12.84 2.12907C13.0457 2.21428 13.2326 2.33917 13.39 2.49662C13.5475 2.65407 13.6724 2.84099 13.7576 3.04671C13.8428 3.25242 13.8867 3.47291 13.8867 3.69557C13.8867 3.91824 13.8428 4.13873 13.7576 4.34444C13.6724 4.55016 13.5475 4.73708 13.39 4.89453L5.29712 12.9875L2 13.8867L2.89921 10.5895L10.9921 2.49662Z"  stroke="#667085" stroke-width="1.11111"
@@ -626,6 +626,182 @@
                     </div>
                 </form>
             @endforeach
+
+
+            <div class="col-12">
+                <div class="modal fade med-data-modal" id="EditMed" tabindex="-1"
+                    aria-labelledby="MedPopModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header py-4">
+                                <h3 class="modal-title fs-5 text-center med-name w-100" id=" MedPopModalLabel">
+                                    <span
+                                        class="me-2">({{ helperFormatMedicinePrefix($list_medicine1->type) }})</span>
+                                    {{ $list_medicine1->name }}
+                                    <span class="ms-2">({{ $medicine1->dosage }})</span>
+                                </h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                    <!-- Dosage -->
+                                    <div class="row mx-0 mb-4 align-items-center">
+                                        <div class="col-4 med-prop position-relative">Dosage</div>
+                                        <div class="col-8">
+                                            <div class="row justify-content-between align-items-center mx-0">
+                                                <div class="col-6 form-fl px-1">
+                                                    <input type="number" class="form-control rounded-0"
+                                                        placeholder="0" id="intake_dosage_{{ $list_pres1->id }}"
+                                                        name="intake_qty" value="{{ $list_pres1->intake_qty }}"
+                                                        onchange="dosage_incnt(this.value,'{{ $list_pres1->id }}')"
+                                                        step="0.01" min="0.01">
+                                                </div>
+                                                <div class="col-5 form-fl px-1">
+                                                    <!-- <input type="text" class="form-control rounded-0" placeholder="Tab"
+                                                            id="insReportName" name="tab_name" value="" disabled> -->
+                                                    <select class="form-control rounded-0" name="dosage"
+                                                        id="dosage_{{ $list_pres1->id }}"
+                                                        onchange="dosagein(this.value,'{{ $list_pres1->id }}')">
+                                                        <option value="Tablet">Tablet</option>
+                                                        <option value="Ml">ML</option>
+                                                        <option value="Drop">Drop</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Timing -->
+
+                                    <div class="row mx-0 mb-4 align-items-center">
+                                        <div class="col-4 med-prop position-relative"
+                                            id="timing_chkbox_{{ $list_pres1->id }}">
+                                            Timing
+                                        </div>
+
+                                        <div class="col-8">
+                                            <div class="row mx-0" id="edit_chkbox_{{ $list_pres1->id }}">
+                                                <div class="col-4 px-1">
+                                                    <div class="select-chk">
+                                                        <input type="checkbox"
+                                                            id="TMorning_{{ $list_pres1->id }}"
+                                                            name="timing_when[]" value="Morning"
+                                                            <?php echo in_array('Morning', $row_values) ? 'checked' : ''; ?>
+                                                            class="edit_chkbox_{{ $list_pres1->id }}"
+                                                            onClick="chkcnt({{ $list_pres1->id }})">
+                                                        <label for="TMorning">Morning</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 px-1">
+                                                    <div class="select-chk">
+                                                        <input type="checkbox"
+                                                            id="Tafternoon_{{ $list_pres1->id }}"
+                                                            name="timing_when[]" value="Noon"
+                                                            <?php echo in_array('Noon', $row_values) ? 'checked' : ''; ?>
+                                                            class="edit_chkbox_{{ $list_pres1->id }}"
+                                                            onClick="chkcnt({{ $list_pres1->id }})">
+                                                        <label for="Tafternoon">Noon</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 px-1">
+                                                    <div class="select-chk">
+                                                        <input type="checkbox"
+                                                            id="Tevening_{{ $list_pres1->id }}"
+                                                            name="timing_when[]" value="Night"
+                                                            <?php echo in_array('Night', $row_values) ? 'checked' : ''; ?>
+                                                            class="edit_chkbox_{{ $list_pres1->id }}"
+                                                            onClick="chkcnt({{ $list_pres1->id }})">
+                                                        <label for="Tevening">Night</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  Relation to food -->
+                                    <div class="row mx-0 mb-4 align-items-center">
+                                        <div class="col-4 med-prop position-relative">
+                                            Relation to food
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="row mx-0">
+                                                <div class="col-6 px-1">
+                                                    <div class="select-chk">
+                                                        <input type="radio" id="timing_how" name="timing_how[]"
+                                                            value="beforefood"
+                                                            {{ $list_pres1->timing_how == 'beforefood' ? 'checked' : '' }}>
+                                                        <label for="bfood">Before Food</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 px-1">
+                                                    <div class="select-chk">
+                                                        <input type="radio" id="timing_how" name="timing_how[]"
+                                                            value="afterfood"
+                                                            {{ $list_pres1->timing_how == 'afterfood' ? 'checked' : '' }}>
+                                                        <label for="food">After Food</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  Follow-up days -->
+                                    <div class="row mx-0 mb-4 align-items-center">
+                                        <div class="col-4 med-prop position-relative">
+                                            Follow-up days
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="row mx-0 align-items-center">
+                                                <div class="col-6 px-1 form-fl">
+                                                    <!--   <input type="number" class="form-control rounded-0" placeholder="0"
+                                                            id="followUpDays" name="tab_count_days" value="" step="1" min="0"
+                                                            oninput="validity.valid||(value='');" onKeyup="followUpDays(this.value)">
+                                              -->
+                                                    <input type="number" class="form-control rounded-0"
+                                                        placeholder="0" id="totaldays_{{ $list_pres1->id }}"
+                                                        name="tab_count_days" step="1" min="1" pattern="[0-9]" onkeypress="return !(event.charCode == 46)"
+                                                        onchange="followUpDays(this.value,'{{ $list_pres1->id }}')"
+                                                        value="{{ $list_pres1->duration }}">
+                                                </div>
+                                                <div class="col-6 px-1">
+                                                    <label for="FollowUpDays">Days</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  Total Count days -->
+                                    <div class="row mx-0 mb-4 align-items-center">
+                                        <div class="col-4 med-prop position-relative">
+                                            Total count
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="row mx-0 align-items-center">
+                                                <div class="col-6 px-1 form-fld">
+                                                    <span class="me-2"
+                                                        id="total_cnt_{{ $list_pres1->id }}">{{ $list_pres1->total_qty }}</span>
+                                                    <span
+                                                        id="total_dg_{{ $list_pres1->id }}">{{ $list_pres1->dosage }}</span>
+                                                    <input type="hidden" name="total_qty"
+                                                        id="total_qty_{{ $list_pres1->id }}" value="5">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button type="button" class="baby-secondary-btn border-1"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="baby-primary-btn border-1"
+                                    id="edit_btn_{{ $list_pres1->id }}"
+                                    onClick="update_valthis({{ $list_pres1->id }})">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 

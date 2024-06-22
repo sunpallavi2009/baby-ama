@@ -28,12 +28,17 @@
       .footer,#kt_footer,#pdf_print {
             display: none;
       }
+
+      .footer,#kt_footer,#back_btn {
+            display: none;
+      }
+      
       body {-webkit-print-color-adjust: exact;}
     }
 
     @print {
         @page :footer {
-            display: none
+            /* display: none */
         }
       
         @page :header {
@@ -60,126 +65,199 @@
 .medicine_dot_line{
     border-bottom:1px dotted #000;
 }
+
+.inv-logo {
+            max-width: 150px;
+        }
+        .header-info p, .header-info .col {
+            margin: 0;
+        }
+        .header-info .col {
+            padding: 0 15px;
+        }
+        .page-footer {
+            background-color: #6f42c1;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .text-primary {
+            color: #6f42c1 !important;
+        }
+
+        .patient-detail p {
+            margin-bottom: 5px;
+        }
+        .patient-detail .row > div {
+            padding-bottom: 10px;
+        }
+
+        table.table th {
+        background-color: #6f42c1;
+        color: white;
+        font-weight: bold;
+        text-align: center; 
+        border: 1px solid #ddd;
+        padding: 10px; 
+    }
+
+    table.table td {
+        text-align: center; 
+        padding: 10px; 
+        border: 1px solid #ddd;
+    }
+
+    table.table tfoot {
+        text-align: center; 
+        padding: 10px; 
+        border: 1px solid #ddd;
+        
+    }
+    
 </style> 
 
 
- <div class="container" id="page">
-    <div class="pharmacy medicine-stacklist  p-5" style="margin-top: 50px;">
-        <div class="row mx-0  justify-content-between p-sm-4">
-            <div class="col-12 col-md-8">
-                <div class="mb-5 pb-4">
-                    <img src="{{ asset('media/logos/babyama-logo.png') }}" alt="Babyama" class="w-100 object-fit-contain inv-logo">
+ <div class="container justify-content-center align-items-center" id="page">
+        <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
+            <div class="mb-5 pb-4 text-center">
+                <img src="{{ asset('media/logos/babyama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo mx-auto">
+            </div>
+            <div class="row header-info text-center">
+                <div class="col-6 text-left">
+                    <p><i class="fas fa-phone-alt text-primary"></i> 78967 84329</p>
+                    <p><i class="fas fa-globe text-primary"></i> babyama.in</p>
                 </div>
-                <div class="row justify-content-between bill-data py-5">
-                    <div class="col-12 col-md-6 col-lg-6 mb-5 mb-lg-0">
-                        <h2 class="pt-title d-block d-md-none mb-5">Invoice</h2>
-                        <h6>BILL FORM:</h6>
-                        <p>Babyama Women Wellness & Paediatric Centre <br>
-                            New Siddha Pudur, <br>
-                            Coimbatore - 638 933. <br>
-                            PH.NO: 78967 84329.</p>
+                <div class="col-6 text-right">
+                    <p class="text-primary">Invoice No: 472</p>
+                    <p class="text-primary">Invoice Date: 12/03/2023</p>
+                </div>
+            </div>
+            <hr>
+            {{-- <div class="row">
+                <div class="col-12">
+                    <h5>Patient Details</h5>
+                    <div class="row patient-detail">
+                        <div class="col-6">
+                            <p><strong class="text-primary">Patient Name : </strong>{{ ucfirst($user->first_name)." ".ucfirst($user->last_name) }}</p>
+                            <p><strong class="text-primary">Age : </strong> {{ ($user->age) }}</p>
+                            <p><strong class="text-primary">Sex : </strong> {{ ($user->gender) }}</p>
+                            <p><strong class="text-primary">Father's name : </strong>{{ ($user->father_name) }}</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong class="text-primary">UMR No : </strong>{{ ($user->umr_no) }}</p>
+                            <p><strong class="text-primary">OP No : </strong>{{ ($user->op_no) }}</p>
+                            <p><strong class="text-primary">Phone Number : </strong>{{ ($user->father_phone)." ".($user->mother_phone) }}.</p>
+                            <p><strong class="text-primary">Address : </strong>{{ ($user->address)}}</p>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-5">
-                        <h6>BILL TO:</h6>
-                        <p> {{ ucfirst($user->first_name)." ".ucfirst($user->last_name) }} <br>
-                            {{ $user->address }}<br>
+                </div>
+            </div> --}}
+            <div class="row">
+                <div class="col-12">
+                    <h5>Patient Details</h5>
+                    <div class="row patient-detail">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-5 text-primary">Patient Name </div>
+                                <div class="col-7">{{ ucfirst($user->first_name)." ".ucfirst($user->last_name) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">Age </div>
+                                <div class="col-7">{{ ($user->age) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">Sex </div>
+                                <div class="col-7">{{ ($user->gender) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">Father's name </div>
+                                <div class="col-7">{{ ($user->father_name) }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-5 text-primary">UMR No </div>
+                                <div class="col-7">{{ ($user->umr_no) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">OP No </div>
+                                <div class="col-7">{{ ($user->op_no) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">Phone Number </div>
+                                <div class="col-7">{{ ($user->father_phone)." ".($user->mother_phone) }}.</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-primary">Address </div>
+                                <div class="col-7">{{ ($user->address)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Medicine Charges</h5>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Medicine</th>
+                        <th>Qty.</th>
+                        <th>Price</th>
+                        {{-- <th>Discount</th> --}}
+                        <th>SGST</th>
+                        <th>CGST</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 1; $total = 0; $tax = 0; @endphp
+                    @foreach($invoice_details as $key => $val)
+                        @php
+                            $list_med = App\Models\Medicine::find($val->medicine_id);
+                            $taxval = isset($list_med) && isset($list_med->selling_tax) ? $list_med->selling_tax : 0;
+                            $tot = $list_med ? $list_med->selling_price * $val->total_qty : 0;
+                        @endphp
+                        <tr>
+                            <td scope="row">{{ $i }} </td>
+                            <td>{{ $list_med ? $list_med->name . ' (' . helperFormatMedicinePrefix($list_med->type) . ')' : 'Medicine not found' }}</td>
+                            <td>{{ $val->total_qty }}</td>
+                            <td>&#x20B9; {{ $list_med ? $list_med->selling_price : 'N/A' }}</td>
+                            {{-- <td>&#x20B9; {{ $list_med ? $list_med->selling_price : 'N/A' }}</td> --}}
+                            {{-- <td>{{ $list_med->buying_tax }}</td> --}}
+                            <td>{{ $list_med->buying_tax }}</td>
+                            <td>{{ $list_med->selling_tax }}</td>
                             
-                            PH. No. {{ ($user->father_phone)." ".($user->mother_phone) }}.<br>
-                            UMR No. {{ ($user->umr_no) }}<br>
-                            OP No. {{ ($user->op_no) }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-xl-3">
-                <div class="inv-title d-flex align-items-center mb-5 py-4 d-none d-md-block">
-                    <h2 class="pt-title ">Invoice</h2>
-                </div>
-                <div class="inv-info pt-2">
-                    <div class="row py-md-5">
-                        <div class="col-5">Invoice No</div>
-                        <div class="col-7"> : <?php echo rand(100,1000); ?> </div>
-                        <div class="col-5">Date</div>
-                        <div class="col-7"> : <?php echo date('d.m.Y'); ?></div>
-                        <div class="col-5">Place</div>
-                        <div class="col-7"> : Coimbatore</div>
-                    </div>
-                </div>
-            </div>
+                            <td>&#x20B9; {{ $tot }}</td> 
+                        </tr>
+                        @php
+                            $i++;
+                            $total += $tot;
+                            $tax += $taxval;
+                        @endphp
+                    @endforeach  
+                </tbody>
+                <tfoot>
+                    <tr>
+                        
+                        <td colspan="6" style="text-align: right; "><strong>Total Amount:</strong></td>
+                        <td colspan="6"> {{ $total }}</td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
-    <div class="col-12 baby-border invoice-table">
-                <table class="table table-hover table table-borderless">
-                    <thead class="py-2">
-                        <tr>
-                            <th scope="col">S.NO</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">QTY</th>
-                            <th scope="col">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody class="mb-5">
-                        @php $i = 1; $total = 0; $tax = 0; @endphp
-                        @foreach($invoice_details as $key => $val)
-                            @php
-                                $list_med = App\Models\Medicine::find($val->medicine_id);
-                                $taxval = isset($list_med) && isset($list_med->selling_tax) ? $list_med->selling_tax : 0;
-                                $tot = $list_med ? $list_med->selling_price * $val->total_qty : 0;
-                            @endphp
-                            <tr>
-                                <th scope="row">{{ $i }} </th>
-                                <td>{{ $list_med ? $list_med->name . ' (' . helperFormatMedicinePrefix($list_med->type) . ')' : 'Medicine not found' }}</td>
-                                <td>&#x20B9; {{ $list_med ? $list_med->selling_price : 'N/A' }}</td>
-                                <td>{{ $val->total_qty }}</td>
-                                <td>&#x20B9; {{ $tot }}</td>
-                            </tr>
-                            @php
-                                $i++;
-                                $total += $tot;
-                                $tax += $taxval;
-                            @endphp
-                        @endforeach  
-                    </tbody>
-                    
-                    <tfoot class="pt-5">
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="tf-info">Total :</td>
-                            <td>&#x20B9; {{ $total }}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="tf-info">Tax :</td>
-                            <td> {{ $tax }} %</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="tf-info">Subtotal :</td>
-                            <?php if($tax == '0'){
-                                $subtotal= $total;
-                            } else { 
-                                $subtotal= $total + ($total * $tax / 100);
-                            }?>
-                            <td>&#x20B9; {{ $subtotal }}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="mt-5 pt-5">
-                    <div class="d-flex px-2 justify-content-start align-items-center gap-4 my-5">
-                        <button id="pdf_print" onclick="printDiv('printableArea')" class="baby-primary-btn" >Print</button>
-                        <a href="{{ URL::previous() }}" class="baby-secondary-btn border-1 text-center">Back</a>
-                    </div>
-                </div>
+    <div class="page-footer">
+        Address: Babyama Women Wellness & Paediatric Centre, New Siddha Pudur, Coimbatore - 638 933.
     </div>
-        
-    
- </div>   
+
+    <div class="mt-5 pt-5">
+        <div class="d-flex px-2 justify-content-start align-items-center gap-4 my-5">
+            <button id="pdf_print" onclick="printDiv('printableArea')" class="baby-primary-btn" >Print</button>
+            <a href="{{ URL::previous() }}" id ="back_btn" class="baby-secondary-btn border-1 text-center">Back</a>
+        </div>
+    </div>
+ 
 @endsection
 
 
@@ -191,7 +269,7 @@
             patientName = '';
              patientName = patientName.replace(" ", "_");
 
-            document.title = "patient_"+patientName+"_prescription_"+timesheetdate;
+            // document.title = "patient_"+patientName+"_prescription_"+timesheetdate;
             window.print();
        }
 </script>

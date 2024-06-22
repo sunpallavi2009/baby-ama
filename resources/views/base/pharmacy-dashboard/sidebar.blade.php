@@ -66,7 +66,7 @@
                     <ul class="sub-menu bg-white px-0 py-2">
                 <li class="{{ ($docRoute=='pharmacy.billing.prescription.list') ? 'active' : ''; }}"><a href="{{ route('pharmacy.billing.prescription.list') }}"
                                 class="ps-0 inline-block sidebar-link ">Prescription</a></li>
-                        <li class=".active"><a href="{{ route('pharmacy.home') }}"
+                        <li class=".active"><a href="{{ route('pharmacy.history') }}"
                                 class="ps-0 inline-block sidebar-link">History</a></li>
                     </ul>
                 </li>

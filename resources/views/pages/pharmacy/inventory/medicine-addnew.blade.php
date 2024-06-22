@@ -89,8 +89,7 @@
                         </div>
                         <div id="buying_tax" class="col-12 col-md-6 col-lg-4">
                             <div class="style-one py-5 flex-column justify-conent-start align-items-start"> <label
-                                    for="buying_tax" class="form-label">Buying
-                                    Tax:</label>
+                                    for="buying_tax" class="form-label">SGST:</label>
                                 <input type="number" class="form-field w-100" step="0.01" min="0"
                                     placeholder="2.5%" id="buying_tax" name="buying_tax" value=""><span
                                     class="ps-2"></span>
@@ -116,8 +115,7 @@
                         </div>
                         <div id="selling_tax" class="col-12 col-md-6 col-lg-4">
                             <div class="style-one py-5 flex-column justify-conent-start align-items-start"> <label
-                                    for="selling_tax" class="form-label">Selling
-                                    Tax: <span class="cls_mandatory">*</span></label>
+                                    for="selling_tax" class="form-label">CGST: <span class="cls_mandatory">*</span></label>
                     <input type="number" class="form-field w-100" step="0.01" min="0.01"
                                     placeholder="3.5%" id="add_selling_tax" name="selling_tax" value=""><span
                                     class="ps-2"></span>
