@@ -25,7 +25,7 @@
                 <div class="col-1 position-absolute">
                     {{-- <a href="{{route('doctor.appointment.patient.details',$patient->id)}}"> --}}
                     {{-- <a href="{{route('doctor.appointment.patient',$appoinment->id)}}"> --}}
-                    <a href="{{ url()->previous() }}">
+                    <a href="javascript:history.back()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
                             fill="none">
                             <path
@@ -1119,7 +1119,7 @@
 
         $("#totaldays_" + id).attr("class", "form-control rounded-0");
             error = 1;
-            
+
         if (intake_dosage == '') {
             $("#intake_dosage_" + id).attr("class", "form-control rounded-0 error-input");
             error = 0;

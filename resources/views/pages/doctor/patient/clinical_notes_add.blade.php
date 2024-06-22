@@ -99,6 +99,7 @@
                         @if (isset($data->id))
                             <input type="hidden" name="id" value="{{ $data->id }}">
                         @endif
+                        <input type="hidden" name="id" value="{{ $appoinment->id }}">
                         {{-- <input type="hidden" name="id" value="{{ $data->id }}">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <input type="hidden" name="doctor_id" value="{{ $doctor }}"> --}}
@@ -160,7 +161,7 @@
                                             Add Prescriptions</a>
                                         <span class="btn-info-bar">Save this Notes Information to Add Medicine</span>
                                     @endif
-                                    
+
                                 </div>
                             </div>
 

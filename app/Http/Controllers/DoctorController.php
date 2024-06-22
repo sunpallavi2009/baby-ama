@@ -1483,40 +1483,14 @@ public function GetAppointments()
     //     return redirect()->back()->with('success', 'Clinical Notes Saved Successfuly');
     // }
 
-    // public function PostClinicalNotesForm(Request $request, Patient $patient)
-    // {
-    //     $data = $request->except('_token');
-    //     $type = $request->prescription_type;
-
-    //     // Create a new instance of ClinicalNotes for each form submission
-    //     $formSave = new ClinicalNotes();
-    //     $formSave->patient_id = $patient->id;
-
-    //     if ($type == 'pediatric') {
-    //         $formSave->pediatric = json_encode($data);
-    //     } else {
-    //         $formSave->dental = json_encode($data);
-    //     }
-
-    //     $formSave->save();
-
-    //     return redirect()->back()->with('success', 'Clinical Notes Saved Successfully');
-    // }
-
-
     public function PostClinicalNotesForm(Request $request, Patient $patient)
     {
         $data = $request->except('_token');
         $type = $request->prescription_type;
 
-        // Find the existing ClinicalNotes entry for the patient
-        $formSave = ClinicalNotes::where('patient_id', $patient->id)->first();
-
-        if ($formSave === null) {
-            // If no existing record, create a new instance
-            $formSave = new ClinicalNotes();
-            $formSave->patient_id = $patient->id;
-        }
+        // Create a new instance of ClinicalNotes for each form submission
+        $formSave = new ClinicalNotes();
+        $formSave->patient_id = $patient->id;
 
         if ($type == 'pediatric') {
             $formSave->pediatric = json_encode($data);
@@ -1528,6 +1502,74 @@ public function GetAppointments()
 
         return redirect()->back()->with('success', 'Clinical Notes Saved Successfully');
     }
+
+//     public function PostClinicalNotesForm(Request $request, Patient $patient)
+// {
+//     $data = $request->except('_token');
+//     $type = $request->prescription_type;
+//     $date = $request->date; // assuming the date is passed in the request
+
+//     // Validate the date field
+//     $request->validate([
+//         'date' => 'required|date'
+//     ]);
+
+//     // Find an existing record for the patient and type on the same date
+//     $existingRecord = ClinicalNotes::where('patient_id', $patient->id)
+//         ->whereDate('created_at', $date)
+//         ->first();
+
+//     if ($existingRecord) {
+//         // Update the existing record
+//         if ($type == 'pediatric') {
+//             $existingRecord->pediatric = json_encode($data);
+//         } else {
+//             $existingRecord->dental = json_encode($data);
+//         }
+//         $existingRecord->save();
+//     } else {
+//         // Create a new instance of ClinicalNotes for each form submission
+//         $formSave = new ClinicalNotes();
+//         $formSave->patient_id = $patient->id;
+
+//         if ($type == 'pediatric') {
+//             $formSave->pediatric = json_encode($data);
+//         } else {
+//             $formSave->dental = json_encode($data);
+//         }
+
+//         $formSave->save();
+//     }
+
+//     return redirect()->back()->with('success', 'Clinical Notes Saved Successfully');
+// }
+
+
+
+    // public function PostClinicalNotesForm(Request $request, Patient $patient)
+    // {
+    //     $data = $request->except('_token');
+    //     $type = $request->prescription_type;
+
+    //     // Find the existing ClinicalNotes entry for the patient
+    //     $formSave = ClinicalNotes::where('patient_id', $patient->id)->first();
+
+    //     if ($formSave === null) {
+    //         // If no existing record, create a new instance
+    //         $formSave = new ClinicalNotes();
+    //         $formSave->patient_id = $patient->id;
+    //     }
+
+    //     if ($type == 'pediatric') {
+    //         $formSave->pediatric = json_encode($data);
+    //     } else {
+    //         $formSave->dental = json_encode($data);
+    //     }
+
+    //     $formSave->save();
+
+    //     return redirect()->back()->with('success', 'Clinical Notes Saved Successfully');
+    // }
 
     /* public function GetPrescriptionDetailAll(Request $request, Appoinment $appoinment,Patient $patient)
     {
