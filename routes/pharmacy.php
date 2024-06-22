@@ -35,4 +35,7 @@ Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {
 
   Route::get('/pharmacy/billing/search/patient/prescription', [PharmacyController::class, 'SearchPatientlist'])->name('pharmacy.billing.search.patient.prescription');
 
+  Route::get('/history', [PharmacyController::class, 'history'])->name('pharmacy.history');
+
+
 });

@@ -553,6 +553,15 @@ public function CompletedPrescription($prescription_id){
         }
     }
 
+    public function history(){
+
+        $patients = PrescriptionMedicine::groupBy('prescription_id')->whereIn('prescription_status',['ignored','delivered'])
+        ->with("user")
+        ->orderBy('id','desc')->paginate(25);
+
+        return view('pages.pharmacy.history.index',compact('patients'));
+    }
+
 
 
 
