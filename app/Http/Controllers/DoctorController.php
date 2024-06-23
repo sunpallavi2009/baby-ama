@@ -1064,6 +1064,8 @@ public function GetAppointments()
                 $s_medicine->timing_how = $pr_timing_how;
                 $s_medicine->notes = $request->notes;
                 $s_medicine->duration = $request->tab_count_days;
+                $s_medicine->appointment_id = $appoinment->id;
+
                 $s_medicine->save();
 
         /*}*/
