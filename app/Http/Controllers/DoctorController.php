@@ -1491,11 +1491,22 @@ public function GetAppointments()
         // Create a new instance of ClinicalNotes for each form submission
         $formSave = new ClinicalNotes();
         $formSave->patient_id = $patient->id;
+        $formSave->appointment_id = $request->id;
 
         if ($type == 'pediatric') {
             $formSave->pediatric = json_encode($data);
-        } else {
+        } elseif($type == 'dental') {
             $formSave->dental = json_encode($data);
+        } elseif($type == 'women_wellness') {
+            $formSave->women_wellness = json_encode($data);
+        }elseif($type == 'women_wellness') {
+            $formSave->women_wellness = json_encode($data);
+        } elseif($type == 'physiotherapy') {
+            $formSave->physiotheraphy = json_encode($data);
+        }elseif($type == 'gynaecology') {
+            $formSave->gynacology = json_encode($data);
+        }else{
+            $formSave->general = json_encode($data);
         }
 
         $formSave->save();

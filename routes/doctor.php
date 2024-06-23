@@ -115,7 +115,7 @@ Route::get('appoinment/{appoinment}/patient/{patient}/women_wellness_case_summer
 
 Route::get('appointment/{appoinment}/patient/{patient}/clinical_notes_add', [DoctorController::class, 'AddClinicalNotesDetail'])->name('doctor.appointment.patient.clinical_notes.add');
 
-Route::post('/patient/{patient}/clinical_notes/save', [DoctorController::class, 'PostClinicalNotesForm'])->name('doctor.patient.clinical_notes.post');
+Route::post('patient/{patient}/clinical_notes/save', [DoctorController::class, 'PostClinicalNotesForm'])->name('doctor.patient.clinical_notes.post');
 
 
 Route::get('appointment/{appoinment}/patient/{patient}/anthropometry_growth_chart', [DoctorController::class, 'GetAnthropometryGrowthChart'])->name('doctor.patient.anthropometry_growth_chart');
