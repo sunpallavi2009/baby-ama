@@ -25,7 +25,7 @@
                 <div class="col-1 position-absolute">
                     {{-- <a href="{{route('doctor.appointment.patient.details',$patient->id)}}"> --}}
                     {{-- <a href="{{route('doctor.appointment.patient',$appoinment->id)}}"> --}}
-                    <a href="javascript:history.back()">
+                    <a href="javascript:history.back()"3>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
                             fill="none">
                             <path
