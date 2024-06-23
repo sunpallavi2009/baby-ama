@@ -249,36 +249,85 @@
                 <h2 class="mb-0">Clinical Notes Case Summary</h2>
             </div>
 
+            <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+            <div class="head baby-shadow py-3 px-5 mb-4">
+                <div class="row px-5 py-4 align-items-center">
+                    <div class="col-12 col-md-2">
+                        <div class="patient-img d-flex justify-content-center align-items-center mx-auto">
+                            <p class="name mb-0">
+                                {{ ucfirst(substr($user->first_name, 0, 1)) . ucfirst(substr($user->last_name, 0, 1)) }}
+                            </p>
+                            {{-- <img src="{{helperAssetUrl('assets/img/patinet-placeholder.png')}}"> --}}
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="patient-info">
+                            <p class="name mb-3">{{ $user->first_name . ' ' . $user->last_name }}</p>
+                            @if ($user->patient)
+                            <p class="doctor-patinet-app-list-color"><span class="fw-normal label">UMR
+                                    NO</span><span class="val">{{ $user->patient->umr_no }}</span>
+                            </p>
+                            <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Gender</span><span class="val">{{
+                                    $user->patient->gender }}</span></p>
+                            <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Age</span><span class="val">{{
+                                    $user->patient->age }}</span></p>
+                            @endif
+            
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="patient-info">
+                            @if ($appoinment->doctor)
+                            <p class="doctor-patinet-app-list-color">
+                                <span class="fw-normal label">Doctor </span>
+                                <span class="val">
+                                    {{ $appoinment->doctor->first_name . ' ' . $appoinment->doctor->last_name }}
+                                </span>
+                            </p>
+                            @endif
+                            {{-- @if (isset($appointment->appoinment_date))
+                            <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Date</span><span class="val">
+                                    {{ $appointment->appoinment_date }}</span></p>
+                            @endif --}}
+                            @if ($appointment->appoinment_session)
+                            <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Session</span><span class="val">
+                                    {{ $appointment->appoinment_session }}</span></p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="notes py-2">
                 <div class="summary mb-2">
                     <p class="question">Chief Complaints</p>
                     <p class="answer border-0">
-                        @php echo isset($data->chief_complaints) ? $data->chief_complaints : '-Nil-'; @endphp
+                        @php echo isset($data->gyn_chief_complaints) ? $data->gyn_chief_complaints : '-Nil-'; @endphp
                     </p>
                 </div>
                 <div class="summary mb-2">
                     <p class="question"> History of Presenting Illness</p>
                     <p class="answer border-0">
-                        @php echo isset($data->h_o_pi) ? $data->h_o_pi : '-Nil-'; @endphp
+                        @php echo isset($data->gyn_history_present_illness) ? $data->gyn_history_present_illness : '-Nil-'; @endphp
                     </p>
                 </div>
                 <div class="summary mb-2">
                     <p class="question">Diagnosis</p>
                     <p class="answer border-0">
-                        @php echo isset($data->diagnosis) ? $data->diagnosis : '-Nil-'; @endphp
+                        @php echo isset($data->gyn_diagnosis) ? $data->gyn_diagnosis : '-Nil-'; @endphp
                     </p>
                 </div>
                 <div class="summary mb-2">
                     <p class="question">Management</p>
                     <p class="answer border-0">
-                        @php echo isset($data->management) ? $data->management : '-Nil-'; @endphp
+                        @php echo isset($data->gyn_management) ? $data->gyn_management : '-Nil-'; @endphp
                     </p>
                 </div>
                 <div class="summary mb-2">
                     <p class="question">Follow up Advice</p>
                     <p class="answer border-0">
-                        @php echo isset($data->follow_up_advice) ? $data->follow_up_advice : '-Nil-'; @endphp
+                        @php echo isset($data->gyn_followup) ? $data->gyn_followup : '-Nil-'; @endphp
                     </p>
                 </div>
 

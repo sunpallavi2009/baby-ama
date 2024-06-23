@@ -581,10 +581,11 @@ public function GetAppointments()
      public function GetPrescriptionDetailAll(Request $request, Appoinment $appoinment,Patient $patient)
     {
         $user = $patient->user;
+        $type  = $request->type;
         $data=[];
         $getPrescriptions= Prescription::where(['appointment_id' => $appoinment->id,'patient_id'=>$patient->id])->get();
         $get= Prescription::where(['appointment_id' => $appoinment->id,'patient_id'=>$patient->id])->first();
-        return view('pages.doctor.patient.prescription-plain', compact('user','patient','appoinment','data' ,'getPrescriptions','get'));
+        return view('pages.doctor.patient.prescription-plain', compact('type','user','patient','appoinment','data' ,'getPrescriptions','get'));
     }
 
     /*
@@ -625,12 +626,12 @@ public function GetAppointments()
         $medicine = [];
 
         if ($data) {
-            $medicine = PrescriptionMedicine::where(['type' => 'general', 'prescription_id' => $dataid])->get();
+            $medicine = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $dataid, 'appointment_id' => $appoinment->id])->get();
         }
 
         // dd($appoinment->id);
 
-        return view('pages.doctor.patient.clinical_notes_add', compact('doctor','pr_id', 'user', 'patient', 'appoinment', 'get', 'medicine', 'data'));
+        return view('pages.doctor.patient.clinical_notes_add', compact('type','doctor','pr_id', 'user', 'patient', 'appoinment', 'get', 'medicine', 'data'));
     }
 
 
@@ -1027,7 +1028,7 @@ public function GetAppointments()
 
          $medicines = $query->orderBy('name','asc')->get();
 
-         $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
+         $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id, 'appointment_id' => $appoinment->id])->get();
 
 
          //$pres = PrescriptionMedicine::where('prescription_id',$pr_id)->get();
@@ -1335,9 +1336,9 @@ public function GetAppointments()
         $dataid = $pediatricData['id'] ?? null;
 
         $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'general', 'prescription_id' => $dataid])->get();
-        }
+        // if ($dataid) {
+            $medicine = PrescriptionMedicine::where(['type' => 'general','appointment_id' => $appoinment->id])->get();
+        // }
 
         return view('pages.doctor.patient.paediatrics-case-summery', compact('appoinment', 'user', 'getFormAnswers', 'clinicalNotes', 'medicine', 'patient'));
     }
@@ -1367,9 +1368,9 @@ public function GetAppointments()
 
         // Fetch medicine data if dataid is available
         $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'dental', 'prescription_id' => $dataid])->get();
-        }
+        // if ($dataid) {
+            $medicine = PrescriptionMedicine::where(['type' => 'dental','appointment_id' => $appoinment->id])->get();
+        // }
 
         // Pass variables to the view
         return view('pages.doctor.patient.dental-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
@@ -1379,6 +1380,8 @@ public function GetAppointments()
     public function GetGynaecologyCaseSummery(Request $request, Appoinment $appoinment, Patient $patient) {
         $user = $appoinment->user;
         $getFormAnswers = Prescription::where('patient_id', $patient->id)->orderBy('id', 'DESC')->get();
+
+        // dd($getFormAnswers);
 
         $clinicalNotes = ClinicalNotes::where('patient_id', $patient->id)
                                     ->orderBy('id', 'DESC')
@@ -1396,9 +1399,9 @@ public function GetAppointments()
         }
 
         $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'gynaecology', 'prescription_id' => $dataid])->get();
-        }
+        // if ($dataid) {
+            $medicine = PrescriptionMedicine::where(['type' => 'gynaecology', 'appointment_id' => $appoinment->id])->get();
+        // }
 
         return view('pages.doctor.patient.gynaecology-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
     }
@@ -1427,9 +1430,9 @@ public function GetAppointments()
         }
 
         $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'physiotherapy', 'prescription_id' => $dataid])->get();
-        }
+        // if ($dataid) {
+            $medicine = PrescriptionMedicine::where(['type' => 'physiotherapy', 'appointment_id' => $appoinment->id])->get();
+        // }
 
         return view('pages.doctor.patient.physiotherapy-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
     }
@@ -1456,10 +1459,13 @@ public function GetAppointments()
             }
         }
 
+
         $medicine = [];
-        if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'women_wellness', 'prescription_id' => $dataid])->get();
-        }
+       
+        $medicine = PrescriptionMedicine::where(['type' => 'women_wellness','appointment_id' => $appoinment->id])->get();
+      
+
+        // dd($medicine);
 
         return view('pages.doctor.patient.women-wellness-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
     }
@@ -1504,9 +1510,9 @@ public function GetAppointments()
         }elseif($type == 'women_wellness') {
             $formSave->women_wellness = json_encode($data);
         } elseif($type == 'physiotherapy') {
-            $formSave->physiotheraphy = json_encode($data);
+            $formSave->physiotherapy = json_encode($data);
         }elseif($type == 'gynaecology') {
-            $formSave->gynacology = json_encode($data);
+            $formSave->gynaecology = json_encode($data);
         }else{
             $formSave->general = json_encode($data);
         }
