@@ -53,121 +53,75 @@
     .dropdown-content th {
         background-color: #f2f2f2;
     }
+    .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    }
+
+    .table th {
+    background-color: #f2f2f2;
+    }
+
+    .table tfoot tr {
+    border-top: 2px solid #000;
+    }
+
+    .table tfoot td {
+    font-weight: bold;
+    }
 </style>
 
 @php
 use App\Models\Medicine;
 @endphp
 
-<div class="dropdown-container pt-2">
-    <button class="dropdown-btn form-control" onclick="toggleDropdown('prescription-table-container')">Doctor
-        Prescription</button>
-    <div class="dropdown-content" id="prescription-table-container">
-        <div class="table-responsive py-3 w-5 p-4" id="mydiv">
-            <table class="table" id="prescription-table">
-                <thead class="table-light bg-color-v1">
-                    <tr>
-                        <th scope="col" class="text-center">S.No</th>
-                        <th scope="col" class="bg-color-v1">MEDICINE</th>
-                        <th scope="col" class="bg-color-v1">Dosage</th>
-                        <th scope="col" class="bg-color-v1">Timing</th>
-                        <th scope="col" class="bg-color-v1">Relation to Food</th>
-                        <th scope="col" class="bg-color-v1">Follow Up Days</th>
-                        <th scope="col" class="bg-color-v1">Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $i=1; @endphp
-                    @foreach ($pres as $list_pres)
-                    @php
-                    $list_medicine = Medicine::find($list_pres->medicine_id);
 
-                    $list_type = (isset($list_medicine->type)) ? helperFormatMedicinePrefix($list_medicine->type) : '';
-                    $list_name = (isset($list_medicine->name)) ? ($list_medicine->name) :
-                    ucfirst($list_pres->prescription_name);
-                    $list_dosage = (isset($list_medicine->dosage)) ? ($list_medicine->dosage) : '';
-                    @endphp
-                    <tr>
-                        <th scope="row" class="text-center">{{ $i }}</th>
-                        <td class="">
-                            @if ($list_type)
-                            {{ '(' . $list_type . ')' }}
-                            @endif
-                            {{ ($list_name) }}
-                            @if ($list_dosage)
-                            {{ '(' . $list_dosage . ')' }}
-                            @endif
-                        </td>
-                        <td>{{ ($list_pres->dosage) }}</td>
-                        <td>{{ ($list_pres->timing_when) }}</td>
-                        <td>{{ ($list_pres->timing_how) }}</td>
-                        <td>{{ ($list_pres->duration) }}</td>
-                        <td>{{ ($list_pres->total_qty) }}</td>
-                    </tr>
-                    @php $i++; @endphp
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="dropdown-container">
+<div class="dropdown-container pt-4">
     <button class="dropdown-btn form-control" onclick="toggleDropdown('pharmacy-bill-table-container')">Pharmacy
         Bill</button>
     <div class="dropdown-content" id="pharmacy-bill-table-container">
         <div class="table-responsive py-3 w-5 p-4" id="mydiv">
-            <table class="table" id="pharmacy-bill-table">
+            <table class="table table-bordered" id="pharmacy-bill-table">
                 <thead class="table-light bg-color-v1">
                     <tr>
-                        <th scope="col" class="text-center">S.No</th>
-                        <th scope="col" class="bg-color-v1">MEDICINE</th>
-                        <th scope="col" class="bg-color-v1">PRICE</th>
-                        <th scope="col" class="bg-color-v1">QUANTITY</th>
-                        <th scope="col" class="bg-color-v1">TOTAL</th>
+                        <th>S.No</th>
+                        <th>Medicine</th>
+                        <th>Qty.</th>
+                        <th>Price</th>
+                        <th>SGST</th>
+                        <th>CGST</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $i=1; $subtotal = 0; @endphp
-                    <!-- Initialize $subtotal variable -->
-                    @foreach ($pharmacyBillMedicines as $bill)
+                    @php $i = 1; $total = 0; $tax = 0; @endphp
+                    @foreach($invoice_details as $key => $val)
                     @php
-                    // Find the corresponding PrescriptionMedicine for the current pharmacy bill medicine
-                    $prescriptionMedicine = $pres->where('medicine_id', $bill->id)->first();
-                    $quantity = $prescriptionMedicine ? $prescriptionMedicine->total_qty : 0;
-                    $totalPrice = $bill->buying_price * $quantity;
-                    $subtotal += $totalPrice;
+                    $list_med = Medicine::find($val->medicine_id);
+                    $taxval = isset($list_med) && isset($list_med->selling_tax) ? $list_med->selling_tax : 0;
+                    $tot = $list_med ? $list_med->selling_price * $val->total_qty : 0;
                     @endphp
                     <tr>
-                        <th scope="row" class="text-center">{{ $i }}</th>
-                        <td>{{ $bill->name }}</td>
-                        <td>{{ $bill->buying_price }}</td>
-                        <td>{{ $quantity }}</td>
-                        <td>{{ $totalPrice }}</td>
+                        <td scope="row">{{ $i }}</td>
+                        <td>{{ $list_med ? $list_med->name . ' (' . helperFormatMedicinePrefix($list_med->type) . ')' : 'Medicine
+                            not found' }}</td>
+                        <td>{{ $val->total_qty }}</td>
+                        <td>&#x20B9; {{ $list_med ? $list_med->selling_price : 'N/A' }}</td>
+                        <td>{{ $list_med ? $list_med->buying_tax : 'N/A' }}</td>
+                        <td>{{ $list_med ? $list_med->selling_tax : 'N/A' }}</td>
+                        <td>&#x20B9; {{ $tot }}</td>
                     </tr>
-                    @php $i++; @endphp
+                    @php
+                    $i++;
+                    $total += $tot;
+                    $tax += $taxval;
+                    @endphp
                     @endforeach
                 </tbody>
-                <tfoot style="border-top: 1px solid #000000">
-                    @php
-                    $tax = $pharmacyBillMedicines->first()->buying_tax ?? 0;
-                    $taxAmount = $subtotal * ($tax / 100);
-                    $totalAmount = $subtotal + $taxAmount;
-                    @endphp
+                <tfoot>
                     <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right">Subtotal</td>
-                        <td>{{ $subtotal }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right">Tax</td>
-                        <td>{{ $taxAmount }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right">Total</td>
-                        <td>{{ $totalAmount }}</td>
+                        <td colspan="6" style="text-align: right;"><strong>Total Amount:</strong></td>
+                        <td>&#x20B9; {{ $total }}</td>
                     </tr>
                 </tfoot>
             </table>
