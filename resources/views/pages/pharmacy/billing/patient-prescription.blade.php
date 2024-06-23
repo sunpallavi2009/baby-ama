@@ -815,7 +815,7 @@ use App\Models\Medicine;
                                             data-bs-dismiss="modal">Cancel</button>
                                         <button type="button" class="baby-primary-btn border-1"
                                             id="edit_btn_{{ $list_pres2->id }}"
-                                            onClick="update_valthis({{ $list_pres2->id }})">Update</button>
+                                            onClick="update_valthis2({{ $list_pres2->id }})">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -967,6 +967,46 @@ use App\Models\Medicine;
         }
 
     }
+
+    function update_valthis2(id) {
+        var intake_dosage = document.getElementById('intake_dosage_' + id).value;
+        var totaldays = document.getElementById('totaldays_' + id).value;
+        var checkBoxes = document.getElementsByClassName('edit_chkbox_' + id);
+        var isChecked = false;
+
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked) {
+                isChecked = true;
+            };
+        };
+        var error = 0;
+        if (intake_dosage == '') {
+            $("#intake_dosage_" + id).attr("class", "form-control rounded-0 error-input");
+            error = 0;
+        } else {
+            $("#intake_dosage_" + id).attr("class", "form-control rounded-0");
+            error = 1;
+        }
+        if (totaldays == '') {
+            $("#totaldays_" + id).attr("class", "form-control rounded-0 error-input");
+            error = 0;
+        } else {
+            $("#totaldays_" + id).attr("class", "form-control rounded-0");
+            error = 1;
+        }
+        if (isChecked) {
+            $("#edit_chkbox_" + id).attr("class", "row mx-0");
+            error = 1;
+        } else {
+            $("#edit_chkbox_" + id).attr("class", "row mx-0 error-input");
+            error = 0;
+        }
+        if (error == 1) {
+            var x = document.getElementById("edit_btn_" + id).type = "submit";
+        }
+
+    }
+
 
 </script>
 
