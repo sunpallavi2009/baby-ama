@@ -1,5 +1,8 @@
 @extends('base.pharmacy-dashboard')
 @section('pharmacy-content')
+@php
+use App\Models\Medicine;
+@endphp
     <style type="text/css">
         .error-div {
             color: red;
@@ -83,16 +86,16 @@
                                     <th scope="col" class="bg-color-v1 text-center">QTY</th>
                                     <th scope="col" class="bg-color-v1 text-center">Action</th>
 
-                                   {{-- 
+                                   {{--
                                    <th scope="col" class="bg-color-v1 text-center">PRESCRIPTION BY</th>
-                                   --}} 
+                                   --}}
                                 </tr>
                             </thead>
                             <tbody>
                             @php $i = 1; @endphp
                             @foreach($listpm as $key => $val)
                             @php
-                            $list_med = App\Models\Medicine::find($val->medicine_id);
+                            $list_med = Medicine::find($val->medicine_id);
                             @endphp
                                 <tr>
                                     <th scope="row" class="text-center">{{ $i }}</th>
@@ -436,7 +439,7 @@
  <!-- Start Edit Medicine Modal -VG -->
             @foreach ($pharmacy as $list_pres1)
                 @php
-                    $list_medicine1 = App\Models\Medicine::find($list_pres1->medicine_id);
+                    $list_medicine1 = Medicine::find($list_pres1->medicine_id);
                     $getType = $list_medicine1->dosage ? ' (' . $list_medicine1->dosage . ')' : '';
                     $fullName = helperFormatMedicinePrefix($list_medicine1->type) . '' . $list_medicine1->name . $getType;
 
@@ -628,6 +631,7 @@
             @endforeach
 
 
+
             <div class="col-12">
                 <div class="modal fade med-data-modal" id="EditMed" tabindex="-1"
                     aria-labelledby="MedPopModalLabel" aria-hidden="true">
@@ -802,6 +806,7 @@
                     </div>
                 </div>
             </div>
+
 
 
 
