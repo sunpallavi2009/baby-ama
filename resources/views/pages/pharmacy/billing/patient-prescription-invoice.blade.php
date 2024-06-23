@@ -34,6 +34,16 @@
       }
       
       body {-webkit-print-color-adjust: exact;}
+
+      .page-footer {
+            /* position: fixed; */
+            bottom: 0;
+            width: 100%;
+            background-color: #6f42c1;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
     }
 
     @print {
@@ -80,6 +90,7 @@
             color: white;
             padding: 10px 0;
             text-align: center;
+            
         }
         .text-primary {
             color: #6f42c1 !important;
@@ -120,7 +131,7 @@
  <div class="container justify-content-center align-items-center" id="page">
         <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
             <div class="mb-5 pb-4 text-center">
-                <img src="{{ asset('media/logos/babyama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo mx-auto">
+                <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo mx-auto">
             </div>
             <div class="row header-info text-center">
                 <div class="col-6 text-left">
