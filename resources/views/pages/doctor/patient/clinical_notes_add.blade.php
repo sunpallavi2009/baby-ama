@@ -153,8 +153,17 @@
 
                                 <div class="py-3">
                                     @if (isset($data->id))
+                                    <a id="add_prescription_link" class="baby-primary-btn" href="#">+ Add Prescriptions</a>
+                                    @else
+                                    <a id="add_prescription_link" class="baby-primary-btn disabled-link" href="#">+ Add Prescriptions</a>
+                                    <span class="btn-info-bar">Save this Notes Information to Add Medicine</span>
+                                    @endif
+                                </div>
+
+                                {{-- <div class="py-3">
+                                    @if (isset($data->id))
                                         <a class="baby-primary-btn"
-                                            href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $data->id, 'type' => 'general']) }}">+
+                                            href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $data->id, 'type' => $type]) }}">+
                                             Add Prescriptions</a>
                                     @else
                                         <a class="baby-primary-btn disabled-link" href="#">+
@@ -162,7 +171,7 @@
                                         <span class="btn-info-bar">Save this Notes Information to Add Medicine</span>
                                     @endif
 
-                                </div>
+                                </div> --}}
                             </div>
 
                         </div>
@@ -242,6 +251,29 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    $(document).ready(function($) {
+        function updateAddPrescriptionLink(typeVal) {
+            var baseUrl = "{{ route('doctor.appointment.patient.prescription.medicine', [
+                'appoinment' => $appoinment->id,
+                'patient' => $user->patient->id,
+                'pr_id' => isset($data->id) ? $data->id : '',
+                'type' => ''
+            ]) }}";
+
+            var newUrl = baseUrl + typeVal;
+            $('#add_prescription_link').attr('href', newUrl);
+        }
+
+        $('#prescription_type').change(function() {
+            var typeVal = $(this).val();
+            updateAddPrescriptionLink(typeVal);
+        });
+
+        // Initial update based on the current select value
+        updateAddPrescriptionLink($('#prescription_type').val());
+    });
 </script>
 <script type="text/javascript">
     $(document).ready(function($) {

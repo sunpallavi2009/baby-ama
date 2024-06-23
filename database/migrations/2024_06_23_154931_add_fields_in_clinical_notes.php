@@ -15,8 +15,8 @@ class AddFieldsInClinicalNotes extends Migration
     {
         Schema::table('clinical_notes_form', function (Blueprint $table) {
             $table->integer('appointment_id')->default(0);
-            $table->longText('gynacology')->nullable();
-            $table->longText('physiotheraphy')->nullable();
+            $table->longText('gynaecology')->nullable();
+            $table->longText('physiotherapy')->nullable();
             $table->longText('general')->nullable();
             $table->longText('women_wellness')->nullable();
         });
