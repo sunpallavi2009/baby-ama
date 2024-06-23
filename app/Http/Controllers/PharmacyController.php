@@ -364,6 +364,8 @@ public function CompletedPrescription($prescription_id){
         return redirect()->back()->with('success', 'Details Saved Successfuly');
     }
 
+    
+
 
     public function prescriptionList(){
 
