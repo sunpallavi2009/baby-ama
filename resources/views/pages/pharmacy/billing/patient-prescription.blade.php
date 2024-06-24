@@ -635,7 +635,7 @@ use App\Models\Medicine;
                 @php
                     $list_medicine2 = Medicine::find($list_pres2->medicine_id);
                     $getType = $list_medicine2->dosage ? ' (' . $list_medicine2->dosage . ')' : '';
-                    $fullName = helperFormatMedicinePrefix($list_medicine1->type) . '' . $list_medicine2->name . $getType;
+                    $fullName = helperFormatMedicinePrefix($list_medicine2->type) . '' . $list_medicine2->name . $getType;
 
                     $row_values = explode(',', $list_pres2->timing_when);
 
@@ -655,7 +655,7 @@ use App\Models\Medicine;
                                     <div class="modal-header py-4">
                                         <h3 class="modal-title fs-5 text-center med-name w-100" id=" MedPopModalLabel">
                                             <span
-                                                class="me-2">({{ helperFormatMedicinePrefix($list_medicine1->type) }})</span>
+                                                class="me-2">({{ helperFormatMedicinePrefix($list_medicine2->type) }})</span>
                                             {{ $list_medicine2->name }}
                                             <span class="ms-2">({{ $medicine1->dosage }})</span>
                                         </h3>
