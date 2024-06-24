@@ -44,6 +44,9 @@
             padding: 10px 0;
             text-align: center;
         }
+        .inv-logo {
+        max-width: 150px;
+        }
     }
 
     @print {
@@ -52,7 +55,7 @@
         }
       
         @page :header {
-            display: none
+            /* display: none */
         }
     }
     .pdf-txt-color{
@@ -77,8 +80,8 @@
 }
 
 .inv-logo {
-            max-width: 150px;
-        }
+  max-width: 150px;
+}
         .header-info p, .header-info .col {
             margin: 0;
         }
@@ -128,8 +131,8 @@
 </style> 
 
 
- <div class="container justify-content-center align-items-center" id="page">
-        <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
+ <div class="container justify-content-center align-items-center" >
+    <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
             <div class="mb-5 pb-4 text-center">
                 <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo mx-auto">
             </div>
@@ -144,25 +147,6 @@
                 </div>
             </div>
             <hr>
-            {{-- <div class="row">
-                <div class="col-12">
-                    <h5>Patient Details</h5>
-                    <div class="row patient-detail">
-                        <div class="col-6">
-                            <p><strong class="text-primary">Patient Name : </strong>{{ ucfirst($user->first_name)." ".ucfirst($user->last_name) }}</p>
-                            <p><strong class="text-primary">Age : </strong> {{ ($user->age) }}</p>
-                            <p><strong class="text-primary">Sex : </strong> {{ ($user->gender) }}</p>
-                            <p><strong class="text-primary">Father's name : </strong>{{ ($user->father_name) }}</p>
-                        </div>
-                        <div class="col-6">
-                            <p><strong class="text-primary">UMR No : </strong>{{ ($user->umr_no) }}</p>
-                            <p><strong class="text-primary">OP No : </strong>{{ ($user->op_no) }}</p>
-                            <p><strong class="text-primary">Phone Number : </strong>{{ ($user->father_phone)." ".($user->mother_phone) }}.</p>
-                            <p><strong class="text-primary">Address : </strong>{{ ($user->address)}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="row">
                 <div class="col-12">
                     <h5>Patient Details</h5>
@@ -227,7 +211,7 @@
                         @php
                             $list_med = App\Models\Medicine::find($val->medicine_id);
                             $taxval = isset($list_med) && isset($list_med->selling_tax) ? $list_med->selling_tax : 0;
-                            $tot = $list_med ? $list_med->selling_price * $val->total_qty : 0;
+                            $tot = $list_med ? $list_med->selling_price * $val->total_qty * (1+($list_med->buying_tax/100))+($list_med->selling_tax/100): 0;
                         @endphp
                         <tr>
                             <td scope="row">{{ $i }} </td>
@@ -256,19 +240,19 @@
                     </tr>
                 </tfoot>
             </table>
+        
+        <div class="page-footer">
+            Address: Babyama Women Wellness & Paediatric Centre, New Siddha Pudur, Coimbatore - 638 933.
         </div>
-    </div>
-    <div class="page-footer">
-        Address: Babyama Women Wellness & Paediatric Centre, New Siddha Pudur, Coimbatore - 638 933.
-    </div>
 
-    <div class="mt-5 pt-5">
-        <div class="d-flex px-2 justify-content-start align-items-center gap-4 my-5">
-            <button id="pdf_print" onclick="printDiv('printableArea')" class="baby-primary-btn" >Print</button>
-            <a href="{{ URL::previous() }}" id ="back_btn" class="baby-secondary-btn border-1 text-center">Back</a>
+        <div class="mt-5 pt-5">
+            <div class="d-flex px-2 justify-content-start align-items-center gap-4 my-5">
+                <button id="pdf_print" onclick="printDiv('printableArea')" class="baby-primary-btn" >Print</button>
+                <a href="{{ URL::previous() }}" id ="back_btn" class="baby-secondary-btn border-1 text-center">Back</a>
+            </div>
         </div>
     </div>
- 
+</div>
 @endsection
 
 

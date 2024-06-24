@@ -108,8 +108,7 @@
                                     </div>
                                     <div id="buying_tax" class="col-12 col-md-6 col-lg-4">
                                         <div class="style-one py-5 flex-column justify-conent-start align-items-start">
-                                            <label for="buying_tax" class="form-label">Buying
-                                                Tax:</label>
+                                            <label for="buying_tax" class="form-label">SGST:</label>
                                             <input type="text" class="form-field w-100"
                                                 id="edit_buying_tax_{{ $getmed->id }}" name="buying_tax"
                                                 value="{{ $getmed->buying_tax }}" placeholder="Buying Tax">
@@ -139,8 +138,7 @@
                                     </div>
                                     <div id="selling_tax" class="col-12 col-md-6 col-lg-4">
                                         <div class="style-one py-5 flex-column justify-conent-start align-items-start">
-                                            <label for="selling_tax" class="form-label">Selling
-                                                Tax:</label>
+                                            <label for="selling_tax" class="form-label">CGST:</label>
                                             <input type="text" class="form-field w-100"
                                                 id="edit_selling_tax_{{ $getmed->id }}" name="selling_tax"
                                                 value="{{ $getmed->selling_tax }}" placeholder="Selling Tax">
