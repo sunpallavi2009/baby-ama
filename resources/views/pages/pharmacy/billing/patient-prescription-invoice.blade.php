@@ -39,7 +39,7 @@
             /* position: fixed; */
             bottom: 0;
             width: 100%;
-            background-color: #6f42c1;
+            background-color: #6A1B9A;
             color: white;
             padding: 10px 0;
             text-align: center;
@@ -89,14 +89,14 @@
             padding: 0 15px;
         }
         .page-footer {
-            background-color: #6f42c1;
+            background-color: #6A1B9A;
             color: white;
             padding: 10px 0;
             text-align: center;
             
         }
         .text-primary {
-            color: #6f42c1 !important;
+            color: #6A1B9A !important;
         }
 
         .patient-detail p {
@@ -107,7 +107,7 @@
         }
 
         table.table th {
-        background-color: #6f42c1;
+        background-color: #6A1B9A;
         color: white;
         font-weight: bold;
         text-align: center; 
@@ -133,19 +133,22 @@
 
  <div class="container justify-content-center align-items-center" >
     <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
-            <div class="mb-5 pb-4 text-center">
-                <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo mx-auto">
+        
+            <div class="col-md-12 mb-5 text-center">
+                <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
+                    class="img-fluid object-fit-contain inv-logo mx-auto">
             </div>
-            <div class="row header-info text-center">
-                <div class="col-6 text-left">
-                    <p><i class="fas fa-phone-alt text-primary"></i> 78967 84329</p>
-                    <p><i class="fas fa-globe text-primary"></i> babyama.in</p>
+            <div class="row mb-3">
+                <div class="col-md-6 text-right">
+                    <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
+                    <i class="fas fa-globe text-primary"></i> babyama.in
                 </div>
-                <div class="col-6 text-right">
-                    <p class="text-primary">Invoice No: 472</p>
-                    <p class="text-primary">Invoice Date: 12/03/2023</p>
+                <div class="col-lg-6 text-right">
+                    <span class="text-primary" style="margin-left: 50%;">Invoice No : </span> {{ $invoice->invoice_number }}<br>
+                    <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span>{{ Date('d/M/Y') }}
                 </div>
             </div>
+
             <hr>
             <div class="row">
                 <div class="col-12">

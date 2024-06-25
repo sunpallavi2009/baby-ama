@@ -383,7 +383,24 @@ public function CompletedPrescription($prescription_id){
         ->get();
         $user = Patient::where('user_id',$userid)->first();
         $prescription_id = PrescriptionMedicine::where('prescription_id',$prid)->first();
-        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user'));
+        
+        $lastInvoice = PrescriptionMedicine::orderBy('created_at', 'desc')->first();
+
+        if ($lastInvoice) {
+            $lastInvoiceNumber = $lastInvoice->invoice_number;
+            $newInvoiceNumber = $lastInvoiceNumber + 1;
+        } else {
+            // If no invoice exists, start with 1
+            $newInvoiceNumber = 1;
+        }
+    
+        // Create a new invoice
+        $invoice = new PrescriptionMedicine();
+        $invoice->invoice_number = $newInvoiceNumber;
+        // Set other invoice details here
+        $invoice->save();
+
+        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice'));
     }
 
     public function PrintPatientInvoice($prid,$userid){
