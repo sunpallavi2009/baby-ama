@@ -42,31 +42,6 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             <!-- Single Clinical Note -->
             @if ($getFormAnswers!=null)
 
-            {{-- <div class="row mb-4">
-                <div class="col-12">
-                    <div class="sort-medicine col position-fixed" style="top:80px; right:40px;z-index:110;">
-                        <div class="btn-group float-end">
-                            <button type="button" class="baby-secondary-btn border-1 dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="pe-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                        viewBox="0 0 20 20" fill="none">
-                                        <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#344054" stroke-width="1.67"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                        </path>
-                                    </svg></span>
-                                Sort by
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#" >Name A to Z</a></li>
-                                <li><a class="dropdown-item" href="#" >Name Z to A</a></li>
-                                <li><a class="dropdown-item" href="#" >Date Oldest to Newest</a></li>
-                                <li><a class="dropdown-item" href="#" >Date Newest to Oldest</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
             @foreach ($getFormAnswers as $list => $ps)
              <?php
              $data = isset($ps['pediatric']) ? json_decode($ps['pediatric']) : [];
@@ -168,68 +143,72 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                         @php echo isset($data->follow_up_advice) ? $data->follow_up_advice : '-Nil-'; @endphp
                                     </p>
                                 </div>
+
+
+
                                 <?php
 
                                 // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'pediatric'])->get();
-                                 $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'type'=>'pediatric'])->get();
+                                    $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'pediatric'])->get();
 
-                                 //print_r($prescription_medicine); exit;
+                                    //print_r($prescription_medicine); exit;
                                 ?>
                                 @if (isset($prescription_medicine))
-                                    <div class="prescription-table py-3">
-                                        <h3 class="">Drug and Prescription</h3>
-                                        <div class="table-responsive py-3">
-                                            <table class="table">
-                                                <thead class="table-light bg-color-v1">
-                                                    <tr>
-                                                        <th scope="col" class="text-center">S.No</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">TIMING</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">RELATION TO
-                                                            FOOD</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
-                                                            DAYS</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php $inc=0; @endphp
-                                                    @foreach ($prescription_medicine as $p_medicine)
-                                                        @php
-                                                            $inc++;
-                                                            $frame_data = [
-                                                                'id' => $p_medicine->id,
-                                                                'medicine_id' => $p_medicine->medicine_id,
-                                                                'total_qty' => $p_medicine->total_qty,
-                                                                'intake_qty' => $p_medicine->intake_qty,
-                                                                'timing_when' => $p_medicine->timing_when,
-                                                                'timing_how' => $p_medicine->timing_how,
-                                                                'duration' => $p_medicine->duration,
-                                                            ];
-                                                            // $medicine_details = getMedcineDetail(
-                                                            //     $p_medicine->medicine_id,
-                                                            // );
-                                                            //$medicine_details =  \App\Models\Medicine::find($p_medicine->medicine_id);
-                                                            $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
-                                                            $list_name   = (isset($medicine_details->name)) ? ($medicine_details->name) : ucfirst($p_medicine->prescription_name);
+                                <div class="prescription-table py-3">
+                                    <h3 class="">Drug and Prescription</h3>
+                                    <div class="table-responsive py-3">
+                                        <table class="table">
+                                            <thead class="table-light bg-color-v1">
+                                                <tr>
+                                                    <th scope="col" class="text-center">S.No</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">TIMING</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">RELATION TO
+                                                        FOOD</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
+                                                        DAYS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php $inc=0; @endphp
+                                                @foreach ($prescription_medicine as $p_medicine)
+                                                @php
+                                                $inc++;
+                                                $frame_data = [
+                                                'id' => $p_medicine->id,
+                                                'medicine_id' => $p_medicine->medicine_id,
+                                                'total_qty' => $p_medicine->total_qty,
+                                                'intake_qty' => $p_medicine->intake_qty,
+                                                'timing_when' => $p_medicine->timing_when,
+                                                'timing_how' => $p_medicine->timing_how,
+                                                'duration' => $p_medicine->duration,
+                                                ];
+                                                // $medicine_details = getMedcineDetail(
+                                                // $p_medicine->medicine_id,
+                                                // );
+                                                //$medicine_details = \App\Models\Medicine::find($p_medicine->medicine_id);
+                                                $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
+                                                $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
+                                                ucfirst($p_medicine->prescription_name);
 
 
-                                                        @endphp
-                                                        <tr>
-                                                            <td class="text-center">{{ $inc }}</td>
-                                                            <td><b>{{ $list_name }}</b></td>
-                                                            <td class="text-center">
-                                                                {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
-                                                            <td class="text-center">{{ $p_medicine->timing_when }}</td>
-                                                            <td class="text-center">{{ $p_medicine->timing_how }}</td>
-                                                            <td class="text-center">{{ $p_medicine->duration }}</td>
-                                                        </tr>
-                                                    @endforeach
+                                                @endphp
+                                                <tr>
+                                                    <td class="text-center">{{ $inc }}</td>
+                                                    <td><b>{{ $list_name }}</b></td>
+                                                    <td class="text-center">
+                                                        {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
+                                                    <td class="text-center">{{ $p_medicine->timing_when }}</td>
+                                                    <td class="text-center">{{ $p_medicine->timing_how }}</td>
+                                                    <td class="text-center">{{ $p_medicine->duration }}</td>
+                                                </tr>
+                                                @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                                 @endif
 
                             </div>
@@ -245,162 +224,174 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
 
             @if ($clinicalNotes!=null)
-            @foreach ($clinicalNotes as $list => $ps)
+            @foreach ($clinicalNotes as $list => $cn)
                 <?php
-                             $data = isset($ps['pediatric']) ? json_decode($ps['pediatric']) : [];
+                $data = isset($cn['pediatric']) ? json_decode($cn['pediatric']) : [];
 
-                             if ($data!=null):
-                             $getap = DB::table('appoinments')->where('id',$ps['appointment_id'])->first();
+                if ($data!=null):
+                $getap = DB::table('appoinments')->where('id',$cn['appointment_id'])->first();
+                    // dd($getap->id);
+                ?>
 
-                             ?>
+                    <div class="col-11 text-center mb-4">
+                        <h2 class="mb-0">Clinical Notes Case Summary</h2>
+                    </div>
 
-
-
-                        <div class="col-11 text-center mb-4">
-                            <h2 class="mb-0">Clinical Notes Case Summary</h2>
-                        </div>
-
-                        <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
-                        <div class="head baby-shadow py-3 px-5 mb-4">
-                            <div class="row px-5 py-4 align-items-center">
-                                <div class="col-12 col-md-2">
-                                    <div class="patient-img d-flex justify-content-center align-items-center mx-auto">
-                                        <p class="name mb-0">
-                                            {{ ucfirst(substr($user->first_name, 0, 1)) . ucfirst(substr($user->last_name, 0, 1)) }}
-                                        </p>
-                                        {{-- <img src="{{helperAssetUrl('assets/img/patinet-placeholder.png')}}"> --}}
-                                    </div>
+                    <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                    <div class="head baby-shadow py-3 px-5 mb-4">
+                        <div class="row px-5 py-4 align-items-center">
+                            <div class="col-12 col-md-2">
+                                <div class="patient-img d-flex justify-content-center align-items-center mx-auto">
+                                    <p class="name mb-0">
+                                        {{ ucfirst(substr($user->first_name, 0, 1)) . ucfirst(substr($user->last_name, 0, 1)) }}
+                                    </p>
+                                    {{-- <img src="{{helperAssetUrl('assets/img/patinet-placeholder.png')}}"> --}}
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="patient-info">
-                                        <p class="name mb-3">{{ $user->first_name . ' ' . $user->last_name }}</p>
-                                        @if ($user->patient)
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">UMR
-                                                NO</span><span class="val">{{ $user->patient->umr_no }}</span>
-                                        </p>
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Gender</span><span class="val">{{
-                                                $user->patient->gender }}</span></p>
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Age</span><span class="val">{{
-                                                $user->patient->age }}</span></p>
-                                        @endif
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="patient-info">
+                                    <p class="name mb-3">{{ $user->first_name . ' ' . $user->last_name }}</p>
+                                    @if ($user->patient)
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">UMR
+                                            NO</span><span class="val">{{ $user->patient->umr_no }}</span>
+                                    </p>
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Gender</span><span class="val">{{
+                                            $user->patient->gender }}</span></p>
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Age</span><span class="val">{{
+                                            $user->patient->age }}</span></p>
+                                    @endif
 
-                                    </div>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="patient-info">
-                                        @if ($appoinment->doctor)
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Doctor </span>
-                                            <span class="val">{{ $appoinment->doctor->first_name.' '.$appoinment->doctor->last_name }}</span>
-                                        </p>
-                                        @endif
-                                        {{-- @if (isset($appointment->appoinment_date))
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Date</span><span class="val">
-                                                {{ $appointment->appoinment_date }}</span></p>
-                                        @endif --}}
-                                        @if ($appointment->appoinment_session)
-                                        <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Session</span><span class="val">
-                                                {{ $appointment->appoinment_session }}</span></p>
-                                        @endif
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="patient-info">
+                                    @if ($appoinment->doctor)
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Doctor </span>
+                                        <span class="val">{{ $appoinment->doctor->first_name.' '.$appoinment->doctor->last_name }}</span>
+                                    </p>
+                                    @endif
+                                    {{-- @if (isset($appointment->appoinment_date))
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Date</span><span class="val">
+                                            {{ $appointment->appoinment_date }}</span></p>
+                                    @endif --}}
+                                    @if ($appointment->appoinment_session)
+                                    <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Session</span><span class="val">
+                                            {{ $appointment->appoinment_session }}</span></p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
-                        <div class="notes py-2">
-                            <div class="summary mb-2">
-                                <p class="question">Chief Complaints</p>
-                                <p class="answer border-0">
-                                    @php echo isset($data->chief_complaints) ? $data->chief_complaints : '-Nil-'; @endphp
-                                </p>
-                            </div>
-                            <div class="summary mb-2">
-                                <p class="question"> History of Presenting Illness</p>
-                                <p class="answer border-0">
-                                    @php echo isset($data->h_o_pi) ? $data->h_o_pi : '-Nil-'; @endphp
-                                </p>
-                            </div>
-                            <div class="summary mb-2">
-                                <p class="question">Diagnosis</p>
-                                <p class="answer border-0">
-                                    @php echo isset($data->diagnosis) ? $data->diagnosis : '-Nil-'; @endphp
-                                </p>
-                            </div>
-                            <div class="summary mb-2">
-                                <p class="question">Management</p>
-                                <p class="answer border-0">
-                                    @php echo isset($data->management) ? $data->management : '-Nil-'; @endphp
-                                </p>
-                            </div>
-                            <div class="summary mb-2">
-                                <p class="question">Follow up Advice</p>
-                                <p class="answer border-0">
-                                    @php echo isset($data->follow_up_advice) ? $data->follow_up_advice : '-Nil-'; @endphp
-                                </p>
-                            </div>
-
+                    <div class="notes py-2">
+                        <div class="summary mb-2">
+                            <p class="question">Chief Complaints</p>
+                            <p class="answer border-0">
+                                @php echo isset($data->chief_complaints) ? $data->chief_complaints : '-Nil-'; @endphp
+                            </p>
                         </div>
+                        <div class="summary mb-2">
+                            <p class="question"> History of Presenting Illness</p>
+                            <p class="answer border-0">
+                                @php echo isset($data->h_o_pi) ? $data->h_o_pi : '-Nil-'; @endphp
+                            </p>
+                        </div>
+                        <div class="summary mb-2">
+                            <p class="question">Diagnosis</p>
+                            <p class="answer border-0">
+                                @php echo isset($data->diagnosis) ? $data->diagnosis : '-Nil-'; @endphp
+                            </p>
+                        </div>
+                        <div class="summary mb-2">
+                            <p class="question">Management</p>
+                            <p class="answer border-0">
+                                @php echo isset($data->management) ? $data->management : '-Nil-'; @endphp
+                            </p>
+                        </div>
+                        <div class="summary mb-2">
+                            <p class="question">Follow up Advice</p>
+                            <p class="answer border-0">
+                                @php echo isset($data->follow_up_advice) ? $data->follow_up_advice : '-Nil-'; @endphp
+                            </p>
+                        </div>
+
+                    </div>
+
+                        <?php
+
+                        // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'pediatric'])->get();
+                            $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'pediatric'])->get();
+
+                            //print_r($prescription_medicine); exit;
+                        ?>
+                        @if (isset($prescription_medicine))
+                        <div class="prescription-table py-3">
+                            <h3 class="">Drug and Prescription</h3>
+                            <div class="table-responsive py-3">
+                                <table class="table">
+                                    <thead class="table-light bg-color-v1">
+                                        <tr>
+                                            <th scope="col" class="text-center">S.No</th>
+                                            <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
+                                            <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
+                                            <th scope="col" class="bg-color-v1 text-center">TIMING</th>
+                                            <th scope="col" class="bg-color-v1 text-center">RELATION TO
+                                                FOOD</th>
+                                            <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
+                                                DAYS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php $inc=0; @endphp
+                                        @foreach ($prescription_medicine as $p_medicine)
+                                        @php
+                                        $inc++;
+                                        $frame_data = [
+                                        'id' => $p_medicine->id,
+                                        'medicine_id' => $p_medicine->medicine_id,
+                                        'total_qty' => $p_medicine->total_qty,
+                                        'intake_qty' => $p_medicine->intake_qty,
+                                        'timing_when' => $p_medicine->timing_when,
+                                        'timing_how' => $p_medicine->timing_how,
+                                        'duration' => $p_medicine->duration,
+                                        ];
+                                        // $medicine_details = getMedcineDetail(
+                                        // $p_medicine->medicine_id,
+                                        // );
+                                        //$medicine_details = \App\Models\Medicine::find($p_medicine->medicine_id);
+                                        $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
+                                        $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
+                                        ucfirst($p_medicine->prescription_name);
+
+
+                                        @endphp
+                                        <tr>
+                                            <td class="text-center">{{ $inc }}</td>
+                                            <td><b>{{ $list_name }}</b></td>
+                                            <td class="text-center">
+                                                {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
+                                            <td class="text-center">{{ $p_medicine->timing_when }}</td>
+                                            <td class="text-center">{{ $p_medicine->timing_how }}</td>
+                                            <td class="text-center">{{ $p_medicine->duration }}</td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endif
+
 
                 <?php endif;  ?>
+
+                <hr class="mt-8 mb-16">
+
             @endforeach
 
-            @if (isset($medicine) && !empty($medicine))
-            <div class="prescription-table py-3">
-                <h3 class="">Drug and Prescription</h3>
-                <div class="table-responsive py-3">
-                    <table class="table">
-                        <thead class="table-light bg-color-v1">
-                            <tr>
-                                <th scope="col" class="text-center">S.No</th>
-                                <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
-                                <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
-                                <th scope="col" class="bg-color-v1 text-center">TIMING</th>
-                                <th scope="col" class="bg-color-v1 text-center">RELATION TO
-                                    FOOD</th>
-                                <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
-                                    DAYS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php $inc=0; @endphp
-                            @foreach ($medicine as $p_medicine)
-                            @php
-                            $inc++;
-                            $frame_data = [
-                            'id' => $p_medicine->id,
-                            'medicine_id' => $p_medicine->medicine_id,
-                            'total_qty' => $p_medicine->total_qty,
-                            'intake_qty' => $p_medicine->intake_qty,
-                            'timing_when' => $p_medicine->timing_when,
-                            'timing_how' => $p_medicine->timing_how,
-                            'duration' => $p_medicine->duration,
-                            ];
-                            // $medicine_details = getMedcineDetail(
-                            // $p_medicine->medicine_id,
-                            // );
-                            //$medicine_details = \App\Models\Medicine::find($p_medicine->medicine_id);
-                            $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
-                            $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
-                            ucfirst($p_medicine->prescription_name);
 
 
-                            @endphp
-                            <tr>
-                                <td class="text-center">{{ $inc }}</td>
-                                <td><b>{{ $list_name }}</b></td>
-                                <td class="text-center">
-                                    {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
-                                <td class="text-center">{{ $p_medicine->timing_when }}</td>
-                                <td class="text-center">{{ $p_medicine->timing_how }}</td>
-                                <td class="text-center">{{ $p_medicine->duration }}</td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            @endif
 
             @else
             <p class="text-center h5 mt-5 pt-5 text-danger fw-normal">No record(s) available</p>

@@ -168,7 +168,7 @@ use App\Models\PrescriptionMedicine;
                                     </p>
                                 </div> --}}
                                 <?php
-                                    $prescription_medicine = prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'women_wellness'])->get();
+                                    $prescription_medicine = prescriptionMedicine::where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'women_wellness'])->get();
                                 ?>
                                 @if (isset($prescription_medicine))
                                     <div class="prescription-table py-3">
@@ -233,17 +233,20 @@ use App\Models\PrescriptionMedicine;
             @endif
 
 
+            <hr class="mt-8 mb-16">
+
+
 
 
             @if ($clinicalNotes!=null)
-            @foreach ($clinicalNotes as $list => $ps)
+            @foreach ($clinicalNotes as $list => $cn)
             <?php
-                        $data = isset($ps['women_wellness']) ? json_decode($ps['women_wellness']) : [];
+            $data = isset($cn['women_wellness']) ? json_decode($cn['women_wellness']) : [];
 
-                        if ($data!=null):
-                        $getap = DB::table('appoinments')->where('id',$ps['appointment_id'])->first();
+            if ($data!=null):
+            $getap = DB::table('appoinments')->where('id',$cn['appointment_id'])->first();
 
-                        ?>
+            ?>
 
 
 
@@ -275,7 +278,7 @@ use App\Models\PrescriptionMedicine;
                             <p class="doctor-patinet-app-list-color"><span class="fw-normal label">Age</span><span class="val">{{
                                     $user->patient->age }}</span></p>
                             @endif
-            
+
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
@@ -333,12 +336,16 @@ use App\Models\PrescriptionMedicine;
                     </p>
                 </div> --}}
 
+
+
+
             </div>
 
-            <?php endif;  ?>
-            @endforeach
 
-            @if (isset($medicine) && !empty($medicine))
+            <?php
+        $prescription_medicine = prescriptionMedicine::where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'women_wellness'])->get();
+    ?>
+            @if (isset($prescription_medicine))
             <div class="prescription-table py-3">
                 <h3 class="">Drug and Prescription</h3>
                 <div class="table-responsive py-3">
@@ -357,7 +364,7 @@ use App\Models\PrescriptionMedicine;
                         </thead>
                         <tbody>
                             @php $inc=0; @endphp
-                            @foreach ($medicine as $p_medicine)
+                            @foreach ($prescription_medicine as $p_medicine)
                             @php
                             $inc++;
                             $frame_data = [
@@ -369,14 +376,11 @@ use App\Models\PrescriptionMedicine;
                             'timing_how' => $p_medicine->timing_how,
                             'duration' => $p_medicine->duration,
                             ];
-                            // $medicine_details = getMedcineDetail(
-                            // $p_medicine->medicine_id,
-                            // );
-                            //$medicine_details = \App\Models\Medicine::find($p_medicine->medicine_id);
-                            $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
+                            $medicine_details = getMedcineDetail(
+                            $p_medicine->medicine_id,
+                            );
                             $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
                             ucfirst($p_medicine->prescription_name);
-
 
                             @endphp
                             <tr>
@@ -396,6 +400,13 @@ use App\Models\PrescriptionMedicine;
             </div>
             @endif
 
+
+            <hr class="mt-8 mb-16">
+
+            <?php endif;  ?>
+            @endforeach
+
+
             @else
             <p class="text-center h5 mt-5 pt-5 text-danger fw-normal">No record(s) available</p>
             @endif
@@ -403,7 +414,7 @@ use App\Models\PrescriptionMedicine;
 
 
 
-            
+
         </section>
 
 

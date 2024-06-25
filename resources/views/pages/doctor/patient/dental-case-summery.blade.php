@@ -136,64 +136,65 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                         @php echo isset($data->dental_diagnosis) ? $data->dental_diagnosis : '-Nil-'; @endphp
                                     </p>
                                 </div>
-                                <?php
-                               // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
-                               $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
+                               <?php
+                                                               // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
+                                                               $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'dental'])->get();
 
-                               ?>
+                                                               ?>
                                 @if (isset($prescription_medicine))
-                                    <div class="prescription-table py-3">
-                                        <h3 class="">Drug and Prescription</h3>
-                                        <div class="table-responsive py-3">
-                                            <table class="table">
-                                                <thead class="table-light bg-color-v1">
-                                                    <tr>
-                                                        <th scope="col" class="text-center">S.No</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">TIMING</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">RELATION TO
-                                                            FOOD</th>
-                                                        <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
-                                                            DAYS</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php $inc=0; @endphp
-                                                    @foreach ($prescription_medicine as $p_medicine)
-                                                        @php
-                                                            $inc++;
-                                                            $frame_data = [
-                                                                'id' => $p_medicine->id,
-                                                                'medicine_id' => $p_medicine->medicine_id,
-                                                                'total_qty' => $p_medicine->total_qty,
-                                                                'intake_qty' => $p_medicine->intake_qty,
-                                                                'timing_when' => $p_medicine->timing_when,
-                                                                'timing_how' => $p_medicine->timing_how,
-                                                                'duration' => $p_medicine->duration,
-                                                            ];
-                                                            // $medicine_details = getMedcineDetail(
-                                                            //     $p_medicine->medicine_id,
-                                                            // );
-                                                            $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
-                                                            $list_name   = (isset($medicine_details->name)) ? ($medicine_details->name) : ucfirst($p_medicine->prescription_name);
+                                <div class="prescription-table py-3">
+                                    <h3 class="">Drug and Prescription</h3>
+                                    <div class="table-responsive py-3">
+                                        <table class="table">
+                                            <thead class="table-light bg-color-v1">
+                                                <tr>
+                                                    <th scope="col" class="text-center">S.No</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">TIMING</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">RELATION TO
+                                                        FOOD</th>
+                                                    <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
+                                                        DAYS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php $inc=0; @endphp
+                                                @foreach ($prescription_medicine as $p_medicine)
+                                                @php
+                                                $inc++;
+                                                $frame_data = [
+                                                'id' => $p_medicine->id,
+                                                'medicine_id' => $p_medicine->medicine_id,
+                                                'total_qty' => $p_medicine->total_qty,
+                                                'intake_qty' => $p_medicine->intake_qty,
+                                                'timing_when' => $p_medicine->timing_when,
+                                                'timing_how' => $p_medicine->timing_how,
+                                                'duration' => $p_medicine->duration,
+                                                ];
+                                                // $medicine_details = getMedcineDetail(
+                                                // $p_medicine->medicine_id,
+                                                // );
+                                                $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
+                                                $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
+                                                ucfirst($p_medicine->prescription_name);
 
-                                                        @endphp
-                                                        <tr>
-                                                            <td class="text-center">{{ $inc }}</td>
-                                                            <td><b>{{ $list_name }}</b></td>
-                                                            <td class="text-center">
-                                                                {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
-                                                            <td class="text-center">{{ $p_medicine->timing_when }}</td>
-                                                            <td class="text-center">{{ $p_medicine->timing_how }}</td>
-                                                            <td class="text-center">{{ $p_medicine->duration }}</td>
-                                                        </tr>
-                                                    @endforeach
+                                                @endphp
+                                                <tr>
+                                                    <td class="text-center">{{ $inc }}</td>
+                                                    <td><b>{{ $list_name }}</b></td>
+                                                    <td class="text-center">
+                                                        {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}</td>
+                                                    <td class="text-center">{{ $p_medicine->timing_when }}</td>
+                                                    <td class="text-center">{{ $p_medicine->timing_how }}</td>
+                                                    <td class="text-center">{{ $p_medicine->duration }}</td>
+                                                </tr>
+                                                @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                                 @endif
 
                             </div>
@@ -205,14 +206,17 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             @endif
 
 
+            <hr class="mt-8 mb-16">
+
+
 
             @if ($clinicalNotes!=null)
-            @foreach ($clinicalNotes as $list => $ps)
+            @foreach ($clinicalNotes as $list => $cn)
             <?php
-            $data = isset($ps['dental']) ? json_decode($ps['dental']) : [];
+            $data = isset($cn['dental']) ? json_decode($cn['dental']) : [];
 
             if ($data!=null):
-            $getap = DB::table('appoinments')->where('id',$ps['appointment_id'])->first();
+            $getap = DB::table('appoinments')->where('id',$cn['appointment_id'])->first();
 
             ?>
 
@@ -307,10 +311,13 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
             </div>
 
-            <?php endif;  ?>
-            @endforeach
 
-            @if (isset($medicine) && !empty($medicine))
+            <?php
+            // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
+            $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'dental'])->get();
+
+            ?>
+            @if (isset($prescription_medicine))
             <div class="prescription-table py-3">
                 <h3 class="">Drug and Prescription</h3>
                 <div class="table-responsive py-3">
@@ -329,7 +336,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                         </thead>
                         <tbody>
                             @php $inc=0; @endphp
-                            @foreach ($medicine as $p_medicine)
+                            @foreach ($prescription_medicine as $p_medicine)
                             @php
                             $inc++;
                             $frame_data = [
@@ -344,11 +351,9 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                             // $medicine_details = getMedcineDetail(
                             // $p_medicine->medicine_id,
                             // );
-                            //$medicine_details = \App\Models\Medicine::find($p_medicine->medicine_id);
                             $medicine_details = DB::table('medicines')->where('id',$p_medicine->medicine_id)->first();
                             $list_name = (isset($medicine_details->name)) ? ($medicine_details->name) :
                             ucfirst($p_medicine->prescription_name);
-
 
                             @endphp
                             <tr>
@@ -367,6 +372,11 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                 </div>
             </div>
             @endif
+
+            <hr class="mt-8 mb-16">
+
+            <?php endif;  ?>
+            @endforeach
 
             @else
             <p class="text-center h5 mt-5 pt-5 text-danger fw-normal">No record(s) available</p>

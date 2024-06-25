@@ -626,10 +626,10 @@ public function GetAppointments()
         $medicine = [];
 
         if ($data) {
-            $medicine = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $dataid, 'appointment_id' => $appoinment->id])->get();
+            $medicine = PrescriptionMedicine::where(['prescription_id' => $dataid, 'appointment_id' => $apid])->get();
         }
 
-        // dd($appoinment->id);
+        // dd($medicine);
 
         return view('pages.doctor.patient.clinical_notes_add', compact('type','doctor','pr_id', 'user', 'patient', 'appoinment', 'get', 'medicine', 'data'));
     }
@@ -1337,7 +1337,7 @@ public function GetAppointments()
 
         $medicine = [];
         // if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'general','appointment_id' => $appoinment->id])->get();
+            $medicine = PrescriptionMedicine::where(['type' => 'pediatric','appointment_id' => $dataid])->get();
         // }
 
         return view('pages.doctor.patient.paediatrics-case-summery', compact('appoinment', 'user', 'getFormAnswers', 'clinicalNotes', 'medicine', 'patient'));
@@ -1461,9 +1461,9 @@ public function GetAppointments()
 
 
         $medicine = [];
-       
+
         $medicine = PrescriptionMedicine::where(['type' => 'women_wellness','appointment_id' => $appoinment->id])->get();
-      
+
 
         // dd($medicine);
 
