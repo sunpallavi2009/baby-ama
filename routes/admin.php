@@ -97,7 +97,8 @@ Route::prefix('admin')->middleware(['auth','role:super-admin|admin|pharmacy|ther
 	Route::get('print/appointment/{appoinment}/prescription/', [AdminController::class, 'printPrescriptionDetail'])->name('admin.print.appointment.prescription');
 	Route::get('print/appointment/{appoinment}/billing/', [AdminController::class, 'printBillingDetail'])->name('admin.print.appointment.billing');
 	Route::get('appointment/{appoinment}/billing',[AdminController::class,'appointmentBilling'])->name('admin.patients.appointments.billing');
-	Route::post('appointment/billing/save',[AdminController::class,'appointmentBillingSave'])->name('admin.patients.appointments.billing.save');
+	Route::post('appointment/{appoinment}/billing/save', [AdminController::class, 'appointmentBillingSave'])
+    ->name('admin.patients.appointments.billing.save');
 
 });
 

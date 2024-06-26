@@ -698,27 +698,41 @@ class AdminController extends Controller
     }
 
    public function appointmentBillingSave(Request $req)
-    {
-        if ($req->appointment_id) {
-            $appointment = Appoinment::find($req->appointment_id);
-            $appointment->doctor_fee = $req->doctor_fee;
-            $appointment->consultant_fee = $req->consultant_fee;
-            $appointment->notes = $req->notes;
-            $appointment->assigned_doctor = $req->doctor_id;
-            $appointment->assigned_specialists = $req->specialists;
-            // $appointment->fees = $req->fees;
+{
+    if ($req->appointment_id) {
+        $appointment = Appoinment::find($req->appointment_id);
 
-            $appointment->consulting_charges = json_encode($req->consulting_charges);
-            $appointment->fee_summaries = json_encode($req->fee_summaries);
-
-            $appointment->payment_method = $req->payment_method;
-            $appointment->total_amount = $req->total_amount;
-
-            $appointment->save();
+        if (!$appointment) {
+            return redirect()->back()->with('error', 'Appointment not found.');
         }
 
-        return redirect()->back()->with('success', 'Appointment Fees Data Updated Successfully');
+        // Generate invoice number only if it's not already set
+        if (!$appointment->invoice_number) {
+            $lastInvoice = Appoinment::whereNotNull('invoice_number')->orderBy('invoice_number', 'desc')->first();
+            $invoiceNumber = $lastInvoice ? ($lastInvoice->invoice_number + 1) : 1;
+            $appointment->invoice_number = $invoiceNumber;
+        }
+
+        $appointment->doctor_fee = $req->doctor_fee;
+        $appointment->consultant_fee = $req->consultant_fee;
+        $appointment->notes = $req->notes;
+        $appointment->assigned_doctor = $req->doctor_id;
+        $appointment->assigned_specialists = $req->specialists;
+        // $appointment->fees = $req->fees;
+
+        $appointment->consulting_charges = json_encode($req->consulting_charges);
+        $appointment->fee_summaries = json_encode($req->fee_summaries);
+
+        $appointment->payment_method = $req->payment_method;
+        $appointment->total_amount = $req->total_amount;
+
+        $appointment->save();
     }
+
+    return redirect()->route('admin.patients.appointments.billing', ['appoinment' => $appointment->id])
+                     ->with('success', 'Appointment Fees Data Updated Successfully');
+}
+
 
 
     public function printBillingDetail($appointment){

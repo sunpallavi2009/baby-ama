@@ -35,8 +35,8 @@
             <h3>Patient Details</h3>
         </div>
         <div class="col-lg-6 text-end">
-            {{-- <span class="text-primary">Invoice No : </span> 472 &nbsp;
-            <span class="text-primary">Invoice Date : </span> 12/03/2023 --}}
+            <span style="color:#714B9D;">Invoice No : </span> {{ $appointment->invoice_number }} &nbsp;
+            <span style="color:#714B9D;">Invoice Date : </span> {{Date('d-M-Y')}}
         </div>
     </div>
 
@@ -83,6 +83,13 @@
                         <span class="separator">:</span>
                         <span>{{$patient->age}}</span>
                     </p>
+                @endif
+                @if($patient->gender)
+                <p>
+                    <span style="color:#714B9D;"><b>Sex</b></span>
+                    <span class="separator">:</span>
+                    <span>{{$patient->gender}}</span>
+                </p>
                 @endif
             </div>
         </div>

@@ -57,7 +57,7 @@
         }
     </style>
 
-<form id="billing-form" method="POST" action="{{ route('admin.patients.appointments.billing.save') }}">
+<form id="billing-form" method="POST" action="{{ route('admin.patients.appointments.billing.save', ['appoinment' => $appointment->id]) }}">
     @csrf
 
     <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
@@ -140,14 +140,26 @@
     <button type="button" class="btn btn-link text-center" onclick="addFeesSummaryRow()">Add More +</button>
 
 
-    <div class="section-title mb-4">Payment Method</div>
-    <div class="col-lg-4 mb-3">
-        <select class="form-select" id="payment_method" name="payment_method">
-            <option value="cash">Cash</option>
-            <option value="card">Card</option>
-            <option value="cheque">Cheque</option>
-            <option value="online">Online Transfer</option>
-        </select>
+   <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title mb-4">Payment Method</div>
+                <div class="col-lg-4 mb-3">
+                    <select class="form-select" id="payment_method" name="payment_method">
+                        <option value="cash" {{ $appointment->payment_method == 'cash' ? 'selected' : '' }}>Cash</option>
+                        <option value="card" {{ $appointment->payment_method == 'card' ? 'selected' : '' }}>Card</option>
+                        <option value="cheque" {{ $appointment->payment_method == 'cheque' ? 'selected' : '' }}>Cheque
+                        </option>
+                        <option value="online" {{ $appointment->payment_method == 'online' ? 'selected' : '' }}>Online
+                            Transfer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6  pt-4" style="background-color: #6A1B9A;height:50px;width:auto;margin-left: auto;">
+                <h3 class="text-white">Overall Total Amount: ₹ {{ number_format($appointment->total_amount, 2) }}</h3>
+            </div>
+        </div>
     </div>
 
     <input type="hidden" id="total_amount" name="total_amount" value="0">
@@ -167,7 +179,19 @@
 </form>
 
 <script>
-    function addConsultingRow() {
+  document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('billing-form');
+
+        form.addEventListener('submit', function (event) {
+        updateTotalAmount();
+        });
+
+        document.querySelectorAll('#fees-summary-table input').forEach(input => {
+        input.addEventListener('input', updateTotalAmount);
+        });
+        });
+
+        function addConsultingRow() {
         const table = document.getElementById('consulting-charges-table').getElementsByTagName('tbody')[0];
         const rowCount = table.rows.length;
         const row = table.insertRow();
@@ -177,88 +201,70 @@
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
 
-        cell1.textContent = rowCount < 9 ? '0' + (rowCount + 1) : (rowCount + 1);
-        cell2.innerHTML = `<input type="text" class="form-control" name="consulting_charges[${rowCount}][service]" placeholder="Service">`;
-        cell3.innerHTML = `<input type="text" class="form-control" name="consulting_charges[${rowCount}][consultant_name]" placeholder="Consultant Name">`;
-        cell4.innerHTML = `<input type="number" class="form-control" name="consulting_charges[${rowCount}][fees]" min="0" placeholder="Fees">`;
-    }
+    cell1.textContent = rowCount < 9 ? '0' + (rowCount + 1) : (rowCount + 1); cell2.innerHTML=`<input type="text"
+        class="form-control" name="consulting_charges[${rowCount}][service]" placeholder="Service">`;
+        cell3.innerHTML = `<input type="text" class="form-control" name="consulting_charges[${rowCount}][consultant_name]"
+            placeholder="Consultant Name">`;
+        cell4.innerHTML = `<input type="number" class="form-control" name="consulting_charges[${rowCount}][fees]" min="0"
+            placeholder="Fees">`;
+        }
 
     function addFeesSummaryRow() {
-        const table = document.getElementById('fees-summary-table').getElementsByTagName('tbody')[0];
-        const rowCount = table.rows.length;
-        const row = table.insertRow();
+    const table = document.getElementById('fees-summary-table').getElementsByTagName('tbody')[0];
+    const rowCount = table.rows.length;
+    const row = table.insertRow();
 
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        const cell3 = row.insertCell(2);
-        const cell4 = row.insertCell(3);
-        const cell5 = row.insertCell(4);
-        const cell6 = row.insertCell(5);
-        const cell7 = row.insertCell(6);
-        const cell8 = row.insertCell(7);
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    const cell4 = row.insertCell(3);
+    const cell5 = row.insertCell(4);
+    const cell6 = row.insertCell(5);
+    const cell7 = row.insertCell(6);
+    const cell8 = row.insertCell(7);
 
-        cell1.textContent = rowCount < 9 ? '0' + (rowCount + 1) : (rowCount + 1);
-        cell2.innerHTML = `<input type="text" class="form-control" name="fee_summaries[${rowCount}][description]" placeholder="Description">`;
-        cell3.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][quantity]" min="1" placeholder="Qty.">`;
-        cell4.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][price]" min="0" placeholder="Price">`;
-        cell5.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][discount]" min="0" placeholder="Discount">`;
-        cell6.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][sgst]" min="0" placeholder="SGST">`;
-        cell7.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][cgst]" min="0" placeholder="CGST">`;
-        cell8.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][total]" min="0" placeholder="Total" readonly>`;
+    cell1.textContent = rowCount < 9 ? '0' + (rowCount + 1) : (rowCount + 1); cell2.innerHTML=`<input type="text"
+        class="form-control" name="fee_summaries[${rowCount}][description]" placeholder="Description">`;
+        cell3.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][quantity]" min="1"
+            placeholder="Qty.">`;
+        cell4.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][price]" min="0"
+            placeholder="Price">`;
+        cell5.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][discount]" min="0"
+            placeholder="Discount">`;
+        cell6.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][sgst]" min="0"
+            placeholder="SGST">`;
+        cell7.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][cgst]" min="0"
+            placeholder="CGST">`;
+        cell8.innerHTML = `<input type="number" class="form-control" name="fee_summaries[${rowCount}][total]" min="0"
+            placeholder="Total" readonly>`;
 
         const inputs = row.getElementsByTagName('input');
-        for (let i = 2; i < inputs.length; i++) {
-            inputs[i].addEventListener('input', updateTotalAmount);
-        }
-    }
+            for (let i = 2; i < inputs.length; i++) { inputs[i].addEventListener('input', updateTotalAmount);
 
-    function updateTotalAmount() {
-        let totalAmount = 0;
-        const rows = document.getElementById('fees-summary-table').getElementsByTagName('tbody')[0].rows;
-
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].cells;
-            const quantity = parseFloat(cells[2].firstChild.value) || 0;
-            const price = parseFloat(cells[3].firstChild.value) || 0;
-            const discount = parseFloat(cells[4].firstChild.value) || 0;
-            const sgst = parseFloat(cells[5].firstChild.value) || 0;
-            const cgst = parseFloat(cells[6].firstChild.value) || 0;
-
-            const total = (quantity * price) * (1 - (discount / 100)) * (1 + (sgst / 100) + (cgst / 100));
-            cells[7].firstChild.value = total.toFixed(2);
-            totalAmount += total;
-        }
-
-        const totalAmountDisplay = document.getElementById('total-amount');
-        totalAmountDisplay.innerText = `₹ ${totalAmount.toFixed(2)}`;
-
-        // Update hidden input for total amount
-        document.getElementById('total_amount').value = totalAmount.toFixed(2);
-    }
-
-    function handleFormSubmit(event) {
-        event.preventDefault();
-
-        const form = document.getElementById('billing-form');
-        const formData = new FormData(form);
-
-        fetch("{{ route('admin.patients.appointments.billing.save') }}", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+        }
+        function updateTotalAmount() {
+            let totalAmount=0;
+            const rows=document.getElementById('fees-summary-table').getElementsByTagName('tbody')[0].rows;
 
-    document.getElementById('billing-form').addEventListener('submit', handleFormSubmit);
+            for (let i=0; i < rows.length; i++)
+            {
+                const cells=rows[i].cells;
+                const quantity=parseFloat(cells[2].firstChild.value) || 0;
+                const price=parseFloat(cells[3].firstChild.value) || 0;
+                const discount=parseFloat(cells[4].firstChild.value) || 0;
+                const sgst=parseFloat(cells[5].firstChild.value) || 0;
+                const cgst=parseFloat(cells[6].firstChild.value) || 0;
+
+                const total=(quantity * price) * (1 - (discount / 100)) * (1 + (sgst / 100) + (cgst / 100));
+                cells[7].firstChild.value=total.toFixed(2);
+                totalAmount +=total;
+            }
+
+            const totalAmountDisplay=document.getElementById('total-amount');
+
+            totalAmountDisplay.innerText=`₹ ${totalAmount.toFixed(2)}`;
+
+            document.getElementById('total_amount').value=totalAmount.toFixed(2);
+        }
 </script>

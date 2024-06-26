@@ -59,14 +59,14 @@
 
                 .details-table,
                 .charges-table {
-                width: 100% !important;
+                    width: 100% !important;
                 }
 
                 .details-table th,
                 .details-table td,
                 .charges-table th,
                 .charges-table td {
-                padding: 8px !important;
+                    padding: 8px !important;
                 }
             }
 
@@ -102,6 +102,7 @@
 
             .inv-logo {
                 max-width: 100px;
+                margin-top: 50px;
             }
 
 
@@ -156,26 +157,53 @@
             .print-footer-line {
                 text-align: center;
                 margin-top: 20px;
-                font-size: 18px;
+                font-size: 12px;
+                height: 22px;
+                line-height: 1.5;
                 color: #ffffff;
                 background-color: #6A1B9A;
             }
+
+
+
+            .row {
+            margin-bottom: 10px;
+            }
+
+            .text-right {
+            text-align: right;
+            }
+
+            .text-left {
+            text-align: left;
+            }
+
+            .text-center {
+            text-align: center;
+            }
+
+            .col-lg-6 {
+                    width: 50%;
+                    float: left;
+            }
         </style>
 
-        <div class="container" id="page">
+        <div class="container" id="printableArea">
             <div class="row mt-1">
                 <div class="col-md-12 mb-5 text-center">
                     <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
                         class="img-fluid object-fit-contain inv-logo mx-auto">
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-6 text-right">
-                        <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
-                        <i class="fas fa-globe text-primary"></i> babyama.in
-                    </div>
-                    <div class="col-lg-6 text-end">
-                        <span class="text-primary">Invoice No : </span> &nbsp;<br>
-                        <span class="text-primary">Invoice Date : </span>{{Date('d-M-Y')}}
+                <div class="col-md-12">
+                    <div class="row mb-3">
+                        <div class="col-lg-6 text-left">
+                            <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
+                            <i class="fas fa-globe text-primary"></i> babyama.in
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <span style="color:#714B9D;">Invoice No : </span> {{ $appointment->invoice_number }} &nbsp;<br>
+                            <span style="color:#714B9D;">Invoice Date : </span> {{Date('d-M-Y')}}
+                        </div>
                     </div>
                 </div>
 
@@ -229,6 +257,13 @@
                                     <span style="color:#714B9D;"><b>Age</b></span>
                                     <span class="separator">:</span>
                                     <span>{{$patient->age}}</span>
+                                </p>
+                                @endif
+                                @if($patient->gender)
+                                <p>
+                                    <span style="color:#714B9D;"><b>Sex</b></span>
+                                    <span class="separator">:</span>
+                                    <span>{{$patient->gender}}</span>
                                 </p>
                                 @endif
                             </div>
@@ -378,7 +413,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="7" class="totals">Total Amount:</td>
-                                <td id="total-amount">{{ isset($appointment['total_amount']) ?
+                                <td id="total-amount" style="background-color: #6A1B9A;height:50px;width:auto;margin-left: auto;color:#ffffff;">₹ {{ isset($appointment['total_amount']) ?
                                     $appointment['total_amount'] : '0.00' }}</td>
                             </tr>
                         </tfoot>
@@ -398,6 +433,10 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+
+
     </section>
 </x-base-layout>
 
