@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Traits\SMSTrait;
 use App\Models\Medicine;
 use App\Models\Patient;
+use App\Models\Appoinment;
 use App\Models\PrescriptionMedicine;
 use Illuminate\Support\Facades\DB;
 
@@ -311,13 +312,18 @@ public function CompletedPrescription($prescription_id){
     }
 
 
-    public function GetUserPrescription(Request $request, $prescription_id){
+    public function GetUserPrescription(Request $request, $prescription_id, $appointment){
 
+        // dd($appointment);
         $id         =  $prescription_id;
+        $appointmentId = $appointment;
         $getuser    =  PrescriptionMedicine::where('prescription_id', $id)->first();
-        $listpm     =  PrescriptionMedicine::where('prescription_id', $id)->get();
+        $listpm     =  PrescriptionMedicine::where(['prescription_id' => $id, 'appointment_id' => $appointmentId])->get();
         $pharmacy   =  PrescriptionMedicine::where(['prescription_id'=>$id,'prescription_by'=>'2'])->get();
         $user       =  Patient::where('user_id', $getuser->user_id)->first();
+
+
+        // dd($appointmentId);
 
         $query = Medicine::query();
 
@@ -367,13 +373,21 @@ public function CompletedPrescription($prescription_id){
     
 
 
-    public function prescriptionList(){
+    // public function prescriptionList(){
 
-        $patients = PrescriptionMedicine::groupBy('prescription_id')
-        ->with("user")
-        ->orderBy('id','desc')->paginate(25);
+    //     $patients = PrescriptionMedicine::groupBy('prescription_id')
+    //     with("user")
+    //     ->orderBy('id','desc')->paginate(25);
 
-        return view('pages.pharmacy.billing.prescription-list',compact('patients'));
+    //     return view('pages.pharmacy.billing.prescription-list',compact('patients'));
+    // }
+    public function prescriptionList() {
+        $patients = PrescriptionMedicine::groupBy('appointment_id')->with("user")
+            ->orderBy('id', 'desc')
+            ->paginate(25);
+
+        // dd($patients);
+        return view('pages.pharmacy.billing.prescription-list', compact('patients'));
     }
 
 

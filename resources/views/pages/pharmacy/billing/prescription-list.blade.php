@@ -110,19 +110,24 @@
                         @elseif($details->prescription_status == 'delivered')
                             Completed
                         @else
-                            {{-- {{ $details->prescription_status }} --}}
+                            {{-- {{ $details->appointment_id }} --}}
                         @endif
                     @else
                         ""
                     @endif
                 </td>
+                
                                     <td class="text-center">
                                         <div class="action-btn-group d-flex justify-content-evenly align-items-center">
                             <a class="act-btn warning" href="#"
                            rel="noopener noreferrer" onclick="prescription_declined('<?php echo $details->prescription_id; ?>')">Decline</a>
-                                            <a class="act-btn success"
-                                                href="{{ route('pharmacy.billing.patient.prescription', $details->prescription_id) }}"
-                                                rel="noopener noreferrer">Proceed</a>
+                           @if(isset($details->prescription_id) && isset($details->appointment_id))
+                           <a class="act-btn success" href="{{ route('pharmacy.billing.patient.prescription', ['prescription_id' => $details->prescription_id, 'appointment' => $details->appointment_id]) }}" rel="noopener noreferrer">Proceed</a>
+                       @else
+                           <span class="text-danger">Missing data</span>
+                       @endif
+                       
+                        
                                         </div>
 
                                         {{-- <button type="button" class="btn border-0 edit-icon" data-bs-toggle="modal"

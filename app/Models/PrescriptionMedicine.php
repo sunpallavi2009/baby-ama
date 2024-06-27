@@ -16,4 +16,9 @@ class PrescriptionMedicine extends Model
         // return $this->hasOne(User::class);
         return $this->hasOne(Patient::class,'user_id','user_id');
     }
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 }
