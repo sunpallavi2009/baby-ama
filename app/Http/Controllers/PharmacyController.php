@@ -340,7 +340,7 @@ public function CompletedPrescription($prescription_id){
          $medicines = $query->where('accessed_by', 'pharmacy')->orderBy('name','asc')->get();
 
         //dd($user);
-     return view('pages.pharmacy.billing.patient-prescription',compact('prescription_id','user','listpm','pharmacy','medicines'));
+     return view('pages.pharmacy.billing.patient-prescription',compact('prescription_id','user','listpm','pharmacy','medicines','appointment'));
     }
 
 
@@ -391,13 +391,14 @@ public function CompletedPrescription($prescription_id){
     }
 
 
-    public function GetPatientInvoice($prid,$userid){
+    public function GetPatientInvoice($prid,$userid,$appointment_id){
 
      $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])
         ->get();
         
         $user = Patient::where('user_id',$userid)->first();
         $prescription_id = PrescriptionMedicine::where('prescription_id',$prid)->first();
+        $appointment = Appoinment::where('id',$appointment_id)->first();
         
         $lastInvoice = PrescriptionMedicine::orderBy('created_at', 'desc')->first();
 
@@ -415,7 +416,7 @@ public function CompletedPrescription($prescription_id){
         // Set other invoice details here
         $invoice->save();
 
-        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice'));
+        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice','appointment'));
     }
 
     

@@ -47,7 +47,7 @@ use App\Models\Medicine;
                     <div class="col-12 col-lg-4 mt-4 mt-lg-0">
                         <div class="text-center">
                             <a class="pharma-btn primary"
-                                href="{{ route('pharmacy.billing.patient.invoice', ['prid'=>$prescription_id, 'userid'=>$user->user_id]) }}" contenteditable="false"
+                                href="{{ route('pharmacy.billing.patient.invoice', ['prid'=>$prescription_id, 'userid'=>$user->user_id, 'appointment_id'=>$appointment]) }}" contenteditable="false"
                                 style="cursor: pointer;">Get Invoice</a>
                         </div>
                     </div>

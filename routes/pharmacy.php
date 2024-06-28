@@ -25,7 +25,7 @@ Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {
     Route::get('/billing/prescription/list', [PharmacyController::class, 'prescriptionList'])->name('pharmacy.billing.prescription.list');
     Route::get('/billing/patient/{prescription_id}/prescription/appointment/{appointment}', [PharmacyController::class, 'GetUserPrescription'])->name('pharmacy.billing.patient.prescription');
 
-    Route::get('/billing/{prid}/patient/{userid}/invoice', [PharmacyController::class, 'GetPatientInvoice'])->name('pharmacy.billing.patient.invoice');
+    Route::get('/billing/{prid}/patient/{userid}/{appointment_id}/invoice', [PharmacyController::class, 'GetPatientInvoice'])->name('pharmacy.billing.patient.invoice');
     Route::get('/print/billing/{prid}/patient/{userid}/invoice', [PharmacyController::class, 'PrintPatientInvoice'])->name('pharmacy.print.billing.patient.invoice');
 
     Route::get('/billing/delete/medicine', [PharmacyController::class, 'DeclinedPrescription'])->name('pharmacy.billing.delete.medicine');

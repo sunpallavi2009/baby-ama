@@ -1,7 +1,6 @@
 @extends('base.pharmacy-dashboard')
 @section('pharmacy-content')
 <style type="text/css">
-        
     #pdf_export tr th{
         padding: 5px!important;
         text-align: center;
@@ -9,10 +8,8 @@
         font-weight: bold;
     }
     #pdf_export tr td{
-        /*font-weight: bold!important;*/
         padding: 5px!important;
         line-height: 1;
-
     }
     div#kt_content {
         background: white;
@@ -22,21 +19,19 @@
     }
     
     @media print {
-      .p-dis-row , #kt_aside,#kt_header,#kt_toolbar, #sidebar-wrapper, header, .navbar {
-        display: none;
-      }
-      .footer,#kt_footer,#pdf_print {
+        .p-dis-row, #kt_aside, #kt_header, #kt_toolbar, #sidebar-wrapper, header, .navbar {
             display: none;
-      }
-
-      .footer,#kt_footer,#back_btn {
+        }
+        .footer, #kt_footer, #pdf_print {
             display: none;
-      }
-      
-      body {-webkit-print-color-adjust: exact;}
-
-      .page-footer {
-            /* position: fixed; */
+        }
+        .footer, #kt_footer, #back_btn {
+            display: none;
+        }
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+        .page-footer {
             bottom: 0;
             width: 100%;
             background-color: #6A1B9A;
@@ -45,7 +40,7 @@
             text-align: center;
         }
         .inv-logo {
-        max-width: 150px;
+            max-width: 150px;
         }
     }
 
@@ -53,60 +48,56 @@
         @page :footer {
             /* display: none */
         }
-      
         @page :header {
             /* display: none */
         }
     }
-    .pdf-txt-color{
-           color: #670e36;
-           font-weight: bold;
+
+    .pdf-txt-color {
+        color: #670e36;
+        font-weight: bold;
     }
-    .pdf-bg-color{
-       background-color: #670e36;
-       font-weight: bold;
-       color: white;
+    .pdf-bg-color {
+        background-color: #670e36;
+        font-weight: bold;
+        color: white;
     }
     #footer {
-     height: 20px;
-     border-top:3px solid black;
+        height: 20px;
+        border-top: 3px solid black;
     }
-#page {
-    height: calc(85vh - 30px); */
-    viewport height - footer height
-}
-.medicine_dot_line{
-    border-bottom:1px dotted #000;
-}
-
-.inv-logo {
-  max-width: 150px;
-}
-        .header-info p, .header-info .col {
-            margin: 0;
-        }
-        .header-info .col {
-            padding: 0 15px;
-        }
-        .page-footer {
-            background-color: #6A1B9A;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            
-        }
-        .text-primary {
-            color: #6A1B9A !important;
-        }
-
-        .patient-detail p {
-            margin-bottom: 5px;
-        }
-        .patient-detail .row > div {
-            padding-bottom: 10px;
-        }
-
-        table.table th {
+    #page {
+        height: calc(85vh - 30px);
+        /* viewport height - footer height */
+    }
+    .medicine_dot_line {
+        border-bottom: 1px dotted #000;
+    }
+    .inv-logo {
+        max-width: 150px;
+    }
+    .header-info p, .header-info .col {
+        margin: 0;
+    }
+    .header-info .col {
+        padding: 0 15px;
+    }
+    .page-footer {
+        background-color: #6A1B9A;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+    }
+    .text-primary {
+        color: #6A1B9A !important;
+    }
+    .patient-detail p {
+        margin-bottom: 5px;
+    }
+    .patient-detail .row > div {
+        padding-bottom: 10px;
+    }
+    table.table th {
         background-color: #6A1B9A;
         color: white;
         font-weight: bold;
@@ -114,22 +105,17 @@
         border: 1px solid #ddd;
         padding: 10px; 
     }
-
     table.table td {
         text-align: center; 
         padding: 10px; 
         border: 1px solid #ddd;
     }
-
     table.table tfoot {
         text-align: center; 
         padding: 10px; 
         border: 1px solid #ddd;
-        
     }
-    
-</style> 
-
+</style>
 
  <div class="container justify-content-center align-items-center" id="printableArea">
     <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
@@ -145,9 +131,23 @@
                 </div>
                 <div class="col-lg-6 text-right">
                     <span class="text-primary" style="margin-left: 50%;">Invoice No : </span> {{ $invoice->invoice_number }}<br>
-                    <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span>
+                    <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span> {{ $appointment->appoinment_date }}
                 </div>
             </div>
+
+            {{-- <div class="row mb-5 align-items-center">
+                <div class="col-md-4 text-left">
+                    <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo">
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
+                    <i class="fas fa-globe text-primary"></i> babyama.in
+                </div>
+                <div class="col-lg-4 text-right">
+                    <span class="text-primary">Invoice No : </span> {{ $invoice->invoice_number }}<br>
+                    <span class="text-primary">Invoice Date : </span> {{ $appointment->appoinment_date }}
+                </div>
+            </div> --}}
 
             <hr>
             <div class="row">
