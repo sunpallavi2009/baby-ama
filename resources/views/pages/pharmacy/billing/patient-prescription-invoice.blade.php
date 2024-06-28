@@ -131,10 +131,10 @@
 </style> 
 
 
- <div class="container justify-content-center align-items-center" >
+ <div class="container justify-content-center align-items-center" id="printableArea">
     <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
         
-            <div class="col-md-12 mb-5 text-center">
+            <div class="col-md-12 mb-12 text-center">
                 <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
                     class="img-fluid object-fit-contain inv-logo mx-auto">
             </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col-lg-6 text-right">
                     <span class="text-primary" style="margin-left: 50%;">Invoice No : </span> {{ $invoice->invoice_number }}<br>
-                    <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span>{{ Date('d/M/Y') }}
+                    <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span>
                 </div>
             </div>
 

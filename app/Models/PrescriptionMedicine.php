@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Patient;
+use App\Models\Appoinment;
 
 
 class PrescriptionMedicine extends Model
@@ -17,8 +18,8 @@ class PrescriptionMedicine extends Model
         return $this->hasOne(Patient::class,'user_id','user_id');
     }
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function appointment() {
+        return $this->hasOne(Appoinment::class, 'appointment_id','id');
+    }
+
 }
