@@ -40,7 +40,7 @@
             text-align: center;
         }
         .inv-logo {
-            max-width: 150px;
+            max-width: 200px;
         }
     }
 
@@ -74,7 +74,7 @@
         border-bottom: 1px dotted #000;
     }
     .inv-logo {
-        max-width: 150px;
+        max-width: 200px;
     }
     .header-info p, .header-info .col {
         margin: 0;
@@ -120,7 +120,7 @@
  <div class="container justify-content-center align-items-center" id="printableArea">
     <div class="pharmacy medicine-stacklist p-5" style="margin-top: 30px;">
         
-            <div class="col-md-12 mb-12 text-center">
+            {{-- <div class="col-md-12 mb-12 text-center">
                 <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
                     class="img-fluid object-fit-contain inv-logo mx-auto">
             </div>
@@ -133,21 +133,25 @@
                     <span class="text-primary" style="margin-left: 50%;">Invoice No : </span> {{ $invoice->invoice_number }}<br>
                     <span class="text-primary" style="margin-left: 50%;">Invoice Date : </span> {{ $appointment->appoinment_date }}
                 </div>
-            </div>
-
-            {{-- <div class="row mb-5 align-items-center">
-                <div class="col-md-4 text-left">
+            </div> --}}
+             
+            <div class="row mb-5 align-items-center">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
                     <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama" class="img-fluid object-fit-contain inv-logo">
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
-                    <i class="fas fa-globe text-primary"></i> babyama.in
+                <div class="col-md-4 mt-5">
+                    <p><i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;</p>
+                    <p><i class="fas fa-phone text-primary"></i> 0422- 3502606, 350260607 &nbsp;</p>
+                    <p><i class="fas fa-envelope text-primary"></i> babyamaclinic@gmail.com &nbsp;</p>
+                    <p><i class="fas fa-globe text-primary"></i> babyama.in</p>
                 </div>
                 <div class="col-lg-4 text-right">
-                    <span class="text-primary">Invoice No : </span> {{ $invoice->invoice_number }}<br>
-                    <span class="text-primary">Invoice Date : </span> {{ $appointment->appoinment_date }}
+                    <p><span class="text-primary">Invoice No : </span> {{ $invoice->invoice_number }}</p>
+                    <p><span class="text-primary">Invoice Date : </span> {{ $appointment->appoinment_date }}</p>
+                    <p><span class="text-primary">GST No. : 33AAJCB9659A1ZO</span></p>
                 </div>
-            </div> --}}
+            </div>
 
             <hr>
             <div class="row">
