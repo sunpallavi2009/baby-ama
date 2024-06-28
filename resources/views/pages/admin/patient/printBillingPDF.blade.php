@@ -1,7 +1,8 @@
 <x-base-layout>
     <section>
-
-<style type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha384-jLKHWM+grD3v4s/ZjXc+oa5RjZoRJcAcCO1h4p8f0jCbYXebO1IQgQUK2RAkOo98" crossorigin="anonymous">
+        <style type="text/css">
             #pdf_export tr th {
                 padding: 5px !important;
                 text-align: center;
@@ -273,6 +274,18 @@
                 width: 50%;
                 float: left;
             }
+            .landline-icon {
+            position: relative;
+            display: inline-block;
+            margin-right: 5px;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            }
+
+            .landline-icon:before {
+            content: "\f67d"; /* Font Awesome "phone-office" icon unicode */
+            color: #0d6efd; /* Primary color */
+            }
         </style>
 
 
@@ -288,7 +301,7 @@
                         </div>
                         <div class="col-md-5 mb-5 pb-4 text-left" style="padding-top: 30px;">
                             <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 78967 84329</p>
-                            <p><i class="fas fa-phone-office text-primary"></i> 0422- 3502606, 350260607</p>
+                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 0422- 3502606, 350260607</p>
                             <p><i class="fa fa-envelope text-primary" aria-hidden="true"></i> babyamaclinic@gmail.com</p>
                             <p><i class="fa fa-globe text-primary" aria-hidden="true"></i> www.babyama.in</p>
                         </div>
