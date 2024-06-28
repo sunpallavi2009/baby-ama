@@ -9,40 +9,57 @@
     padding: 0 15px;
     }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-ABC123==" crossorigin="anonymous" />
 <div class="row p-2">
 
-    <div class="col-md-12 mb-5 pb-4 text-center">
+    <div class="col-md-2 mb-5 pb-4 text-left">
         <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
             class="img-fluid object-fit-contain inv-logo mx-auto">
     </div>
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <h3>ADDRESS:</h3>
-            <p>Babyama Women Wellness & Paediatric Centre<br>
-                New Siddha Pudur,<br>
-                Coimbatore - 638 933.</p>
-        </div>
-        <div class="col-md-6 text-end align-self-center">
-            <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;
-            <i class="fas fa-globe text-primary"></i> babyama.in
+
+    <div class="col-md-6 mb-5 pb-4 text-left">
+            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i>  78967 84329</p>
+            <p><i class="fas fa-phone-office text-primary"></i> 0422- 3502606, 350260607</p>
+            <p><i class="fa fa-envelope text-primary" aria-hidden="true"></i>  babyamaclinic@gmail.com</p>
+            <p><i class="fa fa-globe text-primary" aria-hidden="true"></i>  www.babyama.in</p>
+    </div>
+    <div class="col-md-4 text-end align-self-center">
+        <div class="patient-info">
+            <p>
+                <span style="color:#714B9D;"><b>Invoice No</b></span>
+                <span class="separator">:</span>
+                <span>{{ $appointment->invoice_number }}</span>
+            </p>
+            <p>
+                <span style="color:#714B9D;"><b>Invoice Date</b></span>
+                <span class="separator">:</span>
+                <span>{{ $appointment->appoinment_date }}</span>
+            </p>
+            <p>
+                <span style="color:#714B9D;"><b>GST No.</b></span>
+                <span class="separator">:</span>
+                <span>33AAJCB9659A1ZO</span>
+            </p>
         </div>
     </div>
 
-    <hr>
+    <span style="border: 2px solid #714B9D;"></span>
+    {{-- <hr style="border:2px solid #714B9D;"> --}}
 
-    <div class="row col-md-12 mb-3 mt-4">
+    <div class="row col-md-12 mb-3 mt-8">
         <div class="col-md-6">
             <h3>Patient Details</h3>
         </div>
-        <div class="col-lg-6 text-end">
+        {{-- <div class="col-lg-6 text-end">
             <span style="color:#714B9D;">Invoice No : </span> {{ $appointment->invoice_number }} &nbsp;
-            <span style="color:#714B9D;">Invoice Date : </span> {{Date('d-M-Y')}}
-        </div>
+            <span style="color:#714B9D;">Invoice Date : </span> {{$appointment->appoinment_date}}
+        </div> --}}
     </div>
 
 @if($appointment->user->patient)
 
-<div class="row col-lg-12 p-8" style="background-color: #F9F7FB;">
+<div class="row col-lg-12 p-8" style="background-color: #F9F7FB;border-top-left-radius: 10px;border-top-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
 
     @php
     $patient = $appointment->user->patient;
