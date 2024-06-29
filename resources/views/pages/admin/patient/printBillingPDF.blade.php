@@ -1,8 +1,7 @@
 <x-base-layout>
     <section>
 
-
-        <style type="text/css">
+<style type="text/css">
             #pdf_export tr th {
                 padding: 5px !important;
                 text-align: center;
@@ -11,7 +10,6 @@
             }
 
             #pdf_export tr td {
-                /*font-weight: bold!important;*/
                 padding: 5px !important;
                 line-height: 1;
             }
@@ -25,17 +23,13 @@
             }
 
             @media print {
-
                 .p-dis-row,
                 #kt_aside,
                 #kt_header,
                 #kt_toolbar,
                 #sidebar-wrapper,
                 header,
-                .navbar {
-                    display: none;
-                }
-
+                .navbar,
                 .footer,
                 #kt_footer,
                 #pdf_print {
@@ -68,15 +62,112 @@
                 .charges-table td {
                     padding: 8px !important;
                 }
-            }
 
-            @print {
-                @page :footer {
-                    /* display: none; */
+                .inv-logo {
+                    max-width: 150px;
+                    margin-bottom: 20px;
                 }
 
-                @page :header {
-                    display: none;
+                .section-title {
+                    font-weight: bold;
+                    margin-top: 20px;
+                    color: #6A1B9A;
+                }
+
+                .details-table,
+                .charges-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+
+                .details-table th,
+                .details-table td,
+                .charges-table th,
+                .charges-table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+
+                .charges-table th,
+                .charges-table td {
+                    text-align: center;
+                }
+
+                .charges-table th {
+                    background-color: #6A1B9A;
+                    color: #fff;
+                }
+
+                .charges-table tfoot tr {
+                    border-top: 2px solid #6A1B9A;
+                }
+
+                .charges-table .totals {
+                    font-weight: bold;
+                    text-align: right;
+                    background-color: #f2f2f2;
+                }
+
+                .total-amount {
+                    text-align: right;
+                    font-weight: bold;
+                    color: #6A1B9A;
+                }
+
+                .print-footer-line {
+                    text-align: center;
+                    margin-top: 20px;
+                    font-size: 12px;
+                    height: 22px;
+                    line-height: 1.5;
+                    color: #ffffff;
+                    background-color: #6A1B9A;
+                }
+
+                .row {
+                    margin-bottom: 10px;
+                }
+
+                .text-right {
+                    text-align: right;
+                }
+
+                .text-left {
+                    text-align: left;
+                }
+
+                .text-center {
+                    text-align: center;
+                }
+
+                .col-lg-6 {
+                    width: 50%;
+                    float: left;
+                }
+
+                .col-lg-12,
+                .col-md-3,
+                .col-md-4,
+                .col-md-5 {
+                    float: left;
+                }
+
+                .col-lg-12 {
+                    width: 100%;
+                }
+
+                .col-md-3 {
+                    width: 26.6667%;
+                }
+
+                .col-md-4 {
+                    width: 33.3333%;
+                }
+
+                .col-md-5 {
+                    width: 40%;
                 }
             }
 
@@ -101,10 +192,8 @@
             }
 
             .inv-logo {
-                max-width: 100px;
-                margin-top: 50px;
+                max-width: 150px;
             }
-
 
             .section-title {
                 font-weight: bold;
@@ -164,59 +253,77 @@
                 background-color: #6A1B9A;
             }
 
-
-
             .row {
-            margin-bottom: 10px;
+                margin-bottom: 10px;
             }
 
             .text-right {
-            text-align: right;
+                text-align: right;
             }
 
             .text-left {
-            text-align: left;
+                text-align: left;
             }
 
             .text-center {
-            text-align: center;
+                text-align: center;
             }
 
             .col-lg-6 {
-                    width: 50%;
-                    float: left;
+                width: 50%;
+                float: left;
             }
         </style>
 
+
         <div class="container" id="printableArea">
             <div class="row mt-1">
-                <div class="col-md-12 mb-5 text-center">
-                    <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
-                        class="img-fluid object-fit-contain inv-logo mx-auto">
-                </div>
-                <div class="col-md-12">
-                    <div class="row mb-3">
-                        <div class="col-lg-6 text-left">
-                            <i class="fas fa-phone-alt text-primary"></i> 78967 84329 &nbsp;<br>
-                            <i class="fas fa-globe text-primary"></i> babyama.in
+
+
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-md-3 mb-5 pb-4 text-left">
+                            <img src="{{ asset('media/logos/baby-ama-logo.png') }}" alt="Babyama"
+                                class="img-fluid object-fit-contain inv-logo mx-auto">
                         </div>
-                        <div class="col-lg-6 text-right">
-                            <span style="color:#714B9D;">Invoice No : </span> {{ $appointment->invoice_number }} &nbsp;<br>
-                            <span style="color:#714B9D;">Invoice Date : </span> {{Date('d-M-Y')}}
+                        <div class="col-md-5 mb-5 pb-4 text-left" style="padding-top: 30px;">
+                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 78967 84329</p>
+                            <p><i class="fas fa-phone-office text-primary"></i> 0422- 3502606, 350260607</p>
+                            <p><i class="fa fa-envelope text-primary" aria-hidden="true"></i> babyamaclinic@gmail.com</p>
+                            <p><i class="fa fa-globe text-primary" aria-hidden="true"></i> www.babyama.in</p>
+                        </div>
+                        <div class="col-md-4 text-end align-self-center">
+                            <div class="patient-info">
+                                <p>
+                                    <span style="color:#714B9D;"><b>Invoice No</b></span>
+                                    <span class="separator">:</span>
+                                    <span>{{ $appointment->invoice_number }}</span>
+                                </p>
+                                <p>
+                                    <span style="color:#714B9D;"><b>Invoice Date</b></span>
+                                    <span class="separator">:</span>
+                                    <span>{{ $appointment->appoinment_date }}</span>
+                                </p>
+                                <p>
+                                    <span style="color:#714B9D;"><b>GST No.</b></span>
+                                    <span class="separator">:</span>
+                                    <span>33AAJCB9659A1ZO</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <hr>
+                <span style="border: 2px solid #714B9D;"></span>
 
-                <div class="row col-md-12 mb-3 mt-4">
+                <div class="row col-md-12 mb-3" style="margin-top: 30px;">
                     <div class="col-md-6">
                         <h3>Patient Details</h3>
                     </div>
                 </div>
 
 
-                <div class="col-lg-12 p-4" style="background-color: #F9F7FB;overflow-x:auto">
+                <div class="col-lg-12 p-4" style="background-color: #F9F7FB;border-top-left-radius: 10px;border-top-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
                     <div class="row ">
                         @if($appointment->user->patient)
                         @php
@@ -231,13 +338,6 @@
                                     <span>{{$patient->first_name}} {{$patient->last_name}}</span>
                                 </p>
                                 @endif
-                                {{-- @if($patient->father_name)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Father Name</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$patient->father_name}}</span>
-                                </p>
-                                @endif --}}
                                 @if($patient->blood_group)
                                 <p>
                                     <span style="color:#714B9D;"><b>Blood Group</b></span>
@@ -270,55 +370,8 @@
                         </div>
                         @endif
 
-                        {{-- <div class="col-md-4">
-                            <div class="patient-info">
-                                @if($appointment->appoinment_date)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Appoinment Date</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$appointment->appoinment_date}}</span>
-                                </p>
-                                @endif
-                                @if($appointment->appoinment_session)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Session</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$appointment->appoinment_session}}</span>
-                                </p>
-                                @endif
-                                @if($appointment->appoinment_time)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Time</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$appointment->appoinment_time}}</span>
-                                </p>
-                                @endif
-                            </div>
-                        </div> --}}
-
                         <div class="col-lg-6">
                             <div class="patient-info">
-                                {{-- @if($doctor->first_name)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Doctor Name</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$doctor->first_name}} {{$doctor->last_name}}</span>
-                                </p>
-                                @endif
-                                @if($appointment->specialists)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Specialist</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$appointment->specialists}}</span>
-                                </p>
-                                @endif
-                                @if($userInfo->reg_no)
-                                <p>
-                                    <span style="color:#714B9D;"><b>Reg No</b></span>
-                                    <span class="separator">:</span>
-                                    <span>{{$userInfo->reg_no}}</span>
-                                </p>
-                                @endif --}}
                                 @if($patient->umr_no)
                                 <p>
                                     <span style="color:#714B9D;"><b>UMR No</b></span>
@@ -380,7 +433,7 @@
 
 
                 <div class="section-title mb-4">Fees Summary</div>
-                <div style="overflow-x: auto;">
+                <div style="overflow-x: auto;margin-bottom:150px;">
                     <table class="charges-table" id="fees-summary-table">
                         <thead>
                             <tr>
@@ -412,16 +465,19 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7" class="totals">Total Amount:</td>
+                                <td>Paid by : {{ $appointment['payment_method'] }}</td>
+                                <td colspan="6" class="totals" style="background-color:#ffffff;color:#714B9D;">Total Amount</td>
                                 <td id="total-amount" style="background-color: #6A1B9A;height:50px;width:auto;margin-left: auto;color:#ffffff;">₹ {{ isset($appointment['total_amount']) ?
-                                    $appointment['total_amount'] : '0.00' }}</td>
+                                    $appointment['overall_total_amount'] : '0.00' }}</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
 
-                <div class="print-footer-line">
-                    Address: Babyama Women Wellness & Paediatric Centre, New Siddha Pudur, Coimbatore - 638 933.
+                <p class="text-end">This bill generated by computer doesn't need signature.</p>
+                <span style="border: 2px solid #714B9D;"></span>
+                <div class="text-center" style="color: #714B9D;text-algn:center;">
+                    MP Creations, No 77, 4th floor, NVN Layout VKK Menon Road, New Siddhapudhur, Coimbatore - 641 044.
                 </div>
             </div>
 

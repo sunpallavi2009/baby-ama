@@ -30,7 +30,11 @@ class AddFieldsInClinicalNotes extends Migration
     public function down()
     {
         Schema::table('clinical_notes_form', function (Blueprint $table) {
-            //
+            $table->dropColumn('appointment_id');
+            $table->dropColumn('gynaecology');
+            $table->dropColumn('physiotherapy');
+            $table->dropColumn('general');
+            $table->dropColumn('appointment_id');
         });
     }
 }

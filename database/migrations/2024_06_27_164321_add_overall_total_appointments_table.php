@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPaymentMethodTotalToAppointmentsTable extends Migration
+class AddOverallTotalAppointmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,8 @@ class AddPaymentMethodTotalToAppointmentsTable extends Migration
     public function up()
     {
         Schema::table('appoinments', function (Blueprint $table) {
-
-             $table->string('payment_method')->nullable();
-            $table->decimal('total_amount', 10, 2)->nullable();
+            $table->decimal('service_total_amount', 10, 2)->nullable();
+            $table->decimal('overall_total_amount', 10, 2)->nullable();
         });
     }
 
@@ -28,9 +27,8 @@ class AddPaymentMethodTotalToAppointmentsTable extends Migration
     public function down()
     {
         Schema::table('appoinments', function (Blueprint $table) {
-
-            $table->dropColumn('payment_method');
-            $table->dropColumn('total_amount');
+            $table->dropColumn('service_total_amount');
+            $table->dropColumn('overall_total_amount');
         });
     }
 }

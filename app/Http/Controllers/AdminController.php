@@ -725,6 +725,10 @@ class AdminController extends Controller
 
         $appointment->payment_method = $req->payment_method;
         $appointment->total_amount = $req->total_amount;
+        $appointment->service_total_amount = $req->service_total_amount;
+
+        $overallTotalAmount = $req->service_total_amount + $req->total_amount;
+        $appointment->overall_total_amount = $overallTotalAmount;
 
         $appointment->save();
     }

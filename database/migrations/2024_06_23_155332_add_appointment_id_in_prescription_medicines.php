@@ -27,7 +27,7 @@ class AddAppointmentIdInPrescriptionMedicines extends Migration
     public function down()
     {
         Schema::table('prescription_medicines', function (Blueprint $table) {
-            //
+            $table->dropColumn('appointment_id');
         });
     }
 }
