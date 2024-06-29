@@ -67,6 +67,48 @@ class PharmacyController extends Controller
         }
     }
 
+    public function pageForgot(){
+        return view('pages.pharmacy.forgot_password');
+    }
+
+    public function forgotAction(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+          ]);
+
+          $checkEmailId = User::where('email',$request->email)->first();
+
+        if($checkEmailId)
+        {
+        $mailID = $request->email;
+        $user_email = base64_encode($mailID);
+        $reset_url = route('pharmacy.reset',['user_email'=>$user_email,'token'=>$token]);
+        $site_url  = route('pharmacy.login');
+        $data = [
+            'reset_url' => $reset_url,
+            'site_url' => $site_url
+        ];
+    }
+
+        Mail::send('pages.pharmacy.mail', ["data1"=>$data], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Reset Password');
+            $message->from('svijayalakshmi17@gmail.com','BABYAMA-TEAM');
+
+        });
+
+        return redirect()->back()->with('success', 'We have e-mailed your password reset link!');
+    }
+
     public function index(){
 
         $phuser_id = helperGetAuthUser('id');
