@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -13,6 +14,7 @@ use App\Models\Patient;
 use App\Models\Appoinment;
 use App\Models\PrescriptionMedicine;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 
@@ -69,6 +71,51 @@ class PharmacyController extends Controller
 
     public function pageForgot(){
         return view('pages.pharmacy.forgot_password');
+    }
+
+    public function pageReset($email,$token){
+        $reset_email = base64_decode($email);
+        $updatePassword = DB::table('password_resets')
+                            ->where([
+                              'email' => $reset_email,
+                              'token' => $token
+                            ])
+                            ->first();
+
+        if(!$updatePassword){
+            return redirect()->route('pharmacy.login')->with('error', 'Invalid Request!');
+        }
+        else{
+            return view('pages.pharmacy.reset_password', ['email' => $email,'token' => $token]);
+        }
+    }
+    public function resetAction(Request $request)
+    {
+        $request->validate([
+            //'email' => 'required|email|exists:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $reset_email = base64_decode($request->reset_email);
+        $updatePassword = DB::table('password_resets')
+                            ->where([
+                              'email' => $reset_email,
+                              'token' => $request->reset_token
+                            ])
+                            ->first();
+
+        if(!$updatePassword){
+            return redirect()->back()->with('error', 'Invalid Request!');
+        }
+
+        $user = User::where('email', $reset_email)
+                    ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_resets')->where(['email'=> $reset_email])->delete();
+
+        return redirect()->route('pharmacy.login')->with('success', 'Your password has been changed!');
+
     }
 
     public function forgotAction(Request $request)

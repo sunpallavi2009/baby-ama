@@ -16,6 +16,10 @@ Route::prefix('pharmacy')->group(function () {
     Route::post('/otp/action', [PharmacyController::class, 'otpAction'])->name('pharmacy.otp.post');
     Route::get('/forgot_password', [PharmacyController::class, 'pageForgot'])->name('pharmacy.forgot');
     Route::post('/forgot_password/action', [PharmacyController::class, 'forgotAction'])->name('pharmacy.forgot.post');
+    
+    Route::get('/reset_password/{user_email}/{token}', [PharmacyController::class, 'pageReset'])->name('pharmacy.reset');
+    Route::post('/reset_password/action', [PharmacyController::class, 'resetAction'])->name('pharmacy.reset.post');
+
 });
 
 Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {

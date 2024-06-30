@@ -264,7 +264,8 @@ class AdminController extends Controller
     public function listPatients(){
 
         $query = Patient::query();
-       // $query = $query->orderBy('id', 'DESC');
+    //    $query = $query->orderBy('id', 'DESC');
+    //    $query->orderBy('id', 'desc');
         $limit = 25;
         $data = $query->paginate($limit);
 
