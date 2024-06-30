@@ -57,6 +57,13 @@
                              </div>
                              <!--end::Input group-->
 
+                             <div class="fv-row mb-10">
+                                <a href="{{ route('pharmacy.forgot') }}"><label class="form-label float-start fs-6 fw-bolder text-dark">Forgot Password ?</label>
+                                </a>
+                             </div>
+                             <br>
+                             <br>
+
 
                              <!--begin::Actions-->
                              <div class="text-center">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -13,6 +14,7 @@ use App\Models\Patient;
 use App\Models\Appoinment;
 use App\Models\PrescriptionMedicine;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 
@@ -65,6 +67,93 @@ class PharmacyController extends Controller
         }else{
             return redirect()->back()->with('error','Oops! You have entered invalid credentials,');
         }
+    }
+
+    public function pageForgot(){
+        return view('pages.pharmacy.forgot_password');
+    }
+
+    public function pageReset($email,$token){
+        $reset_email = base64_decode($email);
+        $updatePassword = DB::table('password_resets')
+                            ->where([
+                              'email' => $reset_email,
+                              'token' => $token
+                            ])
+                            ->first();
+
+        if(!$updatePassword){
+            return redirect()->route('pharmacy.login')->with('error', 'Invalid Request!');
+        }
+        else{
+            return view('pages.pharmacy.reset_password', ['email' => $email,'token' => $token]);
+        }
+    }
+    public function resetAction(Request $request)
+    {
+        $request->validate([
+            //'email' => 'required|email|exists:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $reset_email = base64_decode($request->reset_email);
+        $updatePassword = DB::table('password_resets')
+                            ->where([
+                              'email' => $reset_email,
+                              'token' => $request->reset_token
+                            ])
+                            ->first();
+
+        if(!$updatePassword){
+            return redirect()->back()->with('error', 'Invalid Request!');
+        }
+
+        $user = User::where('email', $reset_email)
+                    ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_resets')->where(['email'=> $reset_email])->delete();
+
+        return redirect()->route('pharmacy.login')->with('success', 'Your password has been changed!');
+
+    }
+
+    public function forgotAction(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+          ]);
+
+          $checkEmailId = User::where('email',$request->email)->first();
+
+        if($checkEmailId)
+        {
+        $mailID = $request->email;
+        $user_email = base64_encode($mailID);
+        $reset_url = route('pharmacy.reset',['user_email'=>$user_email,'token'=>$token]);
+        $site_url  = route('pharmacy.login');
+        $data = [
+            'reset_url' => $reset_url,
+            'site_url' => $site_url
+        ];
+    }
+
+        Mail::send('pages.pharmacy.mail', ["data1"=>$data], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Reset Password');
+            $message->from('svijayalakshmi17@gmail.com','BABYAMA-TEAM');
+
+        });
+
+        return redirect()->back()->with('success', 'We have e-mailed your password reset link!');
     }
 
     public function index(){
@@ -340,7 +429,7 @@ public function CompletedPrescription($prescription_id){
          $medicines = $query->where('accessed_by', 'pharmacy')->orderBy('name','asc')->get();
 
         //dd($user);
-     return view('pages.pharmacy.billing.patient-prescription',compact('prescription_id','user','listpm','pharmacy','medicines'));
+     return view('pages.pharmacy.billing.patient-prescription',compact('prescription_id','user','listpm','pharmacy','medicines','appointment'));
     }
 
 
@@ -391,12 +480,14 @@ public function CompletedPrescription($prescription_id){
     }
 
 
-    public function GetPatientInvoice($prid,$userid){
+    public function GetPatientInvoice($prid,$userid,$appointment_id){
 
      $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])
         ->get();
+        
         $user = Patient::where('user_id',$userid)->first();
         $prescription_id = PrescriptionMedicine::where('prescription_id',$prid)->first();
+        $appointment = Appoinment::where('id',$appointment_id)->first();
         
         $lastInvoice = PrescriptionMedicine::orderBy('created_at', 'desc')->first();
 
@@ -414,8 +505,10 @@ public function CompletedPrescription($prescription_id){
         // Set other invoice details here
         $invoice->save();
 
-        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice'));
+        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice','appointment'));
     }
+
+    
 
     public function PrintPatientInvoice($prid,$userid){
         $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])

@@ -14,6 +14,12 @@ Route::prefix('pharmacy')->group(function () {
     Route::post('/login/action', [PharmacyController::class, 'loginAction'])->name('pharmacy.login.post');
     Route::get('/otp', [PharmacyController::class, 'pageOtp'])->name('pharmacy.otp');
     Route::post('/otp/action', [PharmacyController::class, 'otpAction'])->name('pharmacy.otp.post');
+    Route::get('/forgot_password', [PharmacyController::class, 'pageForgot'])->name('pharmacy.forgot');
+    Route::post('/forgot_password/action', [PharmacyController::class, 'forgotAction'])->name('pharmacy.forgot.post');
+    
+    Route::get('/reset_password/{user_email}/{token}', [PharmacyController::class, 'pageReset'])->name('pharmacy.reset');
+    Route::post('/reset_password/action', [PharmacyController::class, 'resetAction'])->name('pharmacy.reset.post');
+
 });
 
 Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {
@@ -25,7 +31,7 @@ Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {
     Route::get('/billing/prescription/list', [PharmacyController::class, 'prescriptionList'])->name('pharmacy.billing.prescription.list');
     Route::get('/billing/patient/{prescription_id}/prescription/appointment/{appointment}', [PharmacyController::class, 'GetUserPrescription'])->name('pharmacy.billing.patient.prescription');
 
-    Route::get('/billing/{prid}/patient/{userid}/invoice', [PharmacyController::class, 'GetPatientInvoice'])->name('pharmacy.billing.patient.invoice');
+    Route::get('/billing/{prid}/patient/{userid}/{appointment_id}/invoice', [PharmacyController::class, 'GetPatientInvoice'])->name('pharmacy.billing.patient.invoice');
     Route::get('/print/billing/{prid}/patient/{userid}/invoice', [PharmacyController::class, 'PrintPatientInvoice'])->name('pharmacy.print.billing.patient.invoice');
 
     Route::get('/billing/delete/medicine', [PharmacyController::class, 'DeclinedPrescription'])->name('pharmacy.billing.delete.medicine');
