@@ -157,60 +157,45 @@ class AdminController extends Controller
         return view('pages.admin.user.admin.form',compact('data','role'));
     }
 
-    public function storeAdmin(Request $request){
 
-
-
-        $user = User::firstOrNew(['id' =>  $request->id]);
+   public function storeAdmin(Request $request)
+    {
+        $user = User::firstOrNew(['id' => $request->id]);
         $user_info = UserInfo::firstOrNew(['user_id' => $request->id]);
 
-          $validatedData = $request->validate([
-                'first_name' => 'required',
-                // 'last_name' => 'required',
-                'email' => 'required|email|unique:users,email,'.$request->id,
-                'phone' => 'required|numeric|digits:10|unique:user_infos,phone,'.$user_info->id,
-            ]);
+        $validatedData = $request->validate([
+            'first_name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $request->id,
+            'phone' => 'required|numeric|digits:10|unique:user_infos,phone,' . $user_info->id,
+        ]);
 
+         if (!$user->exists || !$user_info->avatar) {
+            $validationRules['avatar'] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
+        }
 
-            // Check if an avatar file has been uploaded
-                if ($request->hasFile('avatar')) {
-                    $avatar = $request->file('avatar');
-                    $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                    $avatarPath = $avatar->storeAs('avatars', $avatarName, 'public');
+        // Check if an avatar file has been uploaded
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = $avatar->storeAs('avatars', $avatarName, 'public');
 
-                    // Log the file information for debugging
-                    Log::info('Avatar Uploaded: ' . json_encode([
-                        'original_name' => $avatar->getClientOriginalName(),
-                        'size' => $avatar->getSize(),
-                        'path' => $avatarPath,
-                    ]));
+            // Log the file information for debugging
+            Log::info('Avatar Uploaded: ' . json_encode([
+                'original_name' => $avatar->getClientOriginalName(),
+                'size' => $avatar->getSize(),
+                'path' => $avatarPath,
+            ]));
 
-                    // Save avatar path in user_info relative to public disk
-                    $user_info->avatar = 'storage/' . $avatarPath;
-                } else {
-                    Log::info('No Avatar Uploaded');
-                }
+            // Save avatar path in user_info relative to public disk
+            $user_info->avatar = 'avatars/' . $avatarName;
+        } else {
+            Log::info('No Avatar Uploaded');
+        }
 
-
-            // if ($request->hasFile('avatar')) {
-            //     $avatar = $request->file('avatar');
-            //     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-            //     $avatarPath = $avatar->storeAs('avatars', $avatarName, 'public');
-
-            //     // Save avatar path in user_info
-            //         \Log::info('Avatar Path: ' . $avatarPath);
-            //     $user_info->avatar = $avatarPath;
-            // }
-
-       // $data = isset($request->id) ? User::find($request->id) : new User;
-
-        $this->saveUser($user,$user_info,$request);
-
+        $this->saveUser($user, $user_info, $request);
 
         $getUserCRUDRedirect = getUserCRUDRedirect();
-        return redirect()->route($getUserCRUDRedirect)->with('success','Admin Updated Successfully');
-
-        // return view('pages.admin.user.admin.list',compact('data'));
+        return redirect()->route($getUserCRUDRedirect)->with('success', 'Admin Updated Successfully');
     }
 
 
