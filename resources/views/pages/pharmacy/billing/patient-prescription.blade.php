@@ -84,6 +84,7 @@ use App\Models\Medicine;
                                     <th scope="col" class="bg-color-v1 text-center ">RELATION TO FOOD</th>
                                     <th scope="col" class="bg-color-v1 text-center">FOLLOW UP DAYS</th>
                                     <th scope="col" class="bg-color-v1 text-center">QTY</th>
+                                    <th scope="col" class="bg-color-v1 text-center">PRESCRIPTION BY</th>
                                     <th scope="col" class="bg-color-v1 text-center">Action</th>
 
                                    {{--
@@ -105,6 +106,8 @@ use App\Models\Medicine;
                                     <td class="text-center">{{$val->timing_how}}</td>
                                     <td class="text-center">{{$val->duration}} </td>
                                     <td class="text-center">{{$val->total_qty}}</td>
+                                   <td class="text-center">{{ ($val->prescription_by == '1') ? "Doctor" : "Pharmacy" }}</td>
+
                                     <td class="text-center"><button class="action-btn" data-bs-toggle="modal" data-bs-target="#EditMedicine<?php echo $val->id; ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 16 16" fill="none">
@@ -155,38 +158,40 @@ use App\Models\Medicine;
                                                     </svg>
                                                 </div>
                                                 <div class="search-field-wrap">
-                                                    <input type="search" name="search" placeholder="search medicine"
+                                                    <input type="search" name="search" placeholder="search medicine" 
                                                         id="filterMedicine" class="form-control">
 
-                                                    <!-- <input type="search" name="search" placeholder="search medicine" id="search" class="form-control w-100" /> -->
+                                                     {{-- <input type="search" name="search" placeholder="search medicine" id="search" class="form-control w-100" />  --}}
                                                 </div>
                                             </div>
+                                            
                                         </form>
-                        <div class="med-search-result py-4 mt-4">
 
-                        <div class="med-items">
-                            @foreach ($medicines as $medicine)
-                                @php
-                                    $getType = $medicine->dosage ? ' (' . $medicine->dosage . ')' : '';
-                                    $fullName = helperFormatMedicinePrefix($medicine->type) . ' ' . $medicine->name . $getType;
-                                @endphp
+                                        <div class="med-search-result py-4 mt-4">
 
-                                <div class="med-item" data-bs-toggle="modal"
-                                    data-bs-target="#MedPopModal{{ $medicine->id }}">
-                                    <div class="medicine">
-                                        <span
-                                            class="m-type pe-1 text-capitalize">({{ helperFormatMedicinePrefix($medicine->type) }})</span>
-                                        <span class="m-name">{{ $medicine->name }} </span>
-                                        <span class="m-name ms-1">
-                                            @if ($medicine->dosage)
-                                                {{ '(' . $medicine->dosage . ')' }}
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                                            <div class="med-items">
+                                                @foreach ($medicines as $medicine)
+                                                    @php
+                                                        $getType = $medicine->dosage ? ' (' . $medicine->dosage . ')' : '';
+                                                        $fullName = helperFormatMedicinePrefix($medicine->type) . ' ' . $medicine->name . $getType;
+                                                    @endphp
+
+                                                    <div class="med-item" data-bs-toggle="modal"
+                                                        data-bs-target="#MedPopModal{{ $medicine->id }}">
+                                                        <div class="medicine">
+                                                            <span
+                                                                class="m-type pe-1 text-capitalize">({{ helperFormatMedicinePrefix($medicine->type) }})</span>
+                                                            <span class="m-name">{{ $medicine->name }} </span>
+                                                            <span class="m-name ms-1">
+                                                                @if ($medicine->dosage)
+                                                                    {{ '(' . $medicine->dosage . ')' }}
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
