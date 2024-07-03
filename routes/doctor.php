@@ -85,7 +85,7 @@ Route::prefix('doctor')->middleware('doctor')->group(function () {
     Route::post('save/{appoinment}/{patient}/edit_prescription', [DoctorController::class, 'editPostPrescriptionDetail'])->name('doctor.appointment.prescription.edit.post');
     Route::post('save/{appoinment}/{patient}/add_prescription', [DoctorController::class, 'addClinicalNoteDetail'])->name('doctor.appointment.clinical.add.post');
 
-    // Route::get('appointment/{appoinment}/patient/{patient}/medicine', [DoctorController::class, 'GetMedicineDetail'])->name('doctor.appointment.patient.prescription.medicine');
+    Route::get('appointment/{appoinment}/patient/{patient}/medicine', [DoctorController::class, 'GetMedicineDetail'])->name('doctor.appointment.patient.prescription.medicine');
 
      // New
     Route::get('appointment/{appoinment}/patient/{patient}/medicine/{pr_id}', [DoctorController::class, 'GetMedicineDetail'])->name('doctor.appointment.patient.prescription.medicine');

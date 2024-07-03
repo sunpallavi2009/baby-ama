@@ -160,29 +160,64 @@ if (!function_exists('assignUserRole')) {
     }
 }
 
+// if (!function_exists('getUMRONo')) {
+//     function getUMRONo()
+//     {
+
+//         $result = env('BABY_UMRO_START');
+//         $start = env('BABY_UMRO_START');
+
+//         $year = date('y');
+//         $month = date('m');
+//         $formData = $year . $month;
+
+//         // $data = \App\Models\Patient::select('umr_no')->max('umr_no');
+//         $data = \App\Models\Patient::select('op_no')->where('op_no', 'like', '%' . $formData . '%')->max('op_no');
+
+//         if ($data) {
+//             $result = (int) $data + 1;
+//         } else {
+//             $result = $formData . $start;
+//         }
+
+//         return $result;
+//     }
+// }
+
 if (!function_exists('getUMRONo')) {
     function getUMRONo()
     {
-
-        $result = env('BABY_UMRO_START');
         $start = env('BABY_UMRO_START');
+        $currentYear = date('y');
+        $currentMonth = date('m');
+        $previousMonth = date('m', strtotime('-1 month'));
+        $formDataCurrent = $currentYear . $currentMonth;
+        $formDataPrevious = $currentYear . $previousMonth;
 
-        $year = date('y');
-        $month = date('m');
-        $formData = $year . $month;
-
-        // $data = \App\Models\Patient::select('umr_no')->max('umr_no');
-        $data = \App\Models\Patient::select('op_no')->where('op_no', 'like', '%' . $formData . '%')->max('op_no');
+        // Attempt to get the max op_no for the current month
+        $data = \App\Models\Patient::select('op_no')->where('op_no', 'like', '%' . $formDataCurrent . '%')->max('op_no');
 
         if ($data) {
             $result = (int) $data + 1;
         } else {
-            $result = $formData . $start;
+            // If no data for the current month, try the previous month
+            $data = \App\Models\Patient::select('op_no')->where('op_no', 'like', '%' . $formDataPrevious . '%')->max('op_no');
+            if ($data) {
+                // Extract the last part of the previous month's data and increment it
+                $lastNumber = (int) substr($data, 4);
+                $newNumber = $lastNumber + 1;
+                $result = $formDataCurrent . str_pad($newNumber, '0', STR_PAD_LEFT);
+            } else {
+                // If no data found for both months, use the start value
+                $result = $formDataCurrent . $start;
+            }
         }
 
         return $result;
     }
 }
+
+
 
 if (!function_exists('ageCalculator')) {
     function ageCalculator($dob)
