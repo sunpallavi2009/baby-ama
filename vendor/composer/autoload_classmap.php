@@ -89,6 +89,7 @@ return array(
     'App\\Models\\AnthropometryGrowthCharts' => $baseDir . '/app/Models/AnthropometryGrowthCharts.php',
     'App\\Models\\Appoinment' => $baseDir . '/app/Models/Appoinment.php',
     'App\\Models\\ClinicalNotes' => $baseDir . '/app/Models/ClinicalNotes.php',
+    'App\\Models\\DoctorPrescriptionMedicine' => $baseDir . '/app/Models/DoctorPrescriptionMedicine.php',
     'App\\Models\\Gynaecology' => $baseDir . '/app/Models/Gynaecology.php',
     'App\\Models\\InvestigationReports' => $baseDir . '/app/Models/InvestigationReports.php',
     'App\\Models\\Medicine' => $baseDir . '/app/Models/Medicine.php',

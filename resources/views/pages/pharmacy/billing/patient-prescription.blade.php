@@ -84,7 +84,7 @@ use App\Models\Medicine;
                                     <th scope="col" class="bg-color-v1 text-center ">RELATION TO FOOD</th>
                                     <th scope="col" class="bg-color-v1 text-center">FOLLOW UP DAYS</th>
                                     <th scope="col" class="bg-color-v1 text-center">QTY</th>
-                                    <th scope="col" class="bg-color-v1 text-center">PRESCRIPTION BY</th>
+                                    {{-- <th scope="col" class="bg-color-v1 text-center">PRESCRIPTION BY</th> --}}
                                     <th scope="col" class="bg-color-v1 text-center">Action</th>
 
                                    {{--
@@ -106,7 +106,7 @@ use App\Models\Medicine;
                                     <td class="text-center">{{$val->timing_how}}</td>
                                     <td class="text-center">{{$val->duration}} </td>
                                     <td class="text-center">{{$val->total_qty}}</td>
-                                   <td class="text-center">{{ ($val->prescription_by == '1') ? "Doctor" : "Pharmacy" }}</td>
+                                   {{-- <td class="text-center">{{ ($val->prescription_by == '1') ? "Doctor" : "Pharmacy" }}</td> --}}
 
                                     <td class="text-center"><button class="action-btn" data-bs-toggle="modal" data-bs-target="#EditMedicine<?php echo $val->id; ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
