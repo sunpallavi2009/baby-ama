@@ -822,6 +822,7 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'App\\Models\\AnthropometryGrowthCharts' => __DIR__ . '/../..' . '/app/Models/AnthropometryGrowthCharts.php',
         'App\\Models\\Appoinment' => __DIR__ . '/../..' . '/app/Models/Appoinment.php',
         'App\\Models\\ClinicalNotes' => __DIR__ . '/../..' . '/app/Models/ClinicalNotes.php',
+        'App\\Models\\DoctorPrescriptionMedicine' => __DIR__ . '/../..' . '/app/Models/DoctorPrescriptionMedicine.php',
         'App\\Models\\Gynaecology' => __DIR__ . '/../..' . '/app/Models/Gynaecology.php',
         'App\\Models\\InvestigationReports' => __DIR__ . '/../..' . '/app/Models/InvestigationReports.php',
         'App\\Models\\Medicine' => __DIR__ . '/../..' . '/app/Models/Medicine.php',
