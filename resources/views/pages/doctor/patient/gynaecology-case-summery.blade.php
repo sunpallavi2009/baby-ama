@@ -3,7 +3,7 @@
     @php
         $appointment = $appoinment;
         $getFormAnswers = $getFormAnswers->toArray();
-        use App\Models\PrescriptionMedicine;
+        use App\Models\DoctorPrescriptionMedicine;
     @endphp
     <style>
         .prescription-table .table tr {
@@ -165,7 +165,7 @@
                                     </p>
                                 </div>
                                 <?php
-                                $prescription_medicine = prescriptionMedicine::where(['prescription_id' => $ps['id'],'appointment_id'=>$ps['appointment_id'], 'type' => 'gynaecology'])->get();
+                                $prescription_medicine = DoctorPrescriptionMedicine::where(['prescription_id' => $ps['id'],'appointment_id'=>$ps['appointment_id'], 'type' => 'gynaecology'])->get();
                                 ?>
                                 @if (isset($prescription_medicine))
                                     <div class="prescription-table py-3">
@@ -332,7 +332,7 @@
 
             </div>
             <?php
-                    $prescription_medicine = prescriptionMedicine::where(['prescription_id' => $ps['id'],'appointment_id'=>$data->id, 'type' => 'gynaecology'])->get();
+                    $prescription_medicine = DoctorPrescriptionMedicine::where(['prescription_id' => $ps['id'],'appointment_id'=>$data->id, 'type' => 'gynaecology'])->get();
                 ?>
             @if (isset($prescription_medicine))
             <div class="prescription-table py-3">

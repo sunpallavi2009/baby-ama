@@ -24,4 +24,9 @@ class Appoinment extends Model
         // return $this->hasOne(User::class);
         return $this->hasOne(Prescription::class,'appointment_id','id');
     }
+
+    public function prescriptionMedicines()
+    {
+        return $this->hasMany(PrescriptionMedicine::class, 'appointment_id');
+    }
 }

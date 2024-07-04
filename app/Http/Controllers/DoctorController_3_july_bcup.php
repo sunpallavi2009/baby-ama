@@ -441,7 +441,7 @@ public function GetAppointments()
         if ($getdata) {
             $pr_id = $getdata->id;
             $type = 'pediatric';
-            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+            $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
         }
 
         return view('pages.doctor.patient.pediatric', compact('pres', 'user', 'patient', 'getdata', 'appoinment', 'app_status', 'pr_id'));
@@ -520,7 +520,7 @@ public function GetAppointments()
         if ($getdata) {
         $type = 'dental';
             $pr_id = $getdata->id;
-            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+            $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
 
              }
 
@@ -739,37 +739,37 @@ public function GetAppointments()
         $get = [];
         if($type=='pediatric'){
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->pediatric) ? json_decode($data->pediatric) : [];
             $get['type'] = 'pediatric';
         }
         else if($type=='dental'){
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->dental) ? json_decode($data->dental) : [];
             $get['type'] = 'dental';
         }
         else if($type=='gynaecology'){
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->gynaecology) ? json_decode($data->gynaecology) : [];
             $get['type'] = 'gynaecology';
         }
         else if($type=='physiotherapy'){
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->physiotherapy) ? json_decode($data->physiotherapy) : [];
             $get['type'] = 'physiotherapy';
         }
         else if($type=='women_wellness'){
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->women_wellness) ? json_decode($data->women_wellness) : [];
             $get['type'] = 'women_wellness';
         }
         else {
             $data = Prescription::where(['id'=>$id,'appointment_id'=>$apid,'patient_id'=>$pid])->first();
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>'general','prescription_id'=>$data->id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>'general','prescription_id'=>$data->id])->get();
             $get['value'] = isset($data->general) ? json_decode($data->general) : [];
             $get['type'] = 'general';
         }
@@ -885,7 +885,7 @@ public function GetAppointments()
 
         if($p_id!='')
         {
-            $medicine = DoctorPrescriptionMedicine::where(['type'=>$formtype,'prescription_id'=>$p_id])->get();
+            $medicine = PrescriptionMedicine::where(['type'=>$formtype,'prescription_id'=>$p_id])->get();
         }
         else{
             $medicine = '';
@@ -996,7 +996,7 @@ public function GetAppointments()
         }
 
 
-        $medicine = DoctorPrescriptionMedicine::where(['type'=>$formtype,'prescription_id'=>$data->id])->get();
+        $medicine = PrescriptionMedicine::where(['type'=>$formtype,'prescription_id'=>$data->id])->get();
         $get['value'] = isset($data->$formtype) ? json_decode($data->$formtype) : [];
         $get['type'] = $formtype;
 
@@ -1029,7 +1029,7 @@ public function GetAppointments()
 
          $medicines = $query->orderBy('name','asc')->get();
 
-         $pres = DoctorPrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id, 'appointment_id' => $appoinment->id])->get();
+         $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id, 'appointment_id' => $appoinment->id])->get();
 
 
          //$pres = PrescriptionMedicine::where('prescription_id',$pr_id)->get();
@@ -1038,115 +1038,41 @@ public function GetAppointments()
         // dd($user);
     }
 
-    // public function PostMedicineDetail(Request $request, Appoinment $appoinment,Patient $patient){
+    public function PostMedicineDetail(Request $request, Appoinment $appoinment,Patient $patient){
 
-    //     // dd($request);
-    //    $user = $patient->user;
-    //    if($request->pr_id){
-    //         $data = Prescription::find($request->pr_id);
-    //     }else{
-    //          $data= new Prescription();
-    //     }
-
-    //     $pr_timing_when = isset($request->timing_when) ? implode(',',$request->timing_when) : '';
-    //     $pr_timing_how = isset($request->timing_how) ? implode(',',$request->timing_how) : '';
-
-    //     //$pr_timing_how = $request->timing_how;
-    //     /*if($request->pr_add_edit == 'add'){*/
-    //             $s_medicine = ($request->id) ? PrescriptionMedicine::find($request->id) : new PrescriptionMedicine;
-    //             $s_medicine->prescription_name = ($request->prescription_name) ? $request->prescription_name : '' ;
-    //             $s_medicine->prescription_id = $data->id;
-    //             $s_medicine->user_id = $user->id;
-    //             $s_medicine->type = $request->prescription_type;
-    //             $s_medicine->medicine_id = ($request->medicine_id) ? $request->medicine_id : 'null' ;
-    //             $s_medicine->dosage = $request->dosage;
-    //             $s_medicine->total_qty = $request->total_qty;
-    //             $s_medicine->intake_qty = $request->intake_qty;
-    //             $s_medicine->timing_when = $pr_timing_when;
-    //             $s_medicine->timing_how = $pr_timing_how;
-    //             $s_medicine->notes = $request->notes;
-    //             $s_medicine->duration = $request->tab_count_days;
-    //             $s_medicine->appointment_id = $appoinment->id;
-
-    //             $s_medicine->save();
-
-    //     /*}*/
-    //     return redirect()->back()->with('success', 'Details Saved Successfuly');
-    // }
-
-    public function PostMedicineDetail(Request $request, Appoinment $appoinment, Patient $patient)
-    {
-        $user = $patient->user;
-    
-        // Handle Prescription
-        if ($request->pr_id) {
-            $prescription = Prescription::find($request->pr_id);
-            if (!$prescription) {
-                return redirect()->back()->withErrors(['error' => 'Prescription not found.']);
-            }
-        } else {
-            $prescription = new Prescription();
-            $prescription->patient_id = $patient->id;
-            $prescription->save();
+        // dd($request);
+       $user = $patient->user;
+       if($request->pr_id){
+            $data = Prescription::find($request->pr_id);
+        }else{
+             $data= new Prescription();
         }
-    
-        $pr_timing_when = isset($request->timing_when) ? implode(',', $request->timing_when) : '';
-        $pr_timing_how = isset($request->timing_how) ? implode(',', $request->timing_how) : '';
-    
-        // Handle PrescriptionMedicine
-        if ($request->id) {
-            $medicine = PrescriptionMedicine::find($request->id);
-            if (!$medicine) {
-                $medicine = new PrescriptionMedicine();
-            }
-        } else {
-            $medicine = new PrescriptionMedicine();
-        }
-    
-        $medicine->prescription_name = $request->prescription_name ?: '';
-        $medicine->prescription_id = $prescription->id;
-        $medicine->user_id = $user->id;
-        $medicine->type = $request->prescription_type;
-        $medicine->medicine_id = $request->medicine_id ?: null;
-        $medicine->dosage = $request->dosage ?: '';
-        $medicine->total_qty = $request->total_qty ?: 0;
-        $medicine->intake_qty = $request->intake_qty ?: 0;
-        $medicine->timing_when = $pr_timing_when;
-        $medicine->timing_how = $pr_timing_how;
-        $medicine->notes = $request->notes ?: '';
-        $medicine->duration = $request->tab_count_days ?: 0;
-        $medicine->appointment_id = $appoinment->id;
-        $medicine->save();
-    
-        // Handle DoctorPrescriptionMedicine
-        if ($request->id) {
-            $doctorPrescriptionMedicine = DoctorPrescriptionMedicine::find($request->id);
-            if (!$doctorPrescriptionMedicine) {
-                $doctorPrescriptionMedicine = new DoctorPrescriptionMedicine();
-            }
-        } else {
-            $doctorPrescriptionMedicine = new DoctorPrescriptionMedicine();
-        }
-    
-        $doctorPrescriptionMedicine->prescription_id = $prescription->id;
-        $doctorPrescriptionMedicine->prescription_name = $request->prescription_name ?: '';
-        $doctorPrescriptionMedicine->type = $request->prescription_type ?: '';
-        $doctorPrescriptionMedicine->medicine_id = $request->medicine_id ?: null;
-        $doctorPrescriptionMedicine->dosage = $request->dosage ?: '';
-        $doctorPrescriptionMedicine->total_qty = $request->total_qty ?: 0;
-        $doctorPrescriptionMedicine->intake_qty = $request->intake_qty ?: 0;
-        $doctorPrescriptionMedicine->timing_when = $pr_timing_when;
-        $doctorPrescriptionMedicine->timing_how = $pr_timing_how;
-        $doctorPrescriptionMedicine->notes = $request->notes ?: '';
-        $doctorPrescriptionMedicine->duration = $request->tab_count_days ?: 0;
-        $doctorPrescriptionMedicine->appointment_id = $appoinment->id;
-        $doctorPrescriptionMedicine->user_id = $user->id;
-        $doctorPrescriptionMedicine->save();
-    
-        return redirect()->back()->with('success', 'Details Saved Successfully');
+
+        $pr_timing_when = isset($request->timing_when) ? implode(',',$request->timing_when) : '';
+        $pr_timing_how = isset($request->timing_how) ? implode(',',$request->timing_how) : '';
+
+        //$pr_timing_how = $request->timing_how;
+        /*if($request->pr_add_edit == 'add'){*/
+                $s_medicine = ($request->id) ? PrescriptionMedicine::find($request->id) : new PrescriptionMedicine;
+                $s_medicine->prescription_name = ($request->prescription_name) ? $request->prescription_name : '' ;
+                $s_medicine->prescription_id = $data->id;
+                $s_medicine->user_id = $user->id;
+                $s_medicine->type = $request->prescription_type;
+                $s_medicine->medicine_id = ($request->medicine_id) ? $request->medicine_id : 'null' ;
+                $s_medicine->dosage = $request->dosage;
+                $s_medicine->total_qty = $request->total_qty;
+                $s_medicine->intake_qty = $request->intake_qty;
+                $s_medicine->timing_when = $pr_timing_when;
+                $s_medicine->timing_how = $pr_timing_how;
+                $s_medicine->notes = $request->notes;
+                $s_medicine->duration = $request->tab_count_days;
+                $s_medicine->appointment_id = $appoinment->id;
+
+                $s_medicine->save();
+
+        /*}*/
+        return redirect()->back()->with('success', 'Details Saved Successfuly');
     }
-    
-
 
 
     public function SearchMedicine(Request $request){
@@ -1172,7 +1098,7 @@ public function GetAppointments()
     }
     public function EditMedicine(Request $request){
 
-        $query =  DoctorPrescriptionMedicine::where('id', $request->edit)->first();
+        $query =  PrescriptionMedicine::where('id', $request->edit)->first();
 
         $response =[];
 
@@ -1184,7 +1110,7 @@ public function GetAppointments()
     }
      public function DeleteMedicine(Request $request){
 
-        $query =  DoctorPrescriptionMedicine::where('id', $request->delid)->delete();
+        $query =  PrescriptionMedicine::where('id', $request->delid)->delete();
 
         $response =[];
 
@@ -1412,7 +1338,7 @@ public function GetAppointments()
 
         $medicine = [];
         // if ($dataid) {
-            $medicine = PrescriptionMedicine::where(['type' => 'pediatric','appointment_id' => $dataid])->get();
+            $medicine = DoctorPrescriptionMedicine::where(['type' => 'pediatric','appointment_id' => $dataid])->get();
         // }
 
         return view('pages.doctor.patient.paediatrics-case-summery', compact('appoinment', 'user', 'getFormAnswers', 'clinicalNotes', 'medicine', 'patient'));
@@ -1444,7 +1370,7 @@ public function GetAppointments()
         // Fetch medicine data if dataid is available
         $medicine = [];
         // if ($dataid) {
-            $medicine = DoctorPrescriptionMedicine::where(['type' => 'dental','appointment_id' => $appoinment->id])->get();
+            $medicine = PrescriptionMedicine::where(['type' => 'dental','appointment_id' => $appoinment->id])->get();
         // }
 
         // Pass variables to the view
@@ -1475,7 +1401,7 @@ public function GetAppointments()
 
         $medicine = [];
         // if ($dataid) {
-            $medicine = DoctorPrescriptionMedicine::where(['type' => 'gynaecology', 'appointment_id' => $appoinment->id])->get();
+            $medicine = PrescriptionMedicine::where(['type' => 'gynaecology', 'appointment_id' => $appoinment->id])->get();
         // }
 
         return view('pages.doctor.patient.gynaecology-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
@@ -1506,7 +1432,7 @@ public function GetAppointments()
 
         $medicine = [];
         // if ($dataid) {
-            $medicine = DoctorPrescriptionMedicine::where(['type' => 'physiotherapy', 'appointment_id' => $appoinment->id])->get();
+            $medicine = PrescriptionMedicine::where(['type' => 'physiotherapy', 'appointment_id' => $appoinment->id])->get();
         // }
 
         return view('pages.doctor.patient.physiotherapy-case-summery', compact('clinicalNotes', 'medicine', 'appoinment', 'user', 'getFormAnswers'));
@@ -1537,7 +1463,7 @@ public function GetAppointments()
 
         $medicine = [];
 
-        $medicine = DoctorPrescriptionMedicine::where(['type' => 'women_wellness','appointment_id' => $appoinment->id])->get();
+        $medicine = PrescriptionMedicine::where(['type' => 'women_wellness','appointment_id' => $appoinment->id])->get();
 
 
         // dd($medicine);
@@ -1775,7 +1701,7 @@ public function GetAppointments()
 
                $type = 'gynaecology';
                 $pr_id = $getdata->id;
-                $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+                $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
         }
             //print_r($getdata); exit;
             return view('pages.doctor.patient.gynaecology-case-record', compact('pres','user','patient','appoinment','app_status','getdata'));

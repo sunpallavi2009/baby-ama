@@ -138,7 +138,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                 </div>
                                <?php
                                                                // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
-                                                               $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'dental'])->get();
+                                                               $prescription_medicine = DB::table('doctor_prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'dental'])->get();
 
                                                                ?>
                                 @if (isset($prescription_medicine))
@@ -314,8 +314,8 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
             <?php
             // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
-            $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'dental'])->get();
-
+            $prescription_medicine = DB::table('doctor_prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'dental'])->get();
+            
             ?>
             @if (isset($prescription_medicine))
             <div class="prescription-table py-3">

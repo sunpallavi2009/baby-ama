@@ -149,7 +149,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                 <?php
 
                                 // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'pediatric'])->get();
-                                    $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'pediatric'])->get();
+                                    $prescription_medicine = DB::table('doctor_prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$ps['appointment_id'],'type'=>'pediatric'])->get();
 
                                     //print_r($prescription_medicine); exit;
                                 ?>
@@ -321,7 +321,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                         <?php
 
                         // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'pediatric'])->get();
-                            $prescription_medicine = DB::table('prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'pediatric'])->get();
+                            $prescription_medicine = DB::table('doctor_prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'pediatric'])->get();
 
                             //print_r($prescription_medicine); exit;
                         ?>

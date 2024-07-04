@@ -459,23 +459,23 @@ public function CompletedPrescription($prescription_id){
         return redirect()->back()->with('success', 'Details Saved Successfuly');
     }
 
-    
 
+    // public function prescriptionList() {
+    //     $patients = PrescriptionMedicine::groupBy('appointment_id')->with("user")
+    //         ->orderBy('id', 'desc')
+    //         ->paginate(25);
 
-    // public function prescriptionList(){
-
-    //     $patients = PrescriptionMedicine::groupBy('prescription_id')
-    //     with("user")
-    //     ->orderBy('id','desc')->paginate(25);
-
-    //     return view('pages.pharmacy.billing.prescription-list',compact('patients'));
+    //     // dd($patients);
+    //     return view('pages.pharmacy.billing.prescription-list', compact('patients'));
     // }
-    public function prescriptionList() {
-        $patients = PrescriptionMedicine::groupBy('appointment_id')->with("user")
+
+        public function prescriptionList()
+    {
+        $patients = PrescriptionMedicine::with(['user', 'appointment'])
+            ->groupBy('appointment_id')
             ->orderBy('id', 'desc')
             ->paginate(25);
 
-        // dd($patients);
         return view('pages.pharmacy.billing.prescription-list', compact('patients'));
     }
 

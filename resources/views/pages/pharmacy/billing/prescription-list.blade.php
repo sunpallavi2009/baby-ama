@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="search-field-wrap w-100">
                                     <input type="search" name="search" placeholder="Search by name, UMR no."
-                                        id="filterpharmaMedicine" class="form-control" onKeyup="patientlist(this.value)">
+                                        id="filterpharmaMedicine" class="form-control" onchange="patientlist(this.value)">
 
                                     <!-- <input type="search" name="search" placeholder="search medicine" id="search" class="form-control w-100" /> -->
                                 </div>
@@ -50,7 +50,7 @@
                                     <th scope="col" class="bg-color-v1 text-center">Age</th>
                                     <th scope="col" class="bg-color-v1 text-center">UMR No.</th>
                                     <th scope="col" class="bg-color-v1 text-center">O/P No.</th>
-                                    {{-- <th scope="col" class="bg-color-v1 text-center">Date</th> --}}
+                                    <th scope="col" class="bg-color-v1 text-center">Date</th>
                                     <th scope="col" class="bg-color-v1 text-center">Status</th>
                                     <th scope="col" class="bg-color-v1 text-center action-btn w-100">Action</th>
                                 </tr>
@@ -102,7 +102,7 @@
                 {{ isset($details->user['op_no']) ? $details->user['op_no'] : ""  }}
                 </td>
                 
-                {{-- <td class="text-center">{{ date('d-m-Y', strtotime($details->created_at))  }}</td> --}}
+                <td class="text-center">{{ $details->appointment ? $details->appointment->appoinment_date : '' }}</td>
                 <td class="text-center">
                     @if(isset($details->prescription_status))
                         @if($details->prescription_status == 'ignored')
