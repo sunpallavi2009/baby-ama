@@ -300,8 +300,8 @@
                                 class="img-fluid object-fit-contain inv-logo mx-auto">
                         </div>
                         <div class="col-md-5 mb-5 pb-4 text-left" style="padding-top: 30px;">
-                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 78967 84329</p>
-                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 0422- 3502606, 350260607</p>
+                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> +91 9585599885</p>
+                            <p><i class="fas fa-phone-alt text-primary" aria-hidden="true"></i> 0422- 3502606, 3502607</p>
                             <p><i class="fa fa-envelope text-primary" aria-hidden="true"></i> babyamaclinic@gmail.com</p>
                             <p><i class="fa fa-globe text-primary" aria-hidden="true"></i> www.babyama.in</p>
                         </div>

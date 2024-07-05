@@ -130,7 +130,7 @@ use App\Models\Medicine;
 
                 <div class="col-12 d-flex gap-2 align-items-center">
                     <a href="{{ route('pharmacy.billing.prescription.list') }}" class="baby-btn-v1">Back</a>
-                    <a href="{{ route('pharmacy.billing.complete.medicine', $prescription_id) }}" class="act-btn success">Completed</a>
+                    <a href="{{ route('pharmacy.billing.complete.medicine', $val->id) }}" class="act-btn success">Completed</a>
                 </div>
             </div>
 

@@ -95,6 +95,7 @@ Route::prefix('doctor')->middleware('doctor')->group(function () {
 
     Route::get('doctor/edit/medicine', [DoctorController::class, 'EditMedicine'])->name('doctor.edit.medicine');
     Route::get('doctor/delete/medicine', [DoctorController::class, 'DeleteMedicine'])->name('doctor.delete.medicine');
+    Route::post('appointment/{appoinment}/patient/{patient}/prescription/medicine/update', [DoctorController::class, 'updateMedicineDetail'])->name('doctor.appointment.patient.prescription.medicine.update');
 
 
 // VG

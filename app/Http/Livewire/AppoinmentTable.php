@@ -132,40 +132,42 @@ final class AppoinmentTable extends PowerGridComponent
                 }
             })
             ->addColumn('first_name', function (Appoinment $app) {
-                // dd($app->user->first_name);
-                return $app->user->first_name;
+                return $app->user ? $app->user->first_name : '';
             })
 
-            ->addColumn('umr_no',function (Appoinment $app){
-                return $app->user->patient->umr_no;
+            ->addColumn('umr_no', function (Appoinment $app) {
+                return $app->user && $app->user->patient ? $app->user->patient->umr_no : '';
             })
 
-            ->addColumn('op_no',function (Appoinment $app){
-                return $app->user->patient->op_no;
+            ->addColumn('op_no', function (Appoinment $app) {
+                return $app->user && $app->user->patient ? $app->user->patient->op_no : '';
             })
 
             ->addColumn('d_o_b', function (Appoinment $app) {
-                $formattedDate = Carbon::parse($app->user->patient->d_o_b)->format('d/m/Y');
-                $age = ageCalculator($app->user->patient->d_o_b);
-                $app->formatted_dob = $formattedDate . ' (' . $age . ' Years)';
-                return $app->formatted_dob;
-                // return  "" .$app->user->patient->age;
+                if ($app->user && $app->user->patient) {
+                    $formattedDate = Carbon::parse($app->user->patient->d_o_b)->format('d/m/Y');
+                    $age = ageCalculator($app->user->patient->d_o_b);
+                    return $formattedDate . ' (' . $age . ' Years)';
+                }
+                return '';
             })
 
-            ->addColumn('father_phone',function (Appoinment $app){
-
-                return $app->user->patient->father_phone;
+            ->addColumn('father_phone', function (Appoinment $app) {
+                return $app->user && $app->user->patient ? $app->user->patient->father_phone : '';
             })
 
-            ->addColumn('appoinment_date',function (Appoinment $app){
+            // ->addColumn('appoinment_date',function (Appoinment $app){
 
-                // return $app->appoinment_date;
-                $formattedDate = Carbon::parse($app->appoinment_date)->format('d/m/Y');
-                return $formattedDate;
+                
+            //     $formattedDate = Carbon::parse($app->appoinment_date)->format('d/m/Y');
+            //     return $formattedDate;
+            // })
+
+            ->addColumn('appoinment_date', function (Appoinment $app) {
+                return $app->appoinment_date ? Carbon::parse($app->appoinment_date)->format('d/m/Y') : '';
             })
 
-            ->addColumn('appoinment_session',function (Appoinment $app){
-
+            ->addColumn('appoinment_session', function (Appoinment $app) {
                 return $app->appoinment_session;
             })
 

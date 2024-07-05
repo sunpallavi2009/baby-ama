@@ -353,11 +353,11 @@ class PharmacyController extends Controller
 }
 
 
-public function CompletedPrescription($prescription_id){
+public function CompletedPrescription($id){
 
-    $id =  $prescription_id;
+    $id1 =  $id;
     $status = 'delivered';
-    $query  = PrescriptionMedicine::where('prescription_id', $id)->update(['prescription_status'=>$status]);
+    $query  = PrescriptionMedicine::where('id', $id1)->update(['prescription_status'=>$status]);
 
     $response = [];
 
@@ -368,7 +368,6 @@ public function CompletedPrescription($prescription_id){
 
 
 }
-
     public function DeclinedPrescription(Request $request){
 
         /*$query =  PrescriptionMedicine::where('prescription_id', $request->delid)->first();
@@ -471,15 +470,75 @@ public function CompletedPrescription($prescription_id){
     //     return view('pages.pharmacy.billing.prescription-list', compact('patients'));
     // }
 
-        public function prescriptionList()
-    {
-        $patients = PrescriptionMedicine::with(['user', 'appointment'])
-            ->groupBy('appointment_id')
-            ->orderBy('id', 'desc')
-            ->paginate(25);
+    //     public function prescriptionList()
+    // {
+    //     $patients = PrescriptionMedicine::with(['user', 'appointment'])
+    //         ->groupBy('appointment_id')
+    //         ->orderBy('id', 'desc')
+    //         ->paginate(25);
 
-        return view('pages.pharmacy.billing.prescription-list', compact('patients'));
-    }
+    //     return view('pages.pharmacy.billing.prescription-list', compact('patients'));
+    // }
+
+    public function prescriptionList(Request $request)
+{
+    $search = $request->query('search');
+
+    $patients = PrescriptionMedicine::with(['user', 'appointment'])
+        ->when($search, function ($query) use ($search) {
+            $query->whereHas('user', function ($userQuery) use ($search) {
+                $userQuery->where('first_name', 'like', "%{$search}%")
+                          ->orWhere('last_name', 'like', "%{$search}%")
+                          ->orWhere('umr_no', 'like', "%{$search}%");
+            });
+        })
+        ->groupBy('appointment_id')
+        ->orderBy('id', 'desc')
+        ->paginate(25);
+
+    return view('pages.pharmacy.billing.prescription-list', compact('patients'));
+}
+
+
+//     public function prescriptionList(Request $request)
+// {
+//     $search = $request->input('search');
+
+//     $patients = PrescriptionMedicine::query()
+//         ->with(['user', 'appointment'])
+//         ->whereHas('user', function ($query) use ($search) {
+//             $query->where('first_name', 'like', "%$search%")
+//                   ->orWhere('umr_no', 'like', "%$search%"); // Add more fields as needed
+//         })
+//         ->groupBy('appointment_id')
+//         ->orderBy('id', 'desc')
+//         ->paginate(25);
+
+//     return view('pages.pharmacy.billing.prescription-list', compact('patients'));
+// }
+
+public function searchPrescriptions(Request $request)
+{
+    $search = $request->input('search');
+
+    $patients = PrescriptionMedicine::with(['user', 'appointment'])
+        ->when($search, function ($query) use ($search) {
+            $query->whereHas('user', function ($userQuery) use ($search) {
+                $userQuery->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhere('umr_no', 'like', "%{$search}%");
+            });
+        })
+        ->groupBy('appointment_id')
+        ->orderByDesc('id')
+        ->paginate(25);
+
+    return response()->json([
+        'data' => view('pages.pharmacy.billing.prescription-list', compact('patients'))->render()
+    ]);
+}
+
+
 
 
     public function GetPatientInvoice($prid,$userid,$appointment_id){

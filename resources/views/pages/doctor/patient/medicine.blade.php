@@ -411,6 +411,10 @@
                 <form
                     action="{{ route('doctor.appointment.patient.prescription.medicine.post', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id]) }}"
                     method="POST">
+
+                    {{-- <form
+                    action="{{ route('doctor.appointment.patient.prescription.medicine.update', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id]) }}"
+                    method="POST"> --}}
                     @csrf
                     <input type="hidden" name="pr_id" id="pr_id" value="{{ $data->id }}">
                     <input type="hidden" name="pr_add_edit" id="pr_add_edit" value="update">
