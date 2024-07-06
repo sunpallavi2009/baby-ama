@@ -1074,7 +1074,8 @@ public function GetAppointments()
     //     return redirect()->back()->with('success', 'Details Saved Successfuly');
     // }
 
-//     public function PostMedicineDetail(Request $request, Appoinment $appoinment, Patient $patient)
+
+// public function PostMedicineDetail(Request $request, Appoinment $appoinment, Patient $patient)
 // {
 //     $user = $patient->user;
 
@@ -1090,61 +1091,62 @@ public function GetAppointments()
 //         $prescription->save();
 //     }
 
+//     // Convert timing arrays to strings
 //     $pr_timing_when = isset($request->timing_when) ? implode(',', $request->timing_when) : '';
 //     $pr_timing_how = isset($request->timing_how) ? implode(',', $request->timing_how) : '';
 
 //     // Handle PrescriptionMedicine
-//     $medicine = PrescriptionMedicine::find($request->id);
+//     $medicine = PrescriptionMedicine::where('prescription_id', $prescription->id)
+//                                     ->where('medicine_id', $request->medicine_id)
+//                                     ->first();
+
 //     if (!$medicine) {
 //         $medicine = new PrescriptionMedicine();
 //     }
 
-//     $medicine->prescription_name = $request->prescription_name ?: '';
+//     // Set PrescriptionMedicine fields
+//     $medicine->prescription_name = $request->prescription_name ?? '';
 //     $medicine->prescription_id = $prescription->id;
 //     $medicine->user_id = $user->id;
 //     $medicine->type = $request->prescription_type;
-//     $medicine->medicine_id = $request->medicine_id ?: null;
-//     $medicine->dosage = $request->dosage ?: '';
-//     $medicine->intake_qty = $request->intake_qty ?: 0;
+//     $medicine->medicine_id = $request->medicine_id ?? null;
+//     $medicine->dosage = $request->dosage ?? '';
+//     $medicine->total_qty = $request->total_qty ?? 0;
+//     $medicine->intake_qty = $request->intake_qty ?? 0;
 //     $medicine->timing_when = $pr_timing_when;
 //     $medicine->timing_how = $pr_timing_how;
-//     $medicine->notes = $request->notes ?: '';
-//     $medicine->duration = $request->tab_count_days ?: 0;
+//     $medicine->notes = $request->notes ?? '';
+//     $medicine->duration = $request->tab_count_days ?? 0;
 //     $medicine->appointment_id = $appoinment->id;
-
-//     // Calculate total quantity based on duration and intake quantity
-//     $medicine->total_qty = $medicine->intake_qty * $medicine->duration;
-
 //     $medicine->save();
 
 //     // Handle DoctorPrescriptionMedicine
 //     $doctorPrescriptionMedicine = DoctorPrescriptionMedicine::where('prescription_id', $prescription->id)
 //                                                               ->where('medicine_id', $medicine->medicine_id)
 //                                                               ->first();
+
 //     if (!$doctorPrescriptionMedicine) {
 //         $doctorPrescriptionMedicine = new DoctorPrescriptionMedicine();
 //     }
 
+//     // Set DoctorPrescriptionMedicine fields
 //     $doctorPrescriptionMedicine->prescription_id = $prescription->id;
-//     $doctorPrescriptionMedicine->prescription_name = $request->prescription_name ?: '';
-//     $doctorPrescriptionMedicine->type = $request->prescription_type ?: '';
-//     $doctorPrescriptionMedicine->medicine_id = $request->medicine_id ?: null;
-//     $doctorPrescriptionMedicine->dosage = $request->dosage ?: '';
+//     $doctorPrescriptionMedicine->prescription_name = $request->prescription_name ?? '';
+//     $doctorPrescriptionMedicine->type = $request->prescription_type ?? '';
+//     $doctorPrescriptionMedicine->medicine_id = $request->medicine_id ?? null;
+//     $doctorPrescriptionMedicine->dosage = $request->dosage ?? '';
 //     $doctorPrescriptionMedicine->total_qty = $medicine->total_qty;
 //     $doctorPrescriptionMedicine->intake_qty = $medicine->intake_qty;
 //     $doctorPrescriptionMedicine->timing_when = $pr_timing_when;
 //     $doctorPrescriptionMedicine->timing_how = $pr_timing_how;
-//     $doctorPrescriptionMedicine->notes = $request->notes ?: '';
+//     $doctorPrescriptionMedicine->notes = $request->notes ?? '';
 //     $doctorPrescriptionMedicine->duration = $medicine->duration;
 //     $doctorPrescriptionMedicine->appointment_id = $appoinment->id;
 //     $doctorPrescriptionMedicine->user_id = $user->id;
-
 //     $doctorPrescriptionMedicine->save();
 
 //     return redirect()->back()->with('success', 'Details Saved Successfully');
 // }
-
-
 
 public function PostMedicineDetail(Request $request, Appoinment $appoinment, Patient $patient)
 {
@@ -1182,7 +1184,7 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
     $medicine->type = $request->prescription_type;
     $medicine->medicine_id = $request->medicine_id ?? null;
     $medicine->dosage = $request->dosage ?? '';
-    $medicine->total_qty = $request->total_qty ?? 0;
+    $medicine->total_qty = $request->total_qty ?? 0; // Ensure this value is set from the request
     $medicine->intake_qty = $request->intake_qty ?? 0;
     $medicine->timing_when = $pr_timing_when;
     $medicine->timing_how = $pr_timing_how;
@@ -1206,7 +1208,7 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
     $doctorPrescriptionMedicine->type = $request->prescription_type ?? '';
     $doctorPrescriptionMedicine->medicine_id = $request->medicine_id ?? null;
     $doctorPrescriptionMedicine->dosage = $request->dosage ?? '';
-    $doctorPrescriptionMedicine->total_qty = $medicine->total_qty;
+    $doctorPrescriptionMedicine->total_qty = $request->total_qty ?? 0; // Ensure this value is set from the request
     $doctorPrescriptionMedicine->intake_qty = $medicine->intake_qty;
     $doctorPrescriptionMedicine->timing_when = $pr_timing_when;
     $doctorPrescriptionMedicine->timing_how = $pr_timing_how;
@@ -1218,6 +1220,13 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
 
     return redirect()->back()->with('success', 'Details Saved Successfully');
 }
+
+
+
+
+
+
+
 
 
 

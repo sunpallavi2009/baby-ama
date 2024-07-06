@@ -1938,17 +1938,23 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                {{-- <div class="col-12">
                     <div class="prescription-table py-3">
                         <h3 class="mb-5">Drug and Prescription</h3>
                         <div class="row mx-0">
-                            <div class="col-12 col-md-7 px-0">
+                            <div class="col-12 col-md-12 px-0">
                                 <div class="table-responsive py-3 w-5" id="mydiv">
                                     <table class="table">
                                         <thead class="table-light bg-color-v1">
                                             <tr>
                                                 <th scope="col" class="text-center">S.No</th>
                                                 <th scope="col" class="bg-color-v1">MEDICINE</th>
+                                                <th scope="col" class="bg-color-v1">DOSAGE</th>
+                                                <th scope="col" class="bg-color-v1 text-center">TIMING</th>
+                                                <th scope="col" class="bg-color-v1 text-center">RELATION TO FOOD
+                                                    </th>
+                                                <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
+                                                        DAYS</th>
                                                 <th scope="col" class="bg-color-v1 text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -1973,7 +1979,23 @@
                                                             {{ '(' . $list_dosage . ')' }}
                                                         @endif
                                                     </td>
-                                                    <td class="text-center">
+
+                                                    <td class=""> 
+                                                        {{ $list_pres->intake_qty . ' ' . $list_pres->dosage }}
+                                                    </td>
+
+                                                    <td class=""> 
+                                                        {{ $list_pres->timing_when }}
+                                                    </td>
+
+                                                    <td class=""> 
+                                                        {{ $list_pres->timing_how }}
+                                                    </td>
+
+                                                    <td class=""> 
+                                                        {{ $list_pres->duration  }}
+                                                    </td>
+                                                     <td class="text-center">
                                                         <div class="d-flex">
                                                             <div class="w-50 d-flex justify-content-center align-items-center">
                                                                 <button class="action-btn" data-bs-toggle="modal"
@@ -2000,7 +2022,7 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> 
                                                 </tr>
                                                 @php $i++; @endphp
                                             @endforeach
@@ -2009,6 +2031,62 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <div class="prescription-table py-3">
+                            <h3 class="">Drug and Prescription</h3>
+                            <div class="table-responsive py-3">
+                                <table class="table">
+                                    <thead class="table-light bg-color-v1">
+                                        <tr>
+                                            <th scope="col" class="text-center">S.No</th>
+                                            <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
+                                            <th scope="col" class="bg-color-v1 text-center">DOSAGE</th>
+                                            <th scope="col" class="bg-color-v1 text-center">TIMING</th>
+                                            <th scope="col" class="bg-color-v1 text-center">RELATION TO FOOD
+                                            </th>
+                                            <th scope="col" class="bg-color-v1 text-center">FOLLOW UP’S
+                                                DAYS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php $inc=0; @endphp
+                                        @foreach ($pres as $p_medicine)
+                                            @php
+                                                $inc++;
+                                                $frame_data = [
+                                                    'id' => $p_medicine->id,
+                                                    'medicine_id' => $p_medicine->medicine_id,
+                                                    'total_qty' => $p_medicine->total_qty,
+                                                    'intake_qty' => $p_medicine->intake_qty,
+                                                    'timing_when' => $p_medicine->timing_when,
+                                                    'timing_how' => $p_medicine->timing_how,
+                                                    'duration' => $p_medicine->duration,
+                                                ];
+                                                $medicine_details = getMedcineDetail($p_medicine->medicine_id);
+                                                $list_name   = (isset($medicine_details->name)) ? ($medicine_details->name) : ucfirst($p_medicine->prescription_name);
+
+                                            @endphp
+
+                                            <tr>
+                                                <th scope="row" class="text-center">{{ $inc }}</th>
+                                                <td><b>{{ $list_name }}</b></td>
+                                                <td class="text-center">
+                                                    {{ $p_medicine->intake_qty . ' ' . $p_medicine->dosage }}
+                                                </td>
+                                                <td class="text-center">{{ $p_medicine->timing_when }}</td>
+                                                <td class="text-center">{{ $p_medicine->timing_how }}</td>
+                                                <td class="text-center">{{ $p_medicine->duration }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

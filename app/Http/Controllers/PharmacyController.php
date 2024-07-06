@@ -550,21 +550,39 @@ public function searchPrescriptions(Request $request)
         $prescription_id = PrescriptionMedicine::where('prescription_id',$prid)->first();
         $appointment = Appoinment::where('id',$appointment_id)->first();
 
-        $lastInvoice = PrescriptionMedicine::orderBy('created_at', 'desc')->first();
+        // $lastInvoice = PrescriptionMedicine::orderBy('created_at', 'desc')->first();
 
-        if ($lastInvoice) {
-            $lastInvoiceNumber = $lastInvoice->invoice_number;
-            $newInvoiceNumber = $lastInvoiceNumber + 1;
-        } else {
-            // If no invoice exists, start with 1
-            $newInvoiceNumber = 1;
-        }
+        // if ($lastInvoice) {
+        //     $lastInvoiceNumber = $lastInvoice->invoice_number;
+        //     $newInvoiceNumber = $lastInvoiceNumber + 1;
+        // } else {
+        //     // If no invoice exists, start with 1
+        //     $newInvoiceNumber = 1;
+        // }
 
-        // Create a new invoice
-        $invoice = new PrescriptionMedicine();
-        $invoice->invoice_number = $newInvoiceNumber;
-        // Set other invoice details here
-        $invoice->save();
+        // // Create a new invoice
+        // $invoice = new PrescriptionMedicine();
+        // $invoice->invoice_number = $newInvoiceNumber;
+        // // Set other invoice details here
+        // $invoice->save();
+
+        $lastInvoice = PrescriptionMedicine::orderBy('invoice_number', 'desc')->first();
+
+    // Determine the new invoice number
+            if ($lastInvoice) {
+                $lastInvoiceNumber = $lastInvoice->invoice_number;
+                $newInvoiceNumber = $lastInvoiceNumber + 1;
+            } else {
+                // If no invoice exists, start with 1
+                $newInvoiceNumber = 1;
+            }
+
+           $invoice = new PrescriptionMedicine();
+           $invoice->invoice_number = $newInvoiceNumber;
+           // Set other invoice details here
+           $invoice->save();
+
+           // return $newInvoiceNumber;
 
         return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user','invoice','appointment'));
     }
