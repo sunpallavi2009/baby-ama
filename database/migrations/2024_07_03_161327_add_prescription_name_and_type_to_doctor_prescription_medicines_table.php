@@ -17,8 +17,8 @@ class AddPrescriptionNameAndTypeToDoctorPrescriptionMedicinesTable extends Migra
             $table->string('prescription_name')->nullable()->before('prescription_id');
             $table->string('type')->nullable()->before('prescription_id');
             $table->string('dosage_qty')->nullable()->before('total_qty');
-            
-            
+
+
         });
     }
 
@@ -30,7 +30,9 @@ class AddPrescriptionNameAndTypeToDoctorPrescriptionMedicinesTable extends Migra
     public function down()
     {
         Schema::table('doctor_prescription_medicines', function (Blueprint $table) {
-            //
+            $table->dropColumn('prescription_name');
+            $table->dropColumn('type');
+            $table->dropColumn('dosage_qty');
         });
     }
 }

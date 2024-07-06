@@ -1234,7 +1234,7 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
 
 
 
-   
+
     public function SearchMedicine(Request $request){
 
         $query = Medicine::query();
@@ -1500,6 +1500,13 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
         // if ($dataid) {
             $medicine = PrescriptionMedicine::where(['type' => 'pediatric','appointment_id' => $dataid])->get();
         // }
+
+        // $prescriptionAppointments = [];
+        // foreach ($getFormAnswers as $prescription) {
+        //     $prescriptionAppointments[$prescription->appointment_id] = Appoinment::find($prescription->appointment_id);
+        // }
+
+        // dd($prescriptionAppointments);
 
         return view('pages.doctor.patient.paediatrics-case-summery', compact('appoinment', 'user', 'getFormAnswers', 'clinicalNotes', 'medicine', 'patient'));
     }
