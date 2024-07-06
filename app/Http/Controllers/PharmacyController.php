@@ -543,7 +543,7 @@ public function searchPrescriptions(Request $request)
 
     public function GetPatientInvoice($prid,$userid,$appointment_id){
 
-     $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])
+     $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid,'appointment_id'=>$appointment_id])
         ->get();
 
         $user = Patient::where('user_id',$userid)->first();
