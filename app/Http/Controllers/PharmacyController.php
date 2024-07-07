@@ -434,7 +434,7 @@ public function CompletedPrescription($id){
     }
 
 
-     public function PostMedicineDetail(Request $request,$prid){
+     public function PostMedicineDetail(Request $request,$prid,){
 
         // dd($request);
 
@@ -445,6 +445,7 @@ public function CompletedPrescription($id){
         /*if($request->pr_add_edit == 'add'){*/
                 $s_medicine = ($request->id) ? PrescriptionMedicine::find($request->id) : new PrescriptionMedicine;
                 $s_medicine->prescription_id = $prid;
+                $s_medicine->appointment_id = $request->appointment_id;
                 $s_medicine->user_id = $request->user_id;
                 $s_medicine->medicine_id = $request->medicine_id;
                 $s_medicine->dosage = $request->dosage;

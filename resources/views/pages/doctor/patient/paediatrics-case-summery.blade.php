@@ -238,7 +238,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                         <h2 class="mb-0">Clinical Notes Case Summary</h2>
                     </div>
 
-                    <p class="mb-4 date">{{ isset($appoinment->appoinment_date) ? date('Y-m-d', strtotime($appoinment->appoinment_date)) : '' }}</p>
+                    <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
                     <div class="head baby-shadow py-3 px-5 mb-4">
                         <div class="row px-5 py-4 align-items-center">
                             <div class="col-12 col-md-2">

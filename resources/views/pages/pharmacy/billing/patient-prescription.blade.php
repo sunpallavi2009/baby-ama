@@ -143,12 +143,13 @@ use App\Models\Medicine;
                     $getType = $medicine1->dosage ? ' (' . $medicine1->dosage . ')' : '';
                     $fullName = helperFormatMedicinePrefix($medicine1->type) . ' ' . $medicine1->name . $getType;
                 @endphp
-                    <form action="{{ route('pharmacy.billing.prescription.medicine.post', ['prid' => $prescription_id ]) }}"
-                    method="POST">
+                    <form action="{{ route('pharmacy.billing.prescription.medicine.post', ['prid'=>$prescription_id, 'appointment_id'=>$appointment]) }}" method="POST">
+
                     @csrf
                     <input type="hidden" name="user_id" id="user_id" value="{{ $user->user_id }}">
                     <input type="hidden" name="pr_add_edit" id="pr_add_edit" value="add">
                     <input type="hidden" name="medicine_id" id="medicine_id" value="{{ $medicine1->id }}">
+                    <input type="hidden" name="appointment_id" id="appointment_id" value="{{ $appointment }}">
 
                     <div class="col-12">
                         <div class="modal fade med-data-modal" id="MedPopModal{{ $medicine1->id }}" tabindex="-1"

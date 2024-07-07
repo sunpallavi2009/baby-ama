@@ -441,7 +441,7 @@ public function GetAppointments()
         if ($getdata) {
             $pr_id = $getdata->id;
             $type = 'pediatric';
-            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$appoinment->id ])->get();
         }
 
         return view('pages.doctor.patient.pediatric', compact('pres', 'user', 'patient', 'getdata', 'appoinment', 'app_status', 'pr_id'));
