@@ -56,7 +56,9 @@
             <span style="color:#714B9D;">Invoice Date : </span> {{$appointment->appoinment_date}}
         </div> --}}
     </div>
-
+@php
+$patient = $appointment->user->patient;
+@endphp
 @if($appointment->user->patient)
 
 <div class="row col-lg-12 p-8" style="background-color: #F9F7FB;border-top-left-radius: 10px;border-top-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
@@ -154,21 +156,21 @@
                     <span>{{$appointment->specialists}}</span>
                 </p>
             @endif
-            @if($userInfo->reg_no)
+            @if($userInfo && $userInfo->reg_no)
                 <p>
                     <span style="color:#714B9D;"><b>Reg No</b></span>
                     <span class="separator">:</span>
                     <span>{{$userInfo->reg_no}}</span>
                 </p>
             @endif
-            @if($patient->umr_no)
+            @if($patient && $patient->umr_no)
             <p>
                 <span style="color:#714B9D;"><b>UMR No</b></span>
                 <span class="separator">:</span>
                 <span>{{$patient->umr_no}}</span>
             </p>
             @endif
-            @if($patient->op_no)
+            @if($patient && $patient->op_no)
             <p>
                 <span style="color:#714B9D;"><b>OP No</b></span>
                 <span class="separator">:</span>
