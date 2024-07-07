@@ -83,7 +83,7 @@ use App\Models\DoctorPrescriptionMedicine;
                                 {{-- <div class="col-6 px-0"><button type="button" class="baby-secondary-btn border-1 text-center p-2 float-end">Edit</button></div> --}}
                                 <?php } ?>
                             </div>
-                            <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                            <p class="mb-4 date">{{ isset($getap->appoinment_date) ? date('Y-m-d', strtotime($getap->appoinment_date)) : '' }}</p>
                             <div class="head baby-shadow py-3 px-5 mb-4">
                                 <div class="row px-5 py-4 align-items-center">
                                     <div class="col-12 col-md-2">

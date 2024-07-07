@@ -57,7 +57,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                     {{-- <div class="col-6 px-0"><button type="button" class="baby-secondary-btn border-1 text-center p-2 float-end">Edit</button></div> --}}
                                     <?php //} ?>
                             </div>
-                            <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                            <p class="mb-4 date">{{ isset($getap->appoinment_date) ? date('Y-m-d', strtotime($getap->appoinment_date)) : '' }}</p>
                             <div class="head baby-shadow py-3 px-5 mb-4">
                                 <div class="row px-5 py-4 align-items-center">
                                     <div class="col-12 col-md-2">
@@ -315,7 +315,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
             <?php
             // $prescription_medicine = App\Models\prescriptionMedicine::where(['prescription_id'=>$ps['id'],'type'=>'dental'])->get();
             $prescription_medicine = DB::table('doctor_prescription_medicines')->where(['prescription_id'=>$ps['id'],'appointment_id'=>$data->id,'type'=>'dental'])->get();
-            
+
             ?>
             @if (isset($prescription_medicine))
             <div class="prescription-table py-3">

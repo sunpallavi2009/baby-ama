@@ -48,7 +48,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
              if ($data!=null):
              $getap = DB::table('appoinments')->where('id',$ps['appointment_id'])->first();
-
+                // dd($getap);
              ?>
                     <div class="clinical-note baby-border mb-5">
                         <div class="row px-5 py-4 align-items-center justify-content-between mb-4">
@@ -63,8 +63,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
                                 {{-- <div class="col-6 px-0"><button type="button" class="baby-secondary-btn border-1 text-center p-2 float-end">Edit</button></div> --}}
                                 <?php //} ?>
                             </div>
-
-                            <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                            <p class="mb-4 date">{{ isset($getap->appoinment_date) ? date('Y-m-d', strtotime($getap->appoinment_date)) : '' }}</p>
                             <div class="head baby-shadow py-3 px-5 mb-4">
                                 <div class="row px-5 py-4 align-items-center">
                                     <div class="col-12 col-md-2">

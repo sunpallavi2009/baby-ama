@@ -84,7 +84,7 @@ use App\Models\DoctorPrescriptionMedicine;
                                 </a>
                                 <?php } ?>
                             </div>
-                            <p class="mb-4 date">{{ isset($data->date) ? date('Y-m-d', strtotime($data->date)) : '' }}</p>
+                            <p class="mb-4 date">{{ isset($getap->appoinment_date) ? date('Y-m-d', strtotime($getap->appoinment_date)) : '' }}</p>
                             <div class="head baby-shadow py-3 px-5 mb-4">
                                 <div class="row px-5 py-4 align-items-center">
                                     <div class="col-12 col-md-2">

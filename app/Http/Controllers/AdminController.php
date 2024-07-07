@@ -672,7 +672,7 @@ class AdminController extends Controller
         }
 
         // Get invoice details
-        $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending', 'prescription_id' => $latestPrescriptionId])
+        $invoice_details = PrescriptionMedicine::where(['prescription_id' => $latestPrescriptionId])
         ->where('appointment_id', $appointmentId)
             ->get();
 
