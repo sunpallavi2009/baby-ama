@@ -35,7 +35,7 @@ Route::prefix('pharmacy')->middleware('pharmacy')->group(function () {
     Route::get('/print/billing/{prid}/patient/{userid}/invoice', [PharmacyController::class, 'PrintPatientInvoice'])->name('pharmacy.print.billing.patient.invoice');
 
     Route::get('/billing/delete/medicine', [PharmacyController::class, 'DeclinedPrescription'])->name('pharmacy.billing.delete.medicine');
-    Route::get('/billing/complete/{id}/medicine', [PharmacyController::class, 'CompletedPrescription'])->name('pharmacy.billing.complete.medicine');
+    Route::get('/billing/complete/{appointment_id}/medicine', [PharmacyController::class, 'CompletedPrescription'])->name('pharmacy.billing.complete.medicine');
 
     Route::post('save/{prid}/medicine', [PharmacyController::class, 'PostMedicineDetail'])->name('pharmacy.billing.prescription.medicine.post');
 

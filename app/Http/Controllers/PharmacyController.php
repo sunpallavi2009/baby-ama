@@ -353,11 +353,11 @@ class PharmacyController extends Controller
 }
 
 
-public function CompletedPrescription($id){
+public function CompletedPrescription($appointment_id){
 
-    $id1 =  $id;
+    $id1 =  $appointment_id;
     $status = 'delivered';
-    $query  = PrescriptionMedicine::where('id', $id1)->update(['prescription_status'=>$status]);
+    $query  = PrescriptionMedicine::where('appointment_id', $id1)->update(['prescription_status'=>$status]);
 
     $response = [];
 
@@ -434,7 +434,7 @@ public function CompletedPrescription($id){
     }
 
 
-     public function PostMedicineDetail(Request $request,$prid,){
+     public function PostMedicineDetail(Request $request,$prid){
 
         // dd($request);
 
@@ -544,7 +544,10 @@ public function searchPrescriptions(Request $request)
 
     public function GetPatientInvoice($prid,$userid,$appointment_id){
 
-     $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid,'appointment_id'=>$appointment_id])
+    //  $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid,'appointment_id'=>$appointment_id])
+    //     ->get();
+
+        $invoice_details = PrescriptionMedicine::where(['prescription_id'=>$prid,'appointment_id'=>$appointment_id])
         ->get();
 
         $user = Patient::where('user_id',$userid)->first();

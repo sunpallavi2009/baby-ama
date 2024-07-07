@@ -130,7 +130,7 @@ use App\Models\Medicine;
 
                 <div class="col-12 d-flex gap-2 align-items-center">
                     <a href="{{ route('pharmacy.billing.prescription.list') }}" class="baby-btn-v1">Back</a>
-                    <a href="{{ route('pharmacy.billing.complete.medicine', $val->id) }}" class="act-btn success">Completed</a>
+                    <a href="{{ route('pharmacy.billing.complete.medicine', $val->appointment_id) }}" class="act-btn success">Completed</a>
                 </div>
             </div>
 
@@ -334,6 +334,7 @@ use App\Models\Medicine;
                     <input type="hidden" name="pr_add_edit" id="pr_add_edit" value="update">
                     <input type="hidden" name="medicine_id" id="medicine_id" value="{{ $list_pres1->medicine_id }}">
                     <input type="hidden" name="id" id="edit_id" value="{{ $list_pres1->id }}">
+                    <input type="hidden" name="appointment_id" id="appointment_id" value="{{ $appointment }}">
                     <div class="col-12">
                         <div class="modal fade med-data-modal" id="EditMedPopModal{{ $list_pres1->id }}" tabindex="-1"
                             aria-labelledby="MedPopModalLabel" aria-hidden="true">
@@ -528,6 +529,8 @@ use App\Models\Medicine;
                     <input type="hidden" name="pr_add_edit" id="pr_add_edit" value="update">
                     <input type="hidden" name="medicine_id" id="medicine_id" value="{{ $list_pres2->medicine_id }}">
                     <input type="hidden" name="id" id="edit_id" value="{{ $list_pres2->id }}">
+                    <input type="hidden" name="appointment_id" id="appointment_id" value="{{ $appointment }}">
+
                     <div class="col-12">
                         <div class="modal fade med-data-modal" id="EditMedicine{{ $list_pres2->id }}" tabindex="-1"
                             aria-labelledby="MedPopModalLabel" aria-hidden="true">
