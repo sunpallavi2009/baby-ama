@@ -43,8 +43,13 @@ $id = $appointment->id;
             <div class="mb-8 note-container">
                 <div class="d-flex justify-content-between align-items-center">
                     <label for="note_{{ $note->id }}" class="form-label">
-                        {{ $associatedAppointment->doctor->first_name . ' ' . $associatedAppointment->doctor->last_name
-                        }}
+                        {{-- {{ $associatedAppointment->doctor->first_name . ' ' . $associatedAppointment->doctor->last_name
+                        }} --}}
+                        @if ($associatedAppointment && $associatedAppointment->doctor)
+                        {{ $associatedAppointment->doctor->first_name . ' ' . $associatedAppointment->doctor->last_name }}
+                        @else
+                          Doctor Not Found
+                        @endif
                     </label>
                 </div>
                 <div class="d-flex gap-2 ">
