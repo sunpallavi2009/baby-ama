@@ -431,6 +431,8 @@ public function GetAppointments()
             ->orderBy('id', 'DESC')
             ->first();
 
+            // dd($getdata);
+
         // Get the appointment status
         $get_ap_status = Appoinment::where('id', $appoinment->id)->first();
         $app_status = $get_ap_status ? $get_ap_status->status : null;
@@ -441,9 +443,10 @@ public function GetAppointments()
         if ($getdata) {
             $pr_id = $getdata->id;
             $type = 'pediatric';
-            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$appoinment->id ])->get();
+            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$getdata->appointment_id ])->get();
+            // $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$appoinment->id ])->get();
         }
-
+        // dd($pres);
         return view('pages.doctor.patient.pediatric', compact('pres', 'user', 'patient', 'getdata', 'appoinment', 'app_status', 'pr_id'));
     }
 

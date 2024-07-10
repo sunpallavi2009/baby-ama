@@ -230,7 +230,7 @@ $getFormAnswers = isset($getFormAnswers)  ? $getFormAnswers->toArray() : [];
 
                 if ($data!=null):
                 $getap = DB::table('appoinments')->where('id',$cn['appointment_id'])->first();
-                    // dd($getap->id);
+                    // dd($data->id);
                 ?>
 
                     <div class="col-11 text-center mb-4">
