@@ -523,7 +523,9 @@ public function GetAppointments()
         if ($getdata) {
         $type = 'dental';
             $pr_id = $getdata->id;
-            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+           // $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+            $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$getdata->appointment_id ])->get();
+
 
              }
 
@@ -1221,6 +1223,7 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
     $doctorPrescriptionMedicine->user_id = $user->id;
     $doctorPrescriptionMedicine->save();
 
+   // return redirect()->back()->with('success', 'Details Saved Successfully');
     return redirect()->back()->with('success', 'Details Saved Successfully');
 }
 
@@ -1871,7 +1874,9 @@ public function PostMedicineDetail(Request $request, Appoinment $appoinment, Pat
 
                $type = 'gynaecology';
                 $pr_id = $getdata->id;
-                $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+               // $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+                $pres = DoctorPrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id, 'appointment_id' =>$getdata->appointment_id ])->get();
+
         }
             //print_r($getdata); exit;
             return view('pages.doctor.patient.gynaecology-case-record', compact('pres','user','patient','appoinment','app_status','getdata'));
